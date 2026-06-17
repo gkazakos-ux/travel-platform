@@ -7,11 +7,11 @@ export async function updateSession(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+  // Προστασία σε περίπτωση που λείπουν τα κλειδιά
   if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error("Missing Supabase environment variables");
+    return { response, user: null };
   }
 
-  // Δημιουργία του client χωρίς εξωτερικά types που μπορεί να σπάνε το Edge
   const supabase = createServerClient(
     supabaseUrl,
     supabaseAnonKey,
@@ -32,7 +32,7 @@ export async function updateSession(request: NextRequest) {
           });
         },
       },
-    },
+    }
   );
 
   const {
