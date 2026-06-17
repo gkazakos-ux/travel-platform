@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { updateSession } from "@/services/supabase/middleware";
+import { updateSession } from "@/services/supabase/session";
 
 // URL prefixes that require an authenticated session.
 const PROTECTED_PREFIXES = [
