@@ -1,0 +1,26 @@
+import * as React from "react";
+import { cn } from "@/lib/utils";
+
+interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
+  required?: boolean;
+}
+
+export function Label({ className, children, required, ...props }: LabelProps) {
+  return (
+    <label
+      className={cn(
+        "text-sm font-medium leading-none text-gray-700",
+        "peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+        className,
+      )}
+      {...props}
+    >
+      {children}
+      {required && (
+        <span className="ml-1 text-red-500" aria-hidden="true">
+          *
+        </span>
+      )}
+    </label>
+  );
+}
