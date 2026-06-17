@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { updateSession } from "@/services/supabase/session";
+// 👇 ΕΔΩ ΕΙΝΑΙ Η ΑΛΛΑΓΗ (το κάναμε ./ αντί για @/)
+import { updateSession } from "./services/supabase/session";
 
 // URL prefixes that require an authenticated session.
 const PROTECTED_PREFIXES = [
@@ -27,7 +28,6 @@ export async function middleware(request: NextRequest) {
 
   if (isProtected && !user) {
     const intended = pathname + search;
-    // Γράφουμε το URL απευθείας εδώ, χωρίς να καλούμε το @/config/routes
     const loginUrl = new URL(
       intended ? `/login?next=${encodeURIComponent(intended)}` : "/login", 
       request.url
@@ -38,7 +38,6 @@ export async function middleware(request: NextRequest) {
   // 3. Redirect authenticated users away from login/signup to dashboard.
   const isAuthPage = AUTH_PAGE_PREFIXES.some((p) => pathname.startsWith(p));
   if (isAuthPage && user) {
-    // Γράφουμε το URL του dashboard απευθείας εδώ
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
@@ -50,4 +49,3 @@ export const config = {
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
-// trigger fresh build
