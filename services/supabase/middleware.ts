@@ -2,7 +2,6 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { User } from "@supabase/supabase-js";
 import type { Database } from "@/types/database";
-import { clientEnv } from "@/lib/env.client";
 
 /**
  * Refreshes the Supabase auth session on every request.
@@ -14,9 +13,17 @@ export async function updateSession(
 ): Promise<{ response: NextResponse; user: User | null }> {
   let response = NextResponse.next({ request });
 
+  // Χρησιμοποιούμε απευθείας το process.env αντί για το clientEnv
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error("Missing Supabase environment variables");
+  }
+
   const supabase = createServerClient<Database>(
-    clientEnv.NEXT_PUBLIC_SUPABASE_URL,
-    clientEnv.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
@@ -38,8 +45,6 @@ export async function updateSession(
   );
 
   // getUser() validates the JWT and refreshes the session if expired.
-  // This is the only safe way to check auth in middleware — reading cookies
-  // directly can be spoofed.
   const {
     data: { user },
   } = await supabase.auth.getUser();
