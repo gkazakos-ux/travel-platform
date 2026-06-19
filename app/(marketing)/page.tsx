@@ -10,7 +10,7 @@ const fadeInUp = {
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
   }
 };
 
@@ -18,7 +18,7 @@ const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
+    transition: { staggerChildren: 0.12 }
   }
 };
 
@@ -51,19 +51,17 @@ const Navbar = () => {
 const Hero = () => {
   return (
     <section className="relative pt-36 pb-24 overflow-hidden bg-white">
-      {/* Background Subtle Gradient Blobs */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-100/40 rounded-full blur-3xl -z-10 animate-pulse" />
-      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-indigo-50 rounded-full blur-3xl -z-10" />
-
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-50/50 rounded-full blur-3xl -z-10" />
+      
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <motion.div 
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
           className="text-center lg:text-left"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-100 text-[#FF6B35] text-xs font-bold mb-6">
-            📍 Over 20,000 secret spots shared
+            ✨ Explore travel logs from real people
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight leading-[1.1] mb-6">
             Explore the world <br />
@@ -79,41 +77,30 @@ const Hero = () => {
           </div>
         </motion.div>
         
-        {/* PREMIUM VISUAL: INTERACTIVE APP MOCKUP LIKE POLARSTEPS */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9, y: 40 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative flex justify-center items-center"
-        >
-          {/* Main App Canvas Backdrop */}
-          <div className="relative w-full max-w-[450px] h-[500px] rounded-[3rem] overflow-hidden shadow-2xl border border-gray-100 group">
-            <img 
-              src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=800&q=80" 
-              alt="Travel background" 
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            
-            {/* Animated Floating App Card Inside */}
+        {/* ΕΠΙΣΤΡΟΦΗ ΤΗΣ 3D ΥΔΡΟΓΕΙΟΥ (ΚΑΘΑΡΟΣ ΚΩΔΙΚΑΣ CSS) */}
+        <div className="relative h-[450px] md:h-[550px] w-full bg-[#F8F9FA] rounded-[3rem] border border-gray-100 overflow-hidden flex items-center justify-center shadow-inner">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-100/40 via-transparent to-transparent blur-xl"></div>
+          
+          <div className="w-64 h-64 relative flex items-center justify-center [perspective:1000px] [transform-style:preserve-3d]">
+            <div className="absolute w-80 h-80 border-2 border-dashed border-[#FF6B35]/20 rounded-full [transform:rotateX(65deg)_rotateY(15deg)] animate-[spin_40s_linear_infinite]"></div>
             <motion.div 
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-8 inset-x-6 bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white flex items-center gap-4"
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+              className="w-48 h-48 bg-gradient-to-tr from-[#FF6B35] to-amber-400 rounded-full shadow-[0_0_60px_rgba(255,107,53,0.3)] flex items-center justify-center text-6xl select-none [backface-visibility:hidden]"
             >
-              <img 
-                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=150&q=80" 
-                alt="Spot Avatar" 
-                className="w-16 h-16 rounded-xl object-cover shadow"
-              />
-              <div>
-                <span className="text-[10px] font-black tracking-widest uppercase text-[#FF6B35] bg-orange-50 px-2 py-0.5 rounded">Secret Beach</span>
-                <h4 className="text-sm font-bold text-gray-900 mt-1">Kelingking Hideout, Bali</h4>
-                <p className="text-xs text-gray-400 mt-0.5">Pinned by @travel_pro</p>
-              </div>
+               🌍
             </motion.div>
           </div>
-        </motion.div>
+
+          <motion.div 
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-gray-50 flex items-center gap-3 z-20"
+          >
+            <span className="text-lg">🗺️</span>
+            <span className="text-xs font-black text-gray-800 tracking-tight">Interactive Node Engine</span>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -121,26 +108,25 @@ const Hero = () => {
 
 const SocialMarquee = () => {
   const destinations = [
-    { name: "Kyoto, Japan", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=300&q=80" },
-    { name: "Rome, Italy", img: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=300&q=80" },
-    { name: "Santorini, Greece", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=300&q=80" },
-    { name: "Paris, France", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=300&q=80" },
-    { name: "Bali, Indonesia", img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=300&q=80" }
+    { name: "Kyoto Lanes", img: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=300&q=80" },
+    { name: "Rome Backstreets", img: "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=300&q=80" },
+    { name: "Santorini Cliffs", img: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=300&q=80" },
+    { name: "Icelandic Roads", img: "https://images.unsplash.com/photo-1504893524553-ac55fce69cbf?auto=format&fit=crop&w=300&q=80" }
   ];
 
   return (
     <section className="py-12 bg-[#F8F9FA] overflow-hidden border-y border-gray-100">
       <div className="flex whitespace-nowrap">
         <motion.div 
-          animate={{ x: [0, -1200] }}
-          transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+          animate={{ x: [0, -1000] }}
+          transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
           className="flex gap-8 px-4"
         >
           {[...destinations, ...destinations].map((dest, i) => (
             <div key={i} className="flex items-center gap-4 bg-white p-3 rounded-2xl border border-gray-100 shadow-sm pr-6 min-w-[240px]">
-              <img src={dest.img} alt={dest.name} className="w-12 h-12 rounded-xl object-cover shadow-sm" />
+              <img src={dest.img} alt={dest.name} className="w-12 h-12 rounded-xl object-cover grayscale-[20%] contrast-[110%]" />
               <div>
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Trending Guide</p>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Active Log</p>
                 <p className="text-sm font-extrabold text-gray-900">{dest.name}</p>
               </div>
             </div>
@@ -169,8 +155,8 @@ const HowItWorks = () => {
         className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10"
       >
         {steps.map((step, idx) => (
-          <motion.div key={idx} variants={fadeInUp} className="bg-[#F8F9FA] rounded-3xl p-8 border border-gray-100 relative overflow-hidden group hover:shadow-xl transition-shadow duration-300">
-            <span className="text-6xl font-black text-orange-100/70 absolute top-4 right-6 group-hover:scale-110 transition-transform">{step.num}</span>
+          <motion.div key={idx} variants={fadeInUp} className="bg-[#F8F9FA] rounded-3xl p-8 border border-gray-100 relative overflow-hidden group">
+            <span className="text-6xl font-black text-orange-100/50 absolute top-4 right-6">{step.num}</span>
             <h3 className="text-xl font-bold text-gray-900 mb-4 mt-6">{step.title}</h3>
             <p className="text-gray-500 leading-relaxed">{step.desc}</p>
           </motion.div>
@@ -192,9 +178,9 @@ const BentoFeatures = () => {
         variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
         className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6"
       >
-        {/* CARD 1: BACKGROUND PHOTO INTEGRATION */}
+        {/* PREMIUM CINEMATIC IMAGES FOR BENTO GRID */}
         <motion.div variants={fadeInUp} whileHover={{ scale: 1.01 }} className="md:col-span-2 group bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 relative overflow-hidden h-[400px] cursor-pointer">
-          <img src="https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?auto=format&fit=crop&w=1000&q=80" alt="Map View" className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700" />
+          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80" alt="Map View" className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:scale-105 transition-transform duration-1000 grayscale-[10%]" />
           <div className="relative z-10 p-10 max-w-md">
             <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center mb-6 text-xl font-bold">📍</div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#FF6B35] transition-colors">Visual Smart Maps</h3>
@@ -203,7 +189,7 @@ const BentoFeatures = () => {
         </motion.div>
 
         <motion.div variants={fadeInUp} whileHover={{ scale: 1.02 }} className="group bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 h-[400px] cursor-pointer relative overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=500&q=80" alt="AI search" className="absolute bottom-0 right-0 w-full h-1/2 object-cover opacity-10 group-hover:opacity-20 transition-opacity" />
+          <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=500&q=80" alt="AI search" className="absolute bottom-0 right-0 w-full h-1/2 object-cover opacity-15" />
           <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center mb-6 text-xl font-bold">✨</div>
           <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#FF6B35] transition-colors">AI Filtered Search</h3>
           <p className="text-gray-500">Query exact terms like "hidden sunset balconies in Amalfi" and see verified user logs instantly.</p>
@@ -216,7 +202,7 @@ const BentoFeatures = () => {
         </motion.div>
 
         <motion.div variants={fadeInUp} whileHover={{ scale: 1.01 }} className="md:col-span-2 group bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 h-[400px] relative overflow-hidden cursor-pointer">
-           <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1000&q=80" alt="Collections" className="absolute inset-0 w-full h-full object-cover opacity-10 group-hover:scale-105 transition-transform duration-700" />
+           <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=80" alt="Collections" className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-1000" />
            <div className="p-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center relative z-10 h-full">
               <div>
                 <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center mb-6 text-xl font-bold">💾</div>
@@ -231,10 +217,11 @@ const BentoFeatures = () => {
 };
 
 const CreatorShowcase = () => {
+  // PREMIUM MOODY PORTRAITS LIKE REAL LOGS
   const creators = [
-    { name: "Elena Rostova", location: "Milos, Greece", tags: "Beaches", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" },
-    { name: "Marcus Vance", location: "Kyoto, Japan", tags: "Food & Cafes", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1e?auto=format&fit=crop&w=400&q=80" },
-    { name: "Siddharth M.", location: "Manali, India", tags: "Trekking", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
+    { name: "Elena Rostova", location: "Milos, Greece", tags: "Beaches", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80" },
+    { name: "Marcus Vance", location: "Kyoto, Japan", tags: "Food & Cafes", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" },
+    { name: "Sarah Jenkins", location: "Manali, India", tags: "Trekking", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80" }
   ];
 
   return (
@@ -250,7 +237,7 @@ const CreatorShowcase = () => {
         {creators.map((creator, idx) => (
           <motion.div key={idx} variants={fadeInUp} className="bg-white border border-gray-100 rounded-[2rem] p-5 shadow-xl shadow-gray-100/40 flex flex-col justify-between h-[420px] group">
             <div className="relative w-full h-48 rounded-2xl overflow-hidden mb-6">
-              <img src={creator.img} alt={creator.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src={creator.img} alt={creator.name} className="w-full h-full object-cover grayscale-[10%] contrast-[105%]" />
               <span className="absolute bottom-3 left-3 text-[10px] font-black tracking-widest uppercase text-white bg-[#FF6B35] px-3 py-1 rounded-full">{creator.tags}</span>
             </div>
             <div className="px-2">
@@ -363,14 +350,14 @@ export default function NomadFlowLanding() {
       <CreatorShowcase />
       <Pricing />
       
-      {/* Heavy Graphic CTA Section like Polarsteps */}
+      {/* HIGH END MOODY CTA GRID */}
       <section className="py-24 px-6 bg-white">
         <motion.div 
           initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="max-w-5xl mx-auto rounded-[3rem] h-[450px] relative overflow-hidden flex flex-col justify-center items-center text-center px-6"
         >
-          <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80" alt="CTA background" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
+          <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1200&q=80" alt="CTA background" className="absolute inset-0 w-full h-full object-cover contrast-[105%] brightness-[85%]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70" />
           
           <div className="relative z-10 max-w-xl">
             <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-6">Ready to see the world differently?</h2>
