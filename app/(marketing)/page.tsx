@@ -272,10 +272,17 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- 4. ΕΝΙΑΙΟΣ CONTAINER (TRUE POLARSTEPS REVIEWS & DIAGONAL FOOTER) --- */}
-      <div className="relative bg-[#000A0F] overflow-hidden mt-[-1px]">
+      {/* --- ΤΙΤΛΟΣ REVIEWS (Πατάει στο γκρι φόντο, πριν την εικόνα) --- */}
+      <section className="bg-[#F8F9FA] pt-24 pb-4 text-center relative z-20">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] tracking-tight drop-shadow-sm">
+          Loved by <br /> explorers everywhere
+        </h2>
+      </section>
+
+      {/* --- 4. ENIAIO COMPONENT (REVIEWS CAROUSEL OVERLAP & DIAGONAL FOOTER) --- */}
+      <div className="relative bg-[#000A0F] overflow-hidden">
         
-        {/* Η αυθεντική εικόνα οροσειράς της Polarsteps που κάθεται πίσω από Reviews και Footer */}
+        {/* Η αυθεντική εικόνα οροσειράς της Polarsteps που περνάει πίσω από Reviews και Footer */}
         <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
           <img 
             src="https://framerusercontent.com/images/bM3zU8ikfSHFLRniHcb1d8qGW8.jpg" 
@@ -285,23 +292,20 @@ export default function NomadFlowLanding() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#000A0F] via-transparent to-[#00111A]" />
         </div>
 
-        {/* ΑΥΘΕΝΤΙΚΗ ΔΙΑΓΩΝΙΑ ΚΟΠΗ (SVG POLYGON) */}
-        <div className="w-full overflow-hidden relative z-30 bg-transparent rotate-180">
+        {/* ΑΥΘΕΝΤΙΚΗ ΔΙΑΓΩΝΙΑ ΚΟΠΗ (SVG POLYGON) - Κάθεται ΠΙΣΩ από τις κάρτες */}
+        <div className="w-full overflow-hidden relative z-10 bg-transparent rotate-180">
           <svg viewBox="0 0 100 5" preserveAspectRatio="none" width="100%" height="60" style={{ display: "block" }}>
             <polygon points="-1,0 0,5 101,5" fill="#F8F9FA"></polygon>
           </svg>
         </div>
 
-        {/* REVIEWS TRACK (True Asymmetric Layout) */}
-        <div className="relative z-20 pt-12 pb-16 w-full text-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-16 drop-shadow-md">
-            Loved by <br /> explorers everywhere
-          </h2>
+        {/* REVIEWS TRACK (ΑΛΛΑΓΗ ΕΔΩ: mt-[-140px] για να ανέβουν τα Reviews ανάμεσα στα δύο sections) */}
+        <div className="relative z-20 pb-16 w-full text-center mt-[-140px] overflow-visible">
 
-          <div className="relative w-full max-w-7xl mx-auto px-6">
+          <div className="relative w-full max-w-7xl mx-auto px-6 overflow-visible">
             {/* Arrows */}
-            <button onClick={() => carouselScroll("left")} className="absolute left-4 md:left-12 top-[45%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❮</button>
-            <button onClick={() => carouselScroll("right")} className="absolute right-4 md:right-12 top-[45%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❯</button>
+            <button onClick={() => carouselScroll("left")} className="absolute left-4 md:left-12 top-[50%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❮</button>
+            <button onClick={() => carouselScroll("right")} className="absolute right-4 md:right-12 top-[50%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❯</button>
 
             {/* Carousel Items Track */}
             <div 
@@ -314,7 +318,7 @@ export default function NomadFlowLanding() {
             >
               {/* STACK 1: Δύο κάρτες κειμένου (Η μία κάτω από την άλλη) */}
               <div className="flex flex-col gap-6 min-w-[280px] md:min-w-[320px] h-[460px] justify-between snap-center">
-                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-lg flex flex-col justify-between text-left border border-gray-100/50">
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between text-left border border-gray-100/50">
                   <div>
                     <h4 className="text-sm font-bold text-[#00293D] mb-1">Perfect for tracking trips</h4>
                     <p className="text-[9px] font-bold text-gray-400 mb-2">CONOR, MARCH 9 2026</p>
@@ -324,7 +328,7 @@ export default function NomadFlowLanding() {
                   </div>
                   <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
                 </div>
-                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-lg flex flex-col justify-between text-left border border-gray-100/50">
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between text-left border border-gray-100/50">
                   <div>
                     <h4 className="text-sm font-bold text-[#00293D] mb-1">See where you've been</h4>
                     <p className="text-[9px] font-bold text-gray-400 mb-2">MARCUS, FEB 22 2026</p>
@@ -350,12 +354,12 @@ export default function NomadFlowLanding() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center text-xl border border-white/30 cursor-pointer transition-transform group-hover:scale-110">▶</span>
                 </div>
-                <span className="absolute bottom-6 left-6 text-[10px] font-black tracking-widest text-white/50 uppercase">Pioneers</span>
+                <span className="absolute bottom-4 left-6 text-[9px] font-black tracking-widest text-white/50 uppercase">Pioneers</span>
               </div>
 
               {/* STACK 3: Δύο κάρτες κειμένου */}
               <div className="flex flex-col gap-6 min-w-[280px] md:min-w-[320px] h-[460px] justify-between snap-center">
-                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-lg flex flex-col justify-between text-left border border-gray-100/50">
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between text-left border border-gray-100/50">
                   <div>
                     <h4 className="text-sm font-bold text-[#00293D] mb-1">Easy to use</h4>
                     <p className="text-[9px] font-bold text-gray-400 mb-2">RACHEL, MARCH 15 2026</p>
@@ -365,7 +369,7 @@ export default function NomadFlowLanding() {
                   </div>
                   <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
                 </div>
-                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-lg flex flex-col justify-between text-left border border-gray-100/50">
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between text-left border border-gray-100/50">
                   <div>
                     <h4 className="text-sm font-bold text-[#00293D] mb-1">Stops me wasting time</h4>
                     <p className="text-[9px] font-bold text-gray-400 mb-2">DEBORAH, MARCH 19 2026</p>
@@ -414,30 +418,30 @@ export default function NomadFlowLanding() {
              <div>
                 <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">Get Started</h4>
                 <ul className="space-y-3.5 text-sm font-medium text-gray-300">
-                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Get the app</Link></li>
-                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Log in</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Get the app</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Log in</Link></li>
                 </ul>
              </div>
              <div>
                 <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">About</h4>
                 <ul className="space-y-3.5 text-sm font-medium text-gray-300">
-                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">About us</Link></li>
-                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Careers</Link></li>
-                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Stories</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">About us</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Careers</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Stories</Link></li>
                 </ul>
              </div>
              <div>
                 <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">Features</h4>
                 <ul className="space-y-3.5 text-sm font-medium text-gray-300">
-                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Travel Planner</Link></li>
-                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Travel Tracker</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Travel Planner</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Travel Tracker</Link></li>
                 </ul>
              </div>
              <div>
                 <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">Help & Support</h4>
                 <ul className="space-y-3.5 text-sm font-medium text-gray-300">
-                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Help Center</Link></li>
-                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Contact us</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Help Center</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Contact us</Link></li>
                 </ul>
              </div>
           </div>
