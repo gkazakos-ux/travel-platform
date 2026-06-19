@@ -38,8 +38,8 @@ const Navbar = () => {
           <Link href="#" className="hover:text-[#FF6B35] transition-colors">Community</Link>
         </div>
         <div className="flex items-center gap-4">
-          <Link href="/login" className="text-sm font-semibold text-gray-900 px-4 py-2">Log In</Link>
-          <Link href="/signup" className="bg-[#FF6B35] text-white text-sm font-bold px-6 py-2.5 rounded-full hover:shadow-lg transition-all active:scale-95">
+          <Link href="/login" className="text-sm font-semibold text-gray-900 px-4 py-2 hover:text-[#FF6B35] transition">Log In</Link>
+          <Link href="/signup" className="bg-[#FF6B35] text-white text-sm font-bold px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-orange-200 transition-all active:scale-95">
             Start Planning
           </Link>
         </div>
@@ -58,7 +58,7 @@ const Hero = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center lg:text-left"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-100 text-orange-600 text-xs font-bold mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-100 text-[#FF6B35] text-xs font-bold mb-6">
             ✨ NomadFlow 2.0 is live
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight leading-[1.1] mb-6">
@@ -69,21 +69,21 @@ const Hero = () => {
             Turn travel chaos into perfectly organized itineraries. Collaborate with friends, track budgets, and explore the world with absolute effortless control.
           </p>
           <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-            <Link href="/signup" className="bg-[#FF6B35] text-white font-bold px-8 py-4 rounded-2xl shadow-xl shadow-orange-200 hover:-translate-y-1 hover:scale-105 transition-all active:scale-95">
-              Start Your Journey
+            <Link href="/signup" className="bg-[#FF6B35] text-white font-bold px-12 py-5 rounded-2xl shadow-xl shadow-orange-200 hover:-translate-y-1 hover:scale-105 transition-all active:scale-95 text-lg">
+              Start Your Journey Now ➔
             </Link>
           </div>
         </motion.div>
         
-        {/* ΔΕΞΙ ΜΕΡΟΣ: ΕΔΩ ΜΠΗΚΕ Η ΔΙΚΗ ΣΟΥ 3D ΒΑΛΙΤΣΑ GO TRAVEL */}
-        <div className="relative h-[450px] md:h-[550px] w-full bg-gradient-to-br from-orange-50/50 via-white to-indigo-50/30 rounded-[3rem] border border-gray-100 shadow-inner overflow-hidden">
+        {/* ΔΕΞΙ ΜΕΡΟΣ: ΕΔΩ ΜΠΗΚΕ Η ΔΙΟΡΘΩΜΕΝΗ 3D ΥΔΡΟΓΕΙΟΣ ΠΟΥ ΛΕΙΤΟΥΡΓΕΙ */}
+        <div className="relative h-[450px] md:h-[550px] w-full bg-[#F8F9FA] rounded-[3rem] border border-gray-100 shadow-inner overflow-hidden">
           <iframe 
-            src="https://my.spline.design/luggageanimatedcopy-bd00fb95db504ca03ba5b6826477e600/" 
+            src="https://my.spline.design/interactiveglobecopy-541571d8ad298a0d7f4571f652bfa61c/" 
             frameBorder="0" 
             width="100%" 
             height="100%" 
             className="absolute inset-0 scale-105 pointer-events-auto"
-            title="NomadFlow 3D Travel Asset"
+            title="NomadFlow 3D Interactive Globe"
           />
           
           <motion.div 
@@ -91,7 +91,7 @@ const Hero = () => {
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-4 py-3 rounded-xl shadow-xl border border-gray-50 flex items-center gap-3 z-10 pointer-events-none"
           >
-            <span className="text-lg">🧳</span>
+            <span className="text-lg">🌍</span>
             <span className="text-xs font-black text-gray-800 tracking-tight">Interactive 3D Workspace</span>
           </motion.div>
         </div>
@@ -118,15 +118,15 @@ const BentoFeatures = () => {
         {/* Κάρτα 1: Interactive Maps */}
         <motion.div 
           variants={fadeInUp} 
-          whileHover={{ scale: 1.02, rotateX: 1, rotateY: -1 }}
-          className="md:col-span-2 group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 relative overflow-hidden h-[400px] cursor-pointer"
+          whileHover={{ scale: 1.02, rotateX: 2, rotateY: -2 }}
+          className="md:col-span-2 group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl hover:shadow-orange-500/5 transition-all duration-300 relative overflow-hidden h-[400px] cursor-pointer"
         >
           <div className="relative z-10">
-            <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">🗺️</div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Interactive Maps</h3>
+            <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">📍</div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#FF6B35] transition-colors">Interactive Maps</h3>
             <p className="text-gray-500 max-w-sm">Visualize your entire journey. Pin spots, calculate routes, and optimize your daily exploring with ease.</p>
           </div>
-          <div className="absolute right-0 bottom-0 w-2/3 h-2/3 bg-gray-50 rounded-tl-3xl border-t border-l border-gray-100 overflow-hidden">
+          <div className="absolute right-0 bottom-0 w-2/3 h-2/3 bg-[#F8F9FA] rounded-tl-3xl border-t border-l border-gray-100 overflow-hidden">
              <div className="w-full h-full opacity-40 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#FF6B35]/20 to-transparent"></div>
           </div>
         </motion.div>
@@ -134,22 +134,22 @@ const BentoFeatures = () => {
         {/* Κάρτα 2: AI Magic */}
         <motion.div 
           variants={fadeInUp}
-          whileHover={{ scale: 1.03, rotateY: 2 }}
-          className="group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 h-[400px] cursor-pointer"
+          whileHover={{ scale: 1.03, rotateY: 3 }}
+          className="group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl hover:shadow-orange-500/5 transition-all duration-300 h-[400px] cursor-pointer"
         >
-          <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">✨</div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">AI Magic</h3>
+          <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">✨</div>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#FF6B35] transition-colors">AI Magic</h3>
           <p className="text-gray-500">Get smart suggestions for hidden gems based on your group&apos;s vibe and previous trips.</p>
         </motion.div>
 
         {/* Κάρτα 3: Shared Budgets */}
         <motion.div 
           variants={fadeInUp}
-          whileHover={{ scale: 1.03, rotateY: -2 }}
-          className="group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 h-[400px] cursor-pointer"
+          whileHover={{ scale: 1.03, rotateY: -3 }}
+          className="group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl hover:shadow-orange-500/5 transition-all duration-300 h-[400px] cursor-pointer"
         >
-          <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">💰</div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Shared Budgets</h3>
+          <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">💰</div>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#FF6B35] transition-colors">Shared Budgets</h3>
           <p className="text-gray-500">Split costs seamlessly and track expenses in real-time. No more spreadsheet headaches.</p>
           <div className="mt-10 h-2 w-full bg-gray-100 rounded-full overflow-hidden">
              <div className="h-full bg-[#FF6B35] w-3/4 rounded-full group-hover:w-full transition-all duration-1000"></div>
@@ -159,18 +159,18 @@ const BentoFeatures = () => {
         {/* Κάρτα 4: Offline Mode */}
         <motion.div 
           variants={fadeInUp}
-          whileHover={{ scale: 1.02, rotateX: -1 }}
-          className="md:col-span-2 group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 h-[400px] flex items-center cursor-pointer"
+          whileHover={{ scale: 1.02, rotateX: -2 }}
+          className="md:col-span-2 group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl hover:shadow-orange-500/5 transition-all duration-300 h-[400px] flex items-center cursor-pointer"
         >
            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
               <div>
-                <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">📵</div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Offline Mode</h3>
+                <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">📵</div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#FF6B35] transition-colors">Offline Mode</h3>
                 <p className="text-gray-500">Access your full itinerary even when you&apos;re off the grid in the mountains. No signal, no problem.</p>
               </div>
               <div className="hidden md:block relative w-full h-full">
                  <div className="w-full h-48 bg-[#F8F9FA] group-hover:bg-orange-50/50 rounded-2xl border border-dashed border-gray-200 flex items-center justify-center">
-                    <span className="text-gray-300 group-hover:text-orange-400 font-bold uppercase tracking-widest text-[10px]">Itinerary Syncing...</span>
+                    <span className="text-gray-300 group-hover:text-[#FF6B35] font-bold uppercase tracking-widest text-[10px]">Itinerary Syncing...</span>
                  </div>
               </div>
            </div>
@@ -198,7 +198,7 @@ const SocialMarquee = () => {
           className="flex gap-8 px-4"
         >
           {[...users, ...users, ...users].map((user, i) => (
-            <div key={i} className="flex items-center gap-3 bg-gray-50 px-6 py-4 rounded-2xl border border-gray-100 shadow-sm hover:scale-105 transition-transform cursor-pointer">
+            <div key={i} className="flex items-center gap-3 bg-gray-50 px-6 py-4 rounded-2xl border border-gray-100 shadow-sm hover:scale-105 transition-transform cursor-pointer hover:border-orange-100">
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-xl shadow-sm">{user.avatar}</div>
               <div>
                 <p className="text-sm font-bold text-gray-900">{user.name}</p>
@@ -214,7 +214,7 @@ const SocialMarquee = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t border-gray-100 pt-20 pb-10">
+    <footer className="bg-white border-t border-gray-100 pt-20 pb-10 mt-12">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 mb-16">
         <div className="col-span-2">
           <span className="font-display text-2xl font-extrabold text-[#FF6B35] tracking-tighter">NomadFlow</span>
@@ -223,33 +223,42 @@ const Footer = () => {
           </p>
         </div>
         <div>
-          <h4 className="font-bold text-gray-900 mb-6">Product</h4>
+          <h4 className="font-bold text-gray-900 mb-6 underline underline-offset-4 decoration-[#FF6B35]">Product</h4>
           <ul className="space-y-4 text-sm text-gray-500 font-medium">
             <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Features</Link></li>
             <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Pricing</Link></li>
+            <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Templates</Link></li>
           </ul>
         </div>
         <div>
-          <h4 className="font-bold text-gray-900 mb-6">Company</h4>
+          <h4 className="font-bold text-gray-900 mb-6 underline underline-offset-4 decoration-[#FF6B35]">Company</h4>
           <ul className="space-y-4 text-sm text-gray-500 font-medium">
             <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">About Us</Link></li>
+            <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Careers</Link></li>
           </ul>
         </div>
         <div>
-          <h4 className="font-bold text-gray-900 mb-6">Resources</h4>
+          <h4 className="font-bold text-gray-900 mb-6 underline underline-offset-4 decoration-[#FF6B35]">Resources</h4>
           <ul className="space-y-4 text-sm text-gray-500 font-medium">
             <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Blog</Link></li>
+            <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Support</Link></li>
           </ul>
         </div>
         <div>
-          <h4 className="font-bold text-gray-900 mb-6">Legal</h4>
+          <h4 className="font-bold text-gray-900 mb-6 underline underline-offset-4 decoration-[#FF6B35]">Legal</h4>
           <ul className="space-y-4 text-sm text-gray-500 font-medium">
             <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Privacy</Link></li>
+            <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Terms</Link></li>
           </ul>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-6 pt-10 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center gap-6">
         <p className="text-xs text-gray-400 font-medium font-body">© 2026 NomadFlow. All rights reserved. Your journey, perfectly organized.</p>
+        <div className="flex gap-6">
+          <div className="w-8 h-8 rounded-lg bg-[#F8F9FA] flex items-center justify-center text-gray-400 hover:bg-orange-50 hover:text-[#FF6B35] transition-all cursor-pointer">𝕏</div>
+          <div className="w-8 h-8 rounded-lg bg-[#F8F9FA] flex items-center justify-center text-gray-400 hover:bg-orange-50 hover:text-[#FF6B35] transition-all cursor-pointer"></div>
+          <div className="w-8 h-8 rounded-lg bg-[#F8F9FA] flex items-center justify-center text-gray-400 hover:bg-orange-50 hover:text-[#FF6B35] transition-all cursor-pointer"></div>
+        </div>
       </div>
     </footer>
   );
@@ -268,17 +277,17 @@ export default function NomadFlowLanding() {
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto bg-white rounded-[3rem] p-12 md:p-20 text-center border border-gray-100 shadow-2xl shadow-gray-200/50 relative overflow-hidden"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="max-w-4xl mx-auto bg-white rounded-[3rem] p-12 md:p-20 text-center border border-gray-100 shadow-2xl shadow-orange-500/5 relative overflow-hidden"
         >
           <div className="absolute top-0 left-0 w-full h-1 bg-[#FF6B35]"></div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-6">Ready for your next trip?</h2>
-          <p className="text-lg text-gray-500 mb-10 max-w-lg mx-auto">
-            Join thousands of travelers who have already transformed the way they plan. Create your first itinerary for free today.
+          <p className="text-lg text-gray-500 mb-10 max-w-lg mx-auto leading-relaxed">
+            Join thousands of travelers who have already transformed the way they plan. Create your first itinerary for free today and experience seamless collaboration.
           </p>
           <Link href="/signup" className="inline-block bg-[#FF6B35] text-white font-bold px-12 py-5 rounded-2xl shadow-xl shadow-orange-200 hover:-translate-y-1 hover:scale-105 transition-all active:scale-95 text-lg">
-            Start Planning Now
+            Start Planning Now ➔
           </Link>
         </motion.div>
       </section>
