@@ -9,11 +9,12 @@ export default async function DashboardPage() {
   // 2. Παίρνουμε τον συνδεδεμένο χρήστη
   const { data: { user } } = await supabase.auth.getUser();
 
-  // 3. Παίρνουμε το username από τον πίνακα profiles
+  // 3. Παίρνουμε το username από τον πίνακα profiles. 
+  // Προσθέσαμε το || "" για να μην "γκρινιάζει" το TypeScript!
   const { data: profile } = await supabase
     .from("profiles")
     .select("username")
-    .eq("id", user?.id)
+    .eq("id", user?.id || "")
     .maybeSingle();
 
   // Ορίζουμε το όνομα για να το χρησιμοποιήσουμε παντού (αν δεν έχει, βάζουμε "Traveller")
@@ -29,7 +30,7 @@ export default async function DashboardPage() {
           <div className="flex items-center gap-3 mb-8 cursor-pointer hover:bg-gray-50 p-2 rounded-xl transition">
             <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden relative">
               <Image 
-                src="https://i.pravatar.cc/150?img=11" // Προσωρινό avatar, αργότερα βάζουμε του χρήστη
+                src="https://i.pravatar.cc/150?img=11"
                 alt="Profile" 
                 fill
                 unoptimized
@@ -85,7 +86,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        {/* Logout (Αργότερα θα το κάνουμε να δουλεύει πραγματικά) */}
+        {/* Logout */}
         <div>
           <button className="flex items-center gap-2 text-sm text-red-500 font-bold hover:text-red-600 hover:bg-red-50 p-2.5 rounded-xl w-full transition">
             <span>↪️</span> Logout
