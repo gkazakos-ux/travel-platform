@@ -75,24 +75,37 @@ const Hero = () => {
           </div>
         </motion.div>
         
-        {/* ΔΕΞΙ ΜΕΡΟΣ: ΕΔΩ ΜΠΗΚΕ Η ΔΙΟΡΘΩΜΕΝΗ 3D ΥΔΡΟΓΕΙΟΣ ΠΟΥ ΛΕΙΤΟΥΡΓΕΙ */}
-        <div className="relative h-[450px] md:h-[550px] w-full bg-[#F8F9FA] rounded-[3rem] border border-gray-100 shadow-inner overflow-hidden">
-          <iframe 
-            src="https://my.spline.design/interactiveglobecopy-541571d8ad298a0d7f4571f652bfa61c/" 
-            frameBorder="0" 
-            width="100%" 
-            height="100%" 
-            className="absolute inset-0 scale-105 pointer-events-auto"
-            title="NomadFlow 3D Interactive Globe"
-          />
+        {/* ΔΕΞΙ ΜΕΡΟΣ: ΕΠΙΣΤΡΟΦΗ ΣΤΟΝ ΣΤΑΘΕΡΟ CSS 3D ΠΛΑΝΗΤΗ */}
+        <div className="relative h-[450px] md:h-[550px] w-full bg-[#F8F9FA] rounded-[3rem] border border-gray-100 overflow-hidden flex items-center justify-center shadow-inner group">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-100/40 via-transparent to-transparent blur-xl"></div>
           
+          {/* 3D Cosmos Container */}
+          <div className="w-64 h-64 relative flex items-center justify-center [perspective:1000px] [transform-style:preserve-3d]">
+            {/* 3D Orbit Rings */}
+            <div className="absolute w-80 h-80 border-2 border-dashed border-[#FF6B35]/30 rounded-full [transform:rotateX(65deg)_rotateY(15deg)] animate-[spin_30s_linear_infinite]"></div>
+            <div className="absolute w-64 h-64 border border-orange-200 rounded-full [transform:rotateX(20deg)_rotateY(65deg)] animate-[spin_20s_linear_infinite] opacity-60"></div>
+            
+            {/* Ο Πλανήτης που γυρίζει */}
+            <motion.div 
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+              className="w-44 h-44 bg-gradient-to-tr from-[#FF6B35] to-amber-400 rounded-full shadow-[0_0_60px_rgba(255,107,53,0.35)] flex items-center justify-center text-6xl select-none cursor-grab active:cursor-grabbing [backface-visibility:hidden] hover:scale-105 transition-transform"
+            >
+               🌍
+            </motion.div>
+          </div>
+
+          {/* Floating UI Card */}
           <motion.div 
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -12, 0], rotate: [1, -1, 1] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-4 py-3 rounded-xl shadow-xl border border-gray-50 flex items-center gap-3 z-10 pointer-events-none"
+            className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-md px-5 py-4 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-4 z-20 pointer-events-none"
           >
-            <span className="text-lg">🌍</span>
-            <span className="text-xs font-black text-gray-800 tracking-tight">Interactive 3D Workspace</span>
+            <div className="w-10 h-10 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center text-xl">🗺️</div>
+            <div>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Live System</p>
+              <p className="text-xs font-black text-gray-900">Map Sync Active</p>
+            </div>
           </motion.div>
         </div>
       </div>
