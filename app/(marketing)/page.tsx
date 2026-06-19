@@ -82,184 +82,10 @@ const Navbar = () => {
   );
 };
 
-// --- 3. REVIEWS & SLIDER SECTION ---
-const ReviewsSection = () => {
-  const sliderRef = useRef<HTMLDivElement>(null);
-
-  const scroll = (direction: "left" | "right") => {
-    if (sliderRef.current) {
-      const { scrollLeft, clientWidth } = sliderRef.current;
-      const scrollTo = direction === "left" ? scrollLeft - clientWidth * 0.4 : scrollLeft + clientWidth * 0.4;
-      sliderRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
-    }
-  };
-
-  return (
-    <section className="relative pt-24 bg-[#F8F9FA] z-20 overflow-visible">
-      <div className="max-w-7xl mx-auto px-6 text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] tracking-tight">
-          Loved by <br /> explorers everywhere
-        </h2>
-      </div>
-
-      <div className="relative w-full overflow-visible">
-        <button 
-          onClick={() => scroll("left")}
-          className="absolute left-4 md:left-12 top-[35%] -translate-y-1/2 z-40 bg-[#00293D] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-xl active:scale-95"
-        >
-          ❮
-        </button>
-        <button 
-          onClick={() => scroll("right")}
-          className="absolute right-4 md:right-12 top-[35%] -translate-y-1/2 z-40 bg-[#00293D] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-xl active:scale-95"
-        >
-          ❯
-        </button>
-
-        <div 
-          ref={sliderRef}
-          className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory px-[10%] md:px-[25%] py-4 overflow-visible relative z-30"
-          style={{
-            maskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)"
-          }}
-        >
-          <div className="bg-white rounded-[2rem] p-8 min-w-[280px] md:min-w-[320px] h-[340px] shadow-lg border border-gray-100 flex flex-col justify-between snap-center">
-            <div>
-              <h4 className="text-lg font-bold text-[#00293D] mb-1">Perfect for tracking</h4>
-              <p className="text-xs font-semibold text-gray-400 mb-3">CONOR, MARCH 9 2026</p>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                I love this app! It's perfect for tracking trips and I've ordered a few of the travel books which are very good quality.
-              </p>
-            </div>
-            <div className="text-orange-400 text-xs">⭐⭐⭐⭐⭐</div>
-          </div>
-
-          <div className="relative rounded-[2rem] min-w-[280px] md:min-w-[320px] h-[340px] shadow-lg overflow-hidden snap-center group">
-            <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Alex" className="absolute inset-0 w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-            <div className="absolute top-6 left-6 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-xs font-bold text-white">AH</div>
-              <div>
-                <p className="text-xs font-bold text-white">Alex Hubin</p>
-                <p className="text-[9px] text-white/60 uppercase font-black tracking-wider">Adventurer</p>
-              </div>
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="w-12 h-12 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center text-lg border border-white/30 cursor-pointer">▶</span>
-            </div>
-            <span className="absolute bottom-4 left-6 text-[9px] font-black tracking-widest text-white/50 uppercase">Pioneers</span>
-          </div>
-
-          <div className="bg-white rounded-[2rem] p-8 min-w-[280px] md:min-w-[320px] h-[340px] shadow-lg border border-gray-100 flex flex-col justify-between snap-center">
-            <div>
-              <h4 className="text-lg font-bold text-[#00293D] mb-1">Easy to use</h4>
-              <p className="text-xs font-semibold text-gray-400 mb-3">RACHEL, MARCH 15 2026</p>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                I've been using this app for several trips now. Easy peasy to use. Shared it with family and friends who are using it as well.
-              </p>
-            </div>
-            <div className="text-orange-400 text-xs">⭐⭐⭐⭐⭐</div>
-          </div>
-
-          <div className="bg-white rounded-[2rem] p-8 min-w-[280px] md:min-w-[320px] h-[340px] shadow-lg border border-gray-100 flex flex-col justify-between snap-center">
-            <div>
-              <h4 className="text-lg font-bold text-[#00293D] mb-1">Stops me wasting time</h4>
-              <p className="text-xs font-semibold text-gray-400 mb-3">DEBORAH, MARCH 19 2026</p>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                Just completed a 4 month trip using NomadFlow. Totally love it, stops me wasting time private messaging people about what we are doing!
-              </p>
-            </div>
-            <div className="text-orange-400 text-xs">⭐⭐⭐⭐⭐</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="w-full overflow-hidden relative z-10 mt-12 bg-transparent">
-        <svg viewBox="0 0 100 5" preserveAspectRatio="none" width="100%" height="60" style={{ display: "block", transform: "scale(-1, 1)" }}>
-          <polygon points="-1,0 0,5 101,5" fill="#000A0F"></polygon>
-        </svg>
-      </div>
-    </section>
-  );
-};
-
-// --- 4. THE REAL TRAVEL FOOTER COMPONENT ---
-const Footer = () => {
-  return (
-    <footer className="relative bg-[#000A0F] text-white pt-20 pb-16 overflow-hidden mt-[-5px] z-10">
-      <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-        <img 
-          src="https://framerusercontent.com/images/bM3zU8ikfSHFLRniHcb1d8qGW8.jpg" 
-          alt="Mountain range" 
-          className="w-full h-full object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#000A0F]/80 via-[#000A0F]/40 to-[#001621]" />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col items-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-center tracking-tight max-w-2xl leading-tight mb-8 drop-shadow-md">
-          Join 20M+ explorers by downloading Polarsteps today!
-        </h2>
-        
-        <button className="bg-white text-[#00111A] font-bold px-7 py-3.5 rounded-xl shadow-xl transition-all flex items-center gap-3 mb-32 hover:scale-105 group text-sm">
-          <span className="w-5 h-5 rounded-md bg-gradient-to-b from-[#FC1547] to-[#FE4367] flex items-center justify-center text-[10px] text-white font-bold">
-            🧭
-          </span>
-          Get the app
-        </button>
-
-        <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-white/10 pb-16 mb-12 text-left">
-           <div>
-              <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">Get Started</h4>
-              <ul className="space-y-3.5 text-sm font-medium text-gray-300">
-                <li><Link href="#" className="hover:text-white transition-colors">Get the app</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">Log in</Link></li>
-              </ul>
-           </div>
-           <div>
-              <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">About</h4>
-              <ul className="space-y-3.5 text-sm font-medium text-gray-300">
-                <li><Link href="#" className="hover:text-white transition-colors">About us</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">Careers</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">News & press</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">Stories</Link></li>
-              </ul>
-           </div>
-           <div>
-              <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">Features</h4>
-              <ul className="space-y-3.5 text-sm font-medium text-gray-300">
-                <li><Link href="#" className="hover:text-white transition-colors">Travel Planner</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">AI Trip Planner</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">Travel Tracker</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">Travel Books</Link></li>
-              </ul>
-           </div>
-           <div>
-              <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">Help & Support</h4>
-              <ul className="space-y-3.5 text-sm font-medium text-gray-300">
-                <li><Link href="#" className="hover:text-white transition-colors">Help Center</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">Contact us</Link></li>
-              </ul>
-           </div>
-        </div>
-
-        <div className="w-full flex flex-col md:flex-row justify-between items-center text-xs font-medium text-[#527585]">
-          <p>© 2026 NomadFlow. All rights reserved.</p>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <Link href="#" className="hover:text-gray-300 transition-colors">Terms</Link>
-            <Link href="#" className="hover:text-gray-300 transition-colors">Privacy</Link>
-            <Link href="#" className="hover:text-gray-300 transition-colors">Cookies</Link>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-// --- 5. MAIN LANDING PAGE ---
+// --- 3. MAIN LANDING PAGE COMPONENT ---
 export default function NomadFlowLanding() {
   const [globalProgress, setGlobalProgress] = useState({ hero: 0, story: 0 });
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -282,6 +108,14 @@ export default function NomadFlowLanding() {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const carouselScroll = (direction: "left" | "right") => {
+    if (sliderRef.current) {
+      const { scrollLeft, clientWidth } = sliderRef.current;
+      const scrollTo = direction === "left" ? scrollLeft - clientWidth * 0.4 : scrollLeft + clientWidth * 0.4;
+      sliderRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+    }
+  };
 
   const heroScale = 1.25 - (globalProgress.hero * 0.3);
   const heroRadius = globalProgress.hero * 48;
@@ -438,11 +272,147 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- SECTION 5: REVIEWS CAROUSEL --- */}
-      <ReviewsSection />
+      {/* --- ΕΝΙΑΙΟΣ "DEEP WILD" CONTAINER (REVIEWS + FOOTER ΜΑΖΙ) --- */}
+      <div className="relative bg-[#000A0F] overflow-hidden mt-[-1px]">
+        
+        {/* Η αυθεντική εικόνα οροσειράς της Framer που περνάει ενιαία πίσω από τα πάντα */}
+        <div className="absolute inset-0 z-0 opacity-45 pointer-events-none">
+          <img 
+            src="https://framerusercontent.com/images/bM3zU8ikfSHFLRniHcb1d8qGW8.jpg" 
+            alt="Mountain range silhouette" 
+            className="w-full h-full object-cover object-bottom scale-105"
+          />
+          {/* Blend layers για να σκοτεινιάσει σωστά προς το τέλος */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#000A0F] via-transparent to-[#001621]" />
+        </div>
 
-      {/* --- SECTION 6: FOOTER --- */}
-      <Footer />
+        {/* ΑΥΘΕΝΤΙΚΗ ΔΙΑΓΩΝΙΑ ΚΟΠΗ (SVG POLYGON) */}
+        <div className="w-full overflow-hidden relative z-30 bg-transparent rotate-180">
+          <svg viewBox="0 0 100 5" preserveAspectRatio="none" width="100%" height="60" style={{ display: "block" }}>
+            <polygon points="-1,0 0,5 101,5" fill="#F8F9FA"></polygon>
+          </svg>
+        </div>
+
+        {/* REVIEWS TRACK (Επιπλέει καθαρά πάνω από τα βουνά) */}
+        <div className="relative z-20 pt-12 pb-16 w-full text-center">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-12 drop-shadow-md">
+            Loved by <br /> explorers everywhere
+          </h2>
+
+          <div className="relative w-full max-w-7xl mx-auto px-6">
+            {/* Arrows */}
+            <button onClick={() => carouselScroll("left")} className="absolute left-4 md:left-12 top-[40%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❮</button>
+            <button onClick={() => carouselScroll("right")} className="absolute right-4 md:right-12 top-[40%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❯</button>
+
+            {/* Carousel Track με απαλό fade στα πλάγια */}
+            <div 
+              ref={sliderRef}
+              className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory py-4 overflow-visible"
+              style={{
+                maskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)"
+              }}
+            >
+              {/* Card 1 */}
+              <div className="bg-white rounded-[2rem] p-8 min-w-[290px] md:min-w-[320px] h-[340px] shadow-2xl flex flex-col justify-between snap-center text-left border border-gray-100/50">
+                <div>
+                  <h4 className="text-lg font-bold text-[#00293D] mb-1">Perfect for tracking</h4>
+                  <p className="text-[10px] font-bold text-gray-400 mb-4">CONOR, MARCH 9 2026</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">I love this app! It's perfect for tracking trips and I've ordered a few of the travel books which are very good quality.</p>
+                </div>
+                <div className="text-orange-400 text-xs">⭐⭐⭐⭐⭐</div>
+              </div>
+
+              {/* Card 2: Video (Alex Hubin) */}
+              <div className="relative rounded-[2rem] min-w-[290px] md:min-w-[320px] h-[340px] shadow-2xl overflow-hidden snap-center group text-left">
+                <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Alex" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+                <div className="absolute top-6 left-6 flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-xs font-bold text-white">AH</div>
+                  <div><p className="text-xs font-bold text-white">Alex Hubin</p><p className="text-[9px] text-white/60 uppercase font-black tracking-wider">Adventurer</p></div>
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center"><span className="w-12 h-12 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center text-lg border border-white/30 cursor-pointer transition-transform group-hover:scale-110">▶</span></div>
+                <span className="absolute bottom-4 left-6 text-[9px] font-black tracking-widest text-white/50 uppercase">Pioneers</span>
+              </div>
+
+              {/* Card 3 */}
+              <div className="bg-white rounded-[2rem] p-8 min-w-[290px] md:min-w-[320px] h-[340px] shadow-2xl flex flex-col justify-between snap-center text-left border border-gray-100/50">
+                <div>
+                  <h4 className="text-lg font-bold text-[#00293D] mb-1">Easy to use</h4>
+                  <p className="text-[10px] font-bold text-gray-400 mb-4">RACHEL, MARCH 15 2026</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">I've been using this app for several trips now. Easy peasy to use. Shared it with family and friends who are using it as well.</p>
+                </div>
+                <div className="text-orange-400 text-xs">⭐⭐⭐⭐⭐</div>
+              </div>
+
+              {/* Card 4 */}
+              <div className="bg-white rounded-[2rem] p-8 min-w-[290px] md:min-w-[320px] h-[340px] shadow-2xl flex flex-col justify-between snap-center text-left border border-gray-100/50">
+                <div>
+                  <h4 className="text-lg font-bold text-[#00293D] mb-1">Stops me wasting time</h4>
+                  <p className="text-[10px] font-bold text-gray-400 mb-4">DEBORAH, MARCH 19 2026</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">Just completed a 4 month trip using NomadFlow. Totally love it, stops me wasting time private messaging people about what we are doing!</p>
+                </div>
+                <div className="text-orange-400 text-xs">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA AREA (Centered με το σωστό κουμπί) */}
+        <div className="relative z-10 w-full flex flex-col items-center pt-8 pb-20 text-center">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight max-w-2xl leading-tight mb-8 drop-shadow-md">
+            Join 20M+ explorers by downloading Polarsteps today!
+          </h2>
+          <button className="bg-white text-[#000A0F] font-bold px-7 py-3.5 rounded-xl shadow-2xl transition-all flex items-center gap-3 hover:scale-105 group text-sm">
+            <span className="w-5 h-5 rounded-md bg-gradient-to-b from-[#FC1547] to-[#FE4367] flex items-center justify-center text-[10px] text-white font-bold">🧭</span>
+            Get the app
+          </button>
+        </div>
+
+        {/* FOOTER LINKS */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full text-left">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-white/10 pb-16 mb-12">
+             <div>
+                <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">Get Started</h4>
+                <ul className="space-y-3.5 text-sm font-medium text-gray-300">
+                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Get the app</Link></li>
+                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Log in</Link></li>
+                </ul>
+             </div>
+             <div>
+                <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">About</h4>
+                <ul className="space-y-3.5 text-sm font-medium text-gray-300">
+                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">About us</Link></li>
+                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Careers</Link></li>
+                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Stories</Link></li>
+                </ul>
+             </div>
+             <div>
+                <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">Features</h4>
+                <ul className="space-y-3.5 text-sm font-medium text-gray-300">
+                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Travel Planner</Link></li>
+                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Travel Tracker</Link></li>
+                </ul>
+             </div>
+             <div>
+                <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">Help & Support</h4>
+                <ul className="space-y-3.5 text-sm font-medium text-gray-300">
+                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Help Center</Link></li>
+                  <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Contact us</Link></li>
+                </ul>
+             </div>
+          </div>
+          
+          <div className="flex flex-col md:flex-row justify-between items-center text-xs font-medium text-[#527585] pb-12">
+            <p>© 2026 NomadFlow. All rights reserved.</p>
+            <div className="flex gap-6 mt-4 md:mt-0">
+              <Link href="#" className="hover:text-gray-300 transition-colors">Terms</Link>
+              <Link href="#" className="hover:text-gray-300 transition-colors">Privacy</Link>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </main>
   );
 }
