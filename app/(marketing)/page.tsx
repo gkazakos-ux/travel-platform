@@ -44,7 +44,7 @@ const Navbar = () => {
   );
 };
 
-// --- 2. MAIN LANDING PAGE ---
+// --- 2. MAIN LANDING PAGE COMPONENT ---
 export default function NomadFlowLanding() {
   const [globalProgress, setGlobalProgress] = useState({ hero: 0, story: 0 });
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -54,10 +54,13 @@ export default function NomadFlowLanding() {
       const scrollY = window.scrollY;
       const windowH = window.innerHeight;
       
-      const heroP = Math.max(0, Math.min(1, scrollY / 600));
+      // Δυναμικός υπολογισμός για το Hero
+      const heroP = Math.max(0, Math.min(1, scrollY / windowH));
       
-      const storyStart = 600;
-      const storyEnd = storyStart + (windowH * 3);
+      // Δυναμικός υπολογισμός για το Sticky Story
+      const storyStart = windowH;
+      const storyEnd = storyStart + (windowH * 2.5);
+      
       let storyP = 0;
       if (scrollY > storyStart) {
         storyP = Math.max(0, Math.min(1, (scrollY - storyStart) / (storyEnd - storyStart)));
@@ -83,16 +86,17 @@ export default function NomadFlowLanding() {
   const heroRadius = globalProgress.hero * 48;
   const heroTextOpacity = 1 - (globalProgress.hero * 2); 
 
+  // Ακριβής διαχωρισμός των 3 βημάτων (0.0 -> 0.33 -> 0.66 -> 1.0)
   let activeStep = 0;
   if (globalProgress.story > 0.33 && globalProgress.story <= 0.66) activeStep = 1;
   if (globalProgress.story > 0.66) activeStep = 2;
 
   return (
-    <main className="bg-white relative min-h-screen font-sans overflow-x-hidden">
+    <main className="bg-white relative min-h-screen font-sans w-full overflow-y-auto overflow-x-hidden">
       <Navbar />
 
       {/* --- SECTION 1: HERO ZOOM OUT --- */}
-      <section className="relative h-[120vh] bg-[#F8F9FA] overflow-hidden flex flex-col justify-start pt-32">
+      <section className="relative h-[100vh] bg-[#F8F9FA] overflow-hidden flex flex-col justify-start pt-32">
         <div 
           style={{ transform: `scale(${heroScale})`, borderRadius: `${heroRadius}px` }}
           className="absolute inset-0 w-full h-full origin-bottom will-change-transform z-0 overflow-hidden shadow-2xl"
@@ -124,7 +128,7 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- SECTION 2: INTERACTIVE STICKY PHONE SCROLL STORY --- */}
+      {/* --- SECTION 2: INTERACTIVE STICKY PHONE SCROLL STORY (FIXED TIMING) --- */}
       <section className="relative h-[300vh] bg-[#F8F9FA]">
         <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-12">
@@ -196,7 +200,6 @@ export default function NomadFlowLanding() {
                     <div className="bg-white rounded-[2rem] shadow-lg border border-gray-100 overflow-hidden flex flex-col flex-1 bg-white">
                       <div className="h-32 bg-gray-900 relative overflow-hidden flex-shrink-0">
                         <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400" className="absolute inset-0 w-full h-full object-cover opacity-60" alt="" />
-                        {/* ΔΙΟΡΘΩΜΕΝΟ SVG - ΕΔΩ ΗΤΑΝ ΤΟ ΛΑΘΟΣ */}
                         <svg className="absolute inset-0 w-full h-full text-white" fill="none" viewBox="0 0 290 150">
                           <path stroke="currentColor" strokeWidth="3" strokeLinecap="round" d="M28 110 C 90 70, 130 120, 175 60 S 245 40, 268 28" />
                           <circle cx="28" cy="110" r="4" fill="#FF6B35" stroke="white" strokeWidth="1.5"/>
@@ -316,15 +319,8 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- ΤΙΤΛΟΣ REVIEWS --- */}
-      <section className="bg-[#F8F9FA] pt-32 pb-4 text-center relative z-20">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] tracking-tight">
-          Loved by <br /> explorers everywhere
-        </h2>
-      </section>
-
-      {/* --- 5. REVIEWS OVERLAP & DIAGONAL MOUNTAIN FOOTER --- */}
-      <div className="relative bg-[#000A0F]">
+      {/* --- 5. ENIAIO COMPONENT (REVIEWS OVERLAP & DIAGONAL MOUNTAIN FOOTER) --- */}
+      <div className="relative bg-[#000A0F] w-full min-h-screen pt-12">
         
         {/* Η αυθεντική εικόνα της οροσειράς που κάθεται πίσω από Reviews και Footer */}
         <div className="absolute inset-0 z-0 opacity-45 pointer-events-none">
@@ -336,15 +332,22 @@ export default function NomadFlowLanding() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#000A0F] via-transparent to-[#00111A]" />
         </div>
 
-        {/* ΑΥΘΕΝΤΙΚΗ ΔΙΑΓΩΝΙΑ ΚΟΠΗ */}
-        <div className="w-full overflow-hidden relative z-10 bg-transparent rotate-180">
+        {/* ΑΥΘΕΝΤΙΚΗ ΔΙΑΓΩΝΙΑ ΚΟΠΗ (z-10 για να μην σκεπάζει τις κάρτες) */}
+        <div className="w-full overflow-hidden absolute top-0 inset-x-0 z-10 bg-transparent rotate-180 pointer-events-none">
           <svg viewBox="0 0 100 5" preserveAspectRatio="none" width="100%" height="60" style={{ display: "block" }}>
             <polygon points="-1,0 0,5 101,5" fill="#F8F9FA"></polygon>
           </svg>
         </div>
 
-        {/* REVIEWS TRACK */}
-        <div className="relative z-40 pb-16 w-full text-center mt-[-150px] overflow-visible">
+        {/* ΔΙΟΡΘΩΣΗ: Ο τίτλος μπαίνει μέσα στο container, ΠΑΝΩ από τις κάρτες, με απόλυτη ασφάλεια */}
+        <div className="relative z-50 text-center pt-16 pb-2 w-full">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight drop-shadow-md">
+            Loved by <br /> explorers everywhere
+          </h2>
+        </div>
+
+        {/* REVIEWS TRACK (Με z-40 και πλέον χωρίς να κρύβει τίποτα) */}
+        <div className="relative z-40 pb-16 w-full text-center mt-4 overflow-visible">
           <div className="relative w-full max-w-7xl mx-auto px-6 overflow-visible">
             {/* Arrows */}
             <button onClick={() => carouselScroll("left")} className="absolute left-4 md:left-12 top-[45%] -translate-y-1/2 z-50 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❮</button>
@@ -440,13 +443,13 @@ export default function NomadFlowLanding() {
           <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight max-w-2xl leading-tight mb-8 drop-shadow-md">
             Join 20M+ explorers by downloading Polarsteps today!
           </h2>
-          <button className="bg-white text-[#000A0F] font-bold px-7 py-3.5 rounded-xl shadow-xl transition-all flex items-center gap-3 hover:scale-105 group text-sm">
+          <button className="bg-white text-[#000A0F] font-bold px-7 py-3.5 rounded-xl shadow-2xl transition-all flex items-center gap-3 hover:scale-105 group text-sm">
             <span className="w-5 h-5 rounded-md bg-gradient-to-b from-[#FC1547] to-[#FE4367] flex items-center justify-center text-[10px] text-white font-bold">🧭</span>
             Get the app
           </button>
         </div>
 
-        {/* FOOTER LINKS */}
+        {/* FOOTER LINKS AND BRANDING */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full text-left">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-white/10 pb-16 mb-12">
              <div>
