@@ -1,5 +1,3 @@
-import { SiteHeader } from "@/components/layout/site-header";
-
 export default function MarketingLayout({
   children,
 }: {
@@ -7,7 +5,6 @@ export default function MarketingLayout({
 }) {
   return (
     <>
-      <SiteHeader />
       <main>{children}</main>
     </>
   );
