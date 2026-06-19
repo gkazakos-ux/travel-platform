@@ -1,375 +1,297 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
-// --- Advanced Animation Variants ---
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-  }
-};
+// --- Βοηθητικό Component για το Κινητό ---
+const PhoneMockup = ({ activeStep }: { activeStep: number }) => {
+  const screens = [
+    "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=80", // Plan Map
+    "https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=600&q=80", // Track Route
+    "https://images.unsplash.com/photo-1500835556837-99ac94a94552?auto=format&fit=crop&w=600&q=80"  // Relive Photos
+  ];
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12 }
-  }
-};
-
-const Navbar = () => {
   return (
-    <nav className="fixed top-0 w-full z-[100] bg-white/80 backdrop-blur-md border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <span className="font-display text-2xl font-extrabold text-[#FF6B35] tracking-tighter">
-            NomadFlow
-          </span>
-        </div>
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-          <Link href="#" className="hover:text-[#FF6B35] transition-colors">Explore</Link>
-          <Link href="#" className="hover:text-[#FF6B35] transition-colors">How it works</Link>
-          <Link href="#" className="hover:text-[#FF6B35] transition-colors">Community</Link>
-          <Link href="#" className="hover:text-[#FF6B35] transition-colors">Pricing</Link>
-        </div>
-        <div className="flex items-center gap-4">
-          <Link href="/login" className="text-sm font-semibold text-gray-900 px-4 py-2 hover:text-[#FF6B35] transition">Log In</Link>
-          <Link href="/signup" className="bg-[#FF6B35] text-white text-sm font-bold px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-orange-200 transition-all active:scale-95">
-            Start Planning
-          </Link>
-        </div>
+    <div className="relative w-[300px] md:w-[340px] h-[600px] md:h-[700px] bg-black rounded-[3rem] border-[8px] border-gray-900 shadow-2xl overflow-hidden flex flex-col">
+      {/* Notch */}
+      <div className="absolute top-0 inset-x-0 h-7 flex justify-center z-50">
+        <div className="w-32 h-6 bg-gray-900 rounded-b-3xl"></div>
       </div>
-    </nav>
-  );
-};
-
-const Hero = () => {
-  return (
-    <section className="relative pt-36 pb-24 overflow-hidden bg-white">
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-50/50 rounded-full blur-3xl -z-10" />
       
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center lg:text-left"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-100 text-[#FF6B35] text-xs font-bold mb-6">
-            ✨ Explore travel logs from real people
-          </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight leading-[1.1] mb-6">
-            Explore the world <br />
-            <span className="text-[#FF6B35]">like a local.</span>
-          </h1>
-          <p className="text-xl text-gray-500 max-w-lg mb-10 leading-relaxed mx-auto lg:mx-0">
-            Skip generic tourist traps. Discover hidden restaurants, viewpoints, and photo spots curated by real travelers. Follow experts, save custom maps, and never get lost.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-            <Link href="/signup" className="bg-[#FF6B35] text-white font-bold px-12 py-5 rounded-2xl shadow-xl shadow-orange-200 hover:-translate-y-1 hover:scale-105 transition-all active:scale-95 text-lg">
-              Find Your Next Destination ➔
-            </Link>
-          </div>
-        </motion.div>
+      {/* Οθόνες που αλλάζουν με βάση το Scroll */}
+      <div className="relative w-full h-full bg-[#1A1A1A]">
+        {screens.map((src, index) => (
+          <img 
+            key={index}
+            src={src} 
+            alt={`Screen ${index}`} 
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${activeStep === index ? "opacity-100" : "opacity-0"}`}
+          />
+        ))}
         
-        {/* Η ΑΣΦΑΛΗΣ 3D ΥΔΡΟΓΕΙΟΣ ΜΑΣ */}
-        <div className="relative h-[450px] md:h-[550px] w-full bg-[#F8F9FA] rounded-[3rem] border border-gray-100 overflow-hidden flex items-center justify-center shadow-inner">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-100/40 via-transparent to-transparent blur-xl"></div>
-          
-          <div className="w-64 h-64 relative flex items-center justify-center [perspective:1000px] [transform-style:preserve-3d]">
-            <div className="absolute w-80 h-80 border-2 border-dashed border-[#FF6B35]/20 rounded-full [transform:rotateX(65deg)_rotateY(15deg)] animate-[spin_40s_linear_infinite]"></div>
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-              className="w-48 h-48 bg-gradient-to-tr from-[#FF6B35] to-amber-400 rounded-full shadow-[0_0_60px_rgba(255,107,53,0.3)] flex items-center justify-center text-6xl select-none [backface-visibility:hidden]"
-            >
-               🌍
-            </motion.div>
-          </div>
-
-          <motion.div 
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-gray-50 flex items-center gap-3 z-20"
-          >
-            <span className="text-lg">🗺️</span>
-            <span className="text-xs font-black text-gray-800 tracking-tight">Interactive Node Engine</span>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const SocialMarquee = () => {
-  const destinations = [
-    { name: "Kyoto Lanes", img: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=300&q=80" },
-    { name: "Rome Backstreets", img: "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=300&q=80" },
-    { name: "Santorini Cliffs", img: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=300&q=80" },
-    { name: "Icelandic Roads", img: "https://images.unsplash.com/photo-1504893524553-ac55fce69cbf?auto=format&fit=crop&w=300&q=80" }
-  ];
-
-  return (
-    <section className="py-12 bg-[#F8F9FA] overflow-hidden border-y border-gray-100">
-      <div className="flex whitespace-nowrap">
-        <motion.div 
-          animate={{ x: [0, -1000] }}
-          transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-          className="flex gap-8 px-4"
-        >
-          {[...destinations, ...destinations].map((dest, i) => (
-            <div key={i} className="flex items-center gap-4 bg-white p-3 rounded-2xl border border-gray-100 shadow-sm pr-6 min-w-[240px]">
-              <img src={dest.img} alt={dest.name} className="w-12 h-12 rounded-xl object-cover grayscale-[20%] contrast-[110%]" />
-              <div>
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Active Log</p>
-                <p className="text-sm font-extrabold text-gray-900">{dest.name}</p>
-              </div>
+        {/* Profile Overlay */}
+        <div className="absolute top-16 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-lg">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-xl overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" alt="Avatar" className="w-full h-full object-cover" />
             </div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-};
-
-const HowItWorks = () => {
-  const steps = [
-    { num: "01", title: "Find Trusted Travelers", desc: "Follow creators whose travel tastes match yours. See their real pinned paths." },
-    { num: "02", title: "Unlock Unmapped Spots", desc: "Access high-res photo coords, local restaurant reviews, and hidden entry ways." },
-    { num: "03", title: "Build Your Safe Guide", desc: "Bookmark cards to your dashboard. Access maps offline when trekking off the grid." }
-  ];
-
-  return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6 text-center mb-16">
-        <span className="text-xs font-bold uppercase tracking-widest text-[#FF6B35] bg-orange-50 px-3 py-1 rounded-full">Step-by-step</span>
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mt-6 tracking-tight">Turn screens into steps</h2>
-      </div>
-      <motion.div 
-        variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
-        className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10"
-      >
-        {steps.map((step, idx) => (
-          <motion.div key={idx} variants={fadeInUp} className="bg-[#F8F9FA] rounded-3xl p-8 border border-gray-100 relative overflow-hidden group">
-            <span className="text-6xl font-black text-orange-100/50 absolute top-4 right-6">{step.num}</span>
-            <h3 className="text-xl font-bold text-gray-900 mb-4 mt-6">{step.title}</h3>
-            <p className="text-gray-500 leading-relaxed">{step.desc}</p>
-          </motion.div>
-        ))}
-      </motion.div>
-    </section>
-  );
-};
-
-const BentoFeatures = () => {
-  return (
-    <section className="py-24 bg-[#F8F9FA]">
-      <div className="max-w-7xl mx-auto px-6 text-center mb-16">
-        <span className="text-xs font-bold uppercase tracking-widest text-[#FF6B35] bg-orange-50 px-3 py-1 rounded-full">Explore App</span>
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mt-6 tracking-tight">Built for cinematic discovery.</h2>
-      </div>
-
-      <motion.div 
-        variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
-        className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6"
-      >
-        <motion.div variants={fadeInUp} whileHover={{ scale: 1.01 }} className="md:col-span-2 group bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 relative overflow-hidden h-[400px] cursor-pointer">
-          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80" alt="Map View" className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:scale-105 transition-transform duration-1000 grayscale-[10%]" />
-          <div className="relative z-10 p-10 max-w-md">
-            <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center mb-6 text-xl font-bold">📍</div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#FF6B35] transition-colors">Visual Smart Maps</h3>
-            <p className="text-gray-500">See pins directly overlaid on stunning terrain layouts. Filter by cafes, dramatic lookouts, or historical architecture in one tap.</p>
-          </div>
-        </motion.div>
-
-        <motion.div variants={fadeInUp} whileHover={{ scale: 1.02 }} className="group bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 h-[400px] cursor-pointer relative overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=500&q=80" alt="AI search" className="absolute bottom-0 right-0 w-full h-1/2 object-cover opacity-15" />
-          <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center mb-6 text-xl font-bold">✨</div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#FF6B35] transition-colors">AI Filtered Search</h3>
-          <p className="text-gray-500">Query exact terms like "hidden sunset balconies in Amalfi" and see verified user logs instantly.</p>
-        </motion.div>
-
-        <motion.div variants={fadeInUp} whileHover={{ scale: 1.02 }} className="group bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 h-[400px] cursor-pointer">
-          <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center mb-6 text-xl font-bold">👥</div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#FF6B35] transition-colors">Verified Profiles</h3>
-          <p className="text-gray-500">Check passports of verified travelers. Review their past tracks, follow their logs, and build your circle.</p>
-        </motion.div>
-
-        <motion.div variants={fadeInUp} whileHover={{ scale: 1.01 }} className="md:col-span-2 group bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 h-[400px] relative overflow-hidden cursor-pointer">
-           <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=80" alt="Collections" className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-1000" />
-           <div className="p-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center relative z-10 h-full">
-              <div>
-                <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-xl flex items-center justify-center mb-6 text-xl font-bold">💾</div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#FF6B35] transition-colors">Curated Collections</h3>
-                <p className="text-gray-500">Sort entries into custom visual folders. Keep breakfast options, hikes, or hotel nodes fully synchronized.</p>
-              </div>
-           </div>
-        </motion.div>
-      </motion.div>
-    </section>
-  );
-};
-
-const CreatorShowcase = () => {
-  const creators = [
-    { name: "Elena Rostova", location: "Milos, Greece", tags: "Beaches", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80" },
-    { name: "Marcus Vance", location: "Kyoto, Japan", tags: "Food & Cafes", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" },
-    { name: "Sarah Jenkins", location: "Manali, India", tags: "Trekking", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80" }
-  ];
-
-  return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6 text-center mb-16">
-        <span className="text-xs font-bold uppercase tracking-widest text-[#FF6B35] bg-orange-50 px-3 py-1 rounded-full">The Community</span>
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mt-6 tracking-tight">Meet your next local guides</h2>
-      </div>
-      <motion.div 
-        variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
-        className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8"
-      >
-        {creators.map((creator, idx) => (
-          <motion.div key={idx} variants={fadeInUp} className="bg-white border border-gray-100 rounded-[2rem] p-5 shadow-xl shadow-gray-100/40 flex flex-col justify-between h-[420px] group">
-            <div className="relative w-full h-48 rounded-2xl overflow-hidden mb-6">
-              <img src={creator.img} alt={creator.name} className="w-full h-full object-cover grayscale-[10%] contrast-[105%]" />
-              <span className="absolute bottom-3 left-3 text-[10px] font-black tracking-widest uppercase text-white bg-[#FF6B35] px-3 py-1 rounded-full">{creator.tags}</span>
+            <div>
+              <p className="text-xs font-bold text-gray-900">Emma Miller</p>
+              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Backpacking Asia</p>
             </div>
-            <div className="px-2">
-              <h4 className="text-xl font-extrabold text-gray-900">{creator.name}</h4>
-              <p className="text-sm text-gray-400 mt-1">Expert guide in <span className="text-gray-700 font-medium">{creator.location}</span></p>
-            </div>
-            <div className="flex gap-3 mt-6">
-              <button className="flex-1 py-3 bg-[#F8F9FA] hover:bg-orange-50 hover:text-[#FF6B35] rounded-xl text-xs font-bold text-gray-700 transition-all">View Map</button>
-              <button className="py-3 px-5 bg-[#FF6B35] text-white rounded-xl text-xs font-bold hover:bg-orange-600 transition-all">Follow</button>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
-    </section>
-  );
-};
-
-const Pricing = () => {
-  return (
-    <section className="py-24 bg-[#F8F9FA]">
-      <div className="max-w-7xl mx-auto px-6 text-center mb-16">
-        <span className="text-xs font-bold uppercase tracking-widest text-[#FF6B35] bg-orange-50 px-3 py-1 rounded-full">Pricing Plans</span>
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mt-6 tracking-tight">Transparent pricing for real nomads</h2>
-      </div>
-      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 px-6">
-        <div className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm flex flex-col justify-between">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Explorer</h3>
-            <p className="text-gray-400 text-sm mb-6">Uncover lists and explore tracks.</p>
-            <div className="text-4xl font-black text-gray-900 mb-6">$0 <span className="text-sm font-normal text-gray-400">/ forever</span></div>
-            <ul className="space-y-4 text-sm text-gray-600 mb-8">
-              <li>✓ Follow up to 15 travel guides</li>
-              <li>✓ Interactive dashboard mapping</li>
-              <li>✓ Save 20 active recommendations</li>
-            </ul>
           </div>
-          <Link href="/signup" className="w-full py-3.5 border border-gray-200 text-center rounded-xl font-bold text-sm text-gray-700 hover:border-[#FF6B35] hover:text-[#FF6B35] transition">Start Free</Link>
-        </div>
-        <div className="bg-white rounded-[2rem] p-8 border-2 border-[#FF6B35] shadow-xl relative flex flex-col justify-between">
-          <span className="absolute -top-3 right-6 text-[10px] font-black tracking-widest uppercase text-white bg-[#FF6B35] px-3 py-1 rounded-full">Most Loved Plan</span>
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Pro Nomad</h3>
-            <p className="text-gray-400 text-sm mb-6">Complete unchained access globally.</p>
-            <div className="text-4xl font-black text-gray-900 mb-6">$8 <span className="text-sm font-normal text-gray-400">/ month</span></div>
-            <ul className="space-y-4 text-sm text-gray-600 mb-8">
-              <li>✓ Follow unlimited verified guides</li>
-              <li>✓ High-fidelity Offline Mode maps</li>
-              <li>✓ Unlimited shared collection folders</li>
-              <li>✓ Direct chat access to travel experts</li>
-            </ul>
-          </div>
-          <Link href="/signup" className="w-full py-3.5 bg-[#FF6B35] text-white text-center rounded-xl font-bold text-sm hover:bg-orange-600 transition shadow-lg shadow-orange-100">Go Pro Account</Link>
         </div>
       </div>
-    </section>
-  );
-};
-
-const Footer = () => {
-  return (
-    <footer className="bg-white border-t border-gray-100 pt-20 pb-10">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 mb-16">
-        <div className="col-span-2">
-          <span className="font-display text-2xl font-extrabold text-[#FF6B35] tracking-tighter">NomadFlow</span>
-          <p className="text-gray-500 mt-4 max-w-xs leading-relaxed">
-            Revolutionizing travel discovery. Curate maps, follow seasoned experts, and bypass the commercial noise.
-          </p>
-        </div>
-        <div>
-          <h4 className="font-bold text-gray-900 mb-6 underline underline-offset-4 decoration-[#FF6B35]">Product</h4>
-          <ul className="space-y-4 text-sm text-gray-500 font-medium">
-            <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Features</Link></li>
-            <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Pricing</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-bold text-gray-900 mb-6 underline underline-offset-4 decoration-[#FF6B35]">Company</h4>
-          <ul className="space-y-4 text-sm text-gray-500 font-medium">
-            <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">About Us</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-bold text-gray-900 mb-6 underline underline-offset-4 decoration-[#FF6B35]">Resources</h4>
-          <ul className="space-y-4 text-sm text-gray-500 font-medium">
-            <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Blog</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-bold text-gray-900 mb-6 underline underline-offset-4 decoration-[#FF6B35]">Legal</h4>
-          <ul className="space-y-4 text-sm text-gray-500 font-medium">
-            <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Privacy</Link></li>
-          </ul>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-6 pt-10 border-t border-gray-50 text-center md:text-left">
-        <p className="text-xs text-gray-400 font-medium font-body">© 2026 NomadFlow. All rights reserved. Real people, authentic itineraries.</p>
-      </div>
-    </footer>
+    </div>
   );
 };
 
 export default function NomadFlowLanding() {
-  return (
-    <main className="min-h-screen bg-white">
-      <Navbar />
-      <Hero />
-      <SocialMarquee />
-      <HowItWorks />
-      <BentoFeatures />
-      <CreatorShowcase />
-      <Pricing />
+  const [globalProgress, setGlobalProgress] = useState(0);
+
+  // Ο κεντρικός μηχανισμός Scroll της σελίδας
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowH = window.innerHeight;
       
-      {/* HIGH END MOODY CTA GRID */}
-      <section className="py-24 px-6 bg-white">
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="max-w-5xl mx-auto rounded-[3rem] h-[450px] relative overflow-hidden flex flex-col justify-center items-center text-center px-6"
+      // Υπολογισμός για το Hero Zoom (Πρώτα 600px)
+      const heroP = Math.max(0, Math.min(1, scrollY / 600));
+      
+      // Υπολογισμός για το Sticky Story (Μετά τα πρώτα 600px)
+      const storyStart = 600;
+      const storyEnd = storyStart + (windowH * 3);
+      let storyP = 0;
+      if (scrollY > storyStart) {
+        storyP = Math.max(0, Math.min(1, (scrollY - storyStart) / (storyEnd - storyStart)));
+      }
+
+      setGlobalProgress({ hero: heroP, story: storyP });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Μαθηματικά για το Hero
+  const heroScale = 1.25 - (globalProgress.hero * 0.3); // 1.25 -> 0.95
+  const heroRadius = globalProgress.hero * 48; // 0 -> 48px
+  const heroTextOpacity = 1 - (globalProgress.hero * 2); 
+
+  // Υπολογισμός ενεργού βήματος για το κινητό (0, 1, 2)
+  let activeStep = 0;
+  if (globalProgress.story > 0.33 && globalProgress.story <= 0.66) activeStep = 1;
+  if (globalProgress.story > 0.66) activeStep = 2;
+
+  return (
+    <main className="bg-[#F8F9FA] relative min-h-screen font-sans">
+      
+      {/* Navbar */}
+      <nav className="fixed top-0 w-full z-[100] px-6 py-6 flex justify-between items-center text-white mix-blend-difference">
+        <div className="text-2xl font-extrabold tracking-tighter">NomadFlow</div>
+        <div className="hidden md:flex gap-8 text-sm font-bold">
+          <Link href="#" className="hover:opacity-70 transition-opacity">Explore</Link>
+          <Link href="#" className="hover:opacity-70 transition-opacity">How it works</Link>
+        </div>
+        <div className="flex items-center gap-4">
+          <Link href="/login" className="text-sm font-bold hover:opacity-70 transition-opacity">Log In</Link>
+          <Link href="/signup" className="bg-gradient-to-b from-[#FC1547] to-[#FE4367] text-white text-sm font-bold px-6 py-2.5 rounded-full shadow-lg">
+            Get the app
+          </Link>
+        </div>
+      </nav>
+
+      {/* --- SECTION 1: HERO ZOOM OUT --- */}
+      <section className="relative h-[120vh] bg-black overflow-hidden flex flex-col justify-start pt-32">
+        <div 
+          style={{ transform: `scale(${heroScale})`, borderRadius: `${heroRadius}px` }}
+          className="absolute inset-0 w-full h-full origin-bottom will-change-transform z-0 overflow-hidden"
         >
-          <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1200&q=80" alt="CTA background" className="absolute inset-0 w-full h-full object-cover contrast-[105%] brightness-[85%]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70" />
-          
-          <div className="relative z-10 max-w-xl">
-            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-6">Ready to see the world differently?</h2>
-            <p className="text-gray-200 mb-10 text-base leading-relaxed">
-              Join a collective community of explorers logging true paths, hidden alleys, and local experiences. Start your log for free.
-            </p>
-            <Link href="/signup" className="inline-block bg-[#FF6B35] text-white font-bold px-12 py-5 rounded-2xl shadow-xl hover:bg-orange-600 transition-all text-lg">
-              Create Your Free Account ➔
-            </Link>
+          <div className="absolute inset-0 bg-black/40 z-10" />
+          <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=2000&q=90" alt="Hero Background" className="w-full h-full object-cover" />
+        </div>
+
+        <div 
+          style={{ opacity: heroTextOpacity }}
+          className="relative z-20 text-center max-w-4xl mx-auto px-6 mt-[5vh] flex flex-col items-center"
+        >
+          <div className="flex gap-3 mb-6">
+            <span className="text-white/90 text-[10px] font-bold uppercase tracking-widest bg-white/10 px-3 py-1 rounded-full backdrop-blur-md">⭐ Editors Choice</span>
+            <span className="text-white/90 text-[10px] font-bold uppercase tracking-widest bg-white/10 px-3 py-1 rounded-full backdrop-blur-md">🏆 App of the Day</span>
           </div>
-        </motion.div>
+          <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight mb-6">
+            One travel app for <br /> all your adventures
+          </h1>
+          <p className="text-lg md:text-xl text-white/90 max-w-xl mb-10">
+            Join the 20M+ travelers who plan, track, and relive their trips with NomadFlow.
+          </p>
+          <button className="bg-gradient-to-b from-[#FC1547] to-[#FE4367] text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-[0_10px_18px_-3.75px_rgba(66,0,16,0.3)]">
+            Get the app
+          </button>
+        </div>
       </section>
 
-      <Footer />
+      {/* --- SECTION 2: THE STICKY PHONE SCROLL STORY --- */}
+      {/* 300vh ύψος για να υπάρχει χώρος για το scroll */}
+      <section className="relative h-[300vh] bg-[#F8F9FA]">
+        <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+          
+          <div className="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between">
+            
+            {/* Αριστερό κείμενο που αλλάζει */}
+            <div className="flex-1 text-center md:text-left mb-10 md:mb-0 relative h-[150px] md:h-[300px]">
+              {/* STEP 1 TEXT */}
+              <div className={`absolute top-1/2 -translate-y-1/2 w-full transition-all duration-700 ${activeStep === 0 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+                <h3 className="text-[#FC1547] font-bold tracking-widest uppercase text-sm mb-2">Itinerary builder</h3>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] mb-4 tracking-tight">Plan your next adventure</h2>
+                <p className="text-lg text-gray-500">Get personalized travel tips and map out your route before you go.</p>
+              </div>
+
+              {/* STEP 2 TEXT */}
+              <div className={`absolute top-1/2 -translate-y-1/2 w-full transition-all duration-700 ${activeStep === 1 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10 pointer-events-none'}`}>
+                <h3 className="text-[#FC1547] font-bold tracking-widest uppercase text-sm mb-2">Trip Tracker</h3>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] mb-4 tracking-tight">Capture your route automatically</h2>
+                <p className="text-lg text-gray-500">Share the journey with family and friends through step-by-step updates.</p>
+              </div>
+
+              {/* STEP 3 TEXT */}
+              <div className={`absolute top-1/2 -translate-y-1/2 w-full transition-all duration-700 ${activeStep === 2 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10 pointer-events-none'}`}>
+                <h3 className="text-[#FC1547] font-bold tracking-widest uppercase text-sm mb-2">A recap of your trip</h3>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] mb-4 tracking-tight">Relive the adventure</h2>
+                <p className="text-lg text-gray-500">See your travel stats grow and look back at your memories.</p>
+              </div>
+            </div>
+
+            {/* Το Κινητό στο Κέντρο */}
+            <div className="flex-1 flex justify-center z-20">
+              <PhoneMockup activeStep={activeStep} />
+            </div>
+
+            {/* Δεξί spacer για ισορροπία στο desktop */}
+            <div className="hidden md:block flex-1"></div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* --- SECTION 3: TRAVEL BOOK --- */}
+      <section className="py-32 bg-white text-center px-6">
+        <div className="max-w-4xl mx-auto">
+          <h3 className="text-[#00DB9A] font-bold tracking-widest uppercase text-sm mb-4">In your hands</h3>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] mb-6 tracking-tight">Transform your trip into a Travel Book</h2>
+          <p className="text-xl text-gray-500 mb-10">
+            A beautiful keepsake of your travel memories. <br className="hidden md:block" /> Created with the push of a button.
+          </p>
+          <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80" alt="Travel Book" className="rounded-3xl shadow-2xl w-full max-w-3xl mx-auto object-cover h-[400px]" />
+        </div>
+      </section>
+
+      {/* --- SECTION 4: AND THE BEST PART (BENTO GRID) --- */}
+      <section className="py-32 bg-[#F3F5F7] px-6">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-extrabold text-[#00293D] mb-16 text-center tracking-tight">And the best part...</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Box 1: Privacy */}
+            <div className="md:col-span-2 bg-gradient-to-br from-[#001621] to-[#00293D] rounded-3xl p-10 flex items-center justify-between overflow-hidden relative">
+              <div className="relative z-10">
+                <h3 className="text-3xl font-bold text-white mb-2">Full privacy control</h3>
+                <p className="text-white/60 text-lg">You decide who can see your trip</p>
+              </div>
+              <div className="relative z-10 flex gap-2">
+                 <span className="bg-white/10 text-white backdrop-blur-md px-4 py-2 rounded-full text-sm font-bold border border-white/20">🔒 Only you</span>
+                 <span className="bg-white/5 text-white/50 backdrop-blur-md px-4 py-2 rounded-full text-sm border border-white/5">Friends</span>
+              </div>
+            </div>
+
+            {/* Box 2: Free */}
+            <div className="bg-white rounded-3xl p-10 flex items-center justify-center text-center shadow-sm">
+              <h3 className="text-5xl font-black text-[#00293D] tracking-tighter">It's free!</h3>
+            </div>
+
+            {/* Box 3: Travelers */}
+            <div className="bg-[#004E75] rounded-3xl p-10 flex items-center justify-center text-center">
+              <h3 className="text-3xl font-bold text-white leading-tight">By travelers, <br/> for travelers</h3>
+            </div>
+
+            {/* Box 4: Offline */}
+            <div className="md:col-span-2 bg-white rounded-3xl p-10 border border-gray-100 flex flex-col justify-center relative overflow-hidden">
+               <img src="https://images.unsplash.com/photo-1522199710521-72d69614c71c?auto=format&fit=crop&w=800&q=80" alt="Offline Mode" className="absolute right-0 top-0 bottom-0 w-1/2 object-cover opacity-90 rounded-l-[4rem]" />
+               <div className="relative z-10 w-1/2">
+                 <h3 className="text-3xl font-bold text-[#00293D] mb-2">Works offline</h3>
+                 <p className="text-gray-500">Keeps tracking — even when you're offgrid</p>
+               </div>
+            </div>
+            
+            {/* Box 5: Battery */}
+            <div className="md:col-span-2 bg-[#2E4C43] rounded-3xl p-10 text-center relative overflow-hidden flex flex-col items-center justify-center">
+               <div className="w-20 h-10 border-4 border-white/30 rounded-xl mb-4 relative flex items-center p-1">
+                  <div className="bg-[#00DB9A] h-full w-[96%] rounded-md"></div>
+                  <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-1.5 h-4 bg-white/30 rounded-r-sm"></div>
+               </div>
+               <h3 className="text-2xl font-bold text-white mb-2">Battery-efficient</h3>
+               <p className="text-white/60">Typically less than 4% battery per day</p>
+            </div>
+
+            {/* Box 6: Ad Free */}
+            <div className="bg-[#F11F4C] rounded-3xl p-10 flex flex-col items-center justify-center text-center">
+               <span className="text-4xl mb-4">🚫</span>
+               <h3 className="text-3xl font-bold text-white leading-tight">Proudly <br/> ad-free</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- FOOTER --- */}
+      <footer className="bg-[#001621] pt-24 pb-12 text-white">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-white/10 pb-12 mb-8">
+           <div>
+              <h4 className="text-xs font-bold tracking-widest text-white/50 mb-6 uppercase">Get Started</h4>
+              <ul className="space-y-4 text-sm font-medium">
+                <li><Link href="/signup" className="hover:text-[#00DB9A] transition-colors">Get the app</Link></li>
+                <li><Link href="/login" className="hover:text-[#00DB9A] transition-colors">Log in</Link></li>
+              </ul>
+           </div>
+           <div>
+              <h4 className="text-xs font-bold tracking-widest text-white/50 mb-6 uppercase">About</h4>
+              <ul className="space-y-4 text-sm font-medium">
+                <li><Link href="#" className="hover:text-[#00DB9A] transition-colors">About us</Link></li>
+                <li><Link href="#" className="hover:text-[#00DB9A] transition-colors">Careers</Link></li>
+                <li><Link href="#" className="hover:text-[#00DB9A] transition-colors">News & press</Link></li>
+              </ul>
+           </div>
+           <div>
+              <h4 className="text-xs font-bold tracking-widest text-white/50 mb-6 uppercase">Features</h4>
+              <ul className="space-y-4 text-sm font-medium">
+                <li><Link href="#" className="hover:text-[#00DB9A] transition-colors">Travel Planner</Link></li>
+                <li><Link href="#" className="hover:text-[#00DB9A] transition-colors">Trip Tracker</Link></li>
+                <li><Link href="#" className="hover:text-[#00DB9A] transition-colors">Travel Books</Link></li>
+              </ul>
+           </div>
+           <div>
+              <h4 className="text-xs font-bold tracking-widest text-white/50 mb-6 uppercase">Help & Support</h4>
+              <ul className="space-y-4 text-sm font-medium">
+                <li><Link href="#" className="hover:text-[#00DB9A] transition-colors">Help Center</Link></li>
+                <li><Link href="#" className="hover:text-[#00DB9A] transition-colors">Contact us</Link></li>
+              </ul>
+           </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-white/40 font-medium">
+          <div className="flex gap-4 mb-4 md:mb-0">
+            <span>© 2026 NomadFlow</span>
+            <span>·</span>
+            <Link href="#" className="hover:text-white transition-colors">Terms</Link>
+            <span>·</span>
+            <Link href="#" className="hover:text-white transition-colors">Privacy</Link>
+          </div>
+          <div className="flex gap-4">
+             <span className="hover:text-white cursor-pointer transition-colors">Instagram</span>
+             <span className="hover:text-white cursor-pointer transition-colors">TikTok</span>
+          </div>
+        </div>
+      </footer>
+
     </main>
   );
 }
