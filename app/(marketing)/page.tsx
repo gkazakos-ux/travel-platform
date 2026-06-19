@@ -1,15 +1,7 @@
 "use client";
 
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-// Register GSAP Plugin
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 // --- 1. NAVBAR COMPONENT ---
 const Navbar = () => {
@@ -67,50 +59,84 @@ export default function NomadFlowLanding() {
   // Ref για το Story Section
   const storyRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    // 1. HERO ANIMATION (Zoom-out + Phone Grow)
-    ScrollTrigger.create({
-      trigger: heroRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: true,
-      onUpdate: (self) => {
-        const p = self.progress;
-        
-        if (photoRef.current) {
-          photoRef.current.style.transform = `scale(${1.12 - p * 0.34})`;
-          photoRef.current.style.borderRadius = `${p * 46}px`;
-        }
-        if (overlayRef.current) {
-          overlayRef.current.style.opacity = `${0.45 - p * 0.32}`;
-        }
-        if (copyRef.current) {
-          copyRef.current.style.opacity = `${Math.max(0, 1 - p * 1.7)}`;
-          copyRef.current.style.transform = `translateY(${-6 - p * 6}vh)`;
-        }
-        if (phoneRef.current) {
-          const ph = Math.min(1, p * 1.45);
-          phoneRef.current.style.opacity = `${ph}`;
-          phoneRef.current.style.transform = `translateY(${40 - ph * 40}px) scale(${0.78 + ph * 0.22})`;
-        }
-      }
-    });
+  // Φόρτωση του GSAP μέσω CDN για να μην χρειάζεται Terminal/npm install
+  useEffect(() => {
+    // Συνάρτηση που αρχιζει τα animations αφού φορτωθούν τα scripts
+    const initGSAP = () => {
+      const globalWindow = window as any;
+      if (!globalWindow.gsap || !globalWindow.ScrollTrigger) return;
 
-    // 2. SCROLL STORY ANIMATION (Αλλαγή Steps χωρίς κενά)
-    ScrollTrigger.create({
-      trigger: storyRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: true,
-      onUpdate: (self) => {
-        const p = self.progress;
-        // Ακριβώς ο ίδιος διαχωρισμός step με το demo σου
-        const step = p < 0.34 ? 0 : p < 0.67 ? 1 : 2;
-        setActiveStep(step);
-      }
-    });
+      const gsap = globalWindow.gsap;
+      const ScrollTrigger = globalWindow.ScrollTrigger;
 
-  }, { scope: heroRef }); // Scoped για ασφάλεια
+      gsap.registerPlugin(ScrollTrigger);
+
+      // 1. HERO ANIMATION (Zoom-out + Phone Grow)
+      ScrollTrigger.create({
+        trigger: heroRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
+        onUpdate: (self: any) => {
+          const p = self.progress;
+          
+          if (photoRef.current) {
+            photoRef.current.style.transform = `scale(${1.12 - p * 0.34})`;
+            photoRef.current.style.borderRadius = `${p * 46}px`;
+          }
+          if (overlayRef.current) {
+            overlayRef.current.style.opacity = `${0.45 - p * 0.32}`;
+          }
+          if (copyRef.current) {
+            copyRef.current.style.opacity = `${Math.max(0, 1 - p * 1.7)}`;
+            copyRef.current.style.transform = `translateY(${-6 - p * 6}vh)`;
+          }
+          if (phoneRef.current) {
+            const ph = Math.min(1, p * 1.45);
+            phoneRef.current.style.opacity = `${ph}`;
+            phoneRef.current.style.transform = `translateY(${40 - ph * 40}px) scale(${0.78 + ph * 0.22})`;
+          }
+        }
+      });
+
+      // 2. SCROLL STORY ANIMATION (Αλλαγή Steps χωρίς κενά)
+      ScrollTrigger.create({
+        trigger: storyRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
+        onUpdate: (self: any) => {
+          const p = self.progress;
+          const step = p < 0.34 ? 0 : p < 0.67 ? 1 : 2;
+          setActiveStep(step);
+        }
+      });
+    };
+
+    // Αν το GSAP υπάρχει ήδη, το τρέχουμε
+    if ((window as any).gsap && (window as any).ScrollTrigger) {
+      initGSAP();
+    } else {
+      // Αλλιώς δημιουργούμε τα script tags δυναμικά
+      const gsapScript = document.createElement("script");
+      gsapScript.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js";
+      gsapScript.async = true;
+
+      const triggerScript = document.createElement("script");
+      triggerScript.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js";
+      triggerScript.async = true;
+
+      gsapScript.onload = () => {
+        document.body.appendChild(triggerScript);
+      };
+
+      triggerScript.onload = () => {
+        initGSAP();
+      };
+
+      document.body.appendChild(gsapScript);
+    }
+  }, []);
 
   const carouselScroll = (direction: "left" | "right") => {
     if (sliderRef.current) {
@@ -124,7 +150,7 @@ export default function NomadFlowLanding() {
     <main className="bg-white relative min-h-screen font-sans w-full overflow-y-auto overflow-x-hidden text-gray-900">
       <Navbar />
 
-      {/* --- SECTION 1: HERO ZOOM OUT (230vh ακριβώς όπως το demo) --- */}
+      {/* --- SECTION 1: HERO ZOOM OUT (230vh) --- */}
       <section ref={heroRef} className="relative h-[230vh] bg-[#F3EFE6]">
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
           
@@ -181,7 +207,7 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- SECTION 2: INTERACTIVE STICKY PHONE SCROLL STORY (380vh ακριβώς όπως το demo) --- */}
+      {/* --- SECTION 2: INTERACTIVE STICKY PHONE SCROLL STORY (380vh) --- */}
       <section ref={storyRef} className="relative h-[380vh] bg-[#F3EFE6]">
         <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden bg-[repeating-radial-gradient(circle_at_85%_18%,transparent_0_50px,rgba(11,32,39,0.04)_50px_51px)]">
           <div className="w-full max-w-[1080px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -216,14 +242,14 @@ export default function NomadFlowLanding() {
               </div>
             </div>
 
-            {/* Δεξιά Στήλη: Η Συσκευή (Device) που αλλάζει classes βάσει του activeStep */}
+            {/* Δεξιά Στήλη: Η Συσκευή (Device) */}
             <div className="flex justify-center">
               <div className="w-[290px] h-[590px] bg-[#0c2630] border-[9px] border-[#06161c] rounded-[42px] shadow-2xl p-[13px] relative">
                 <div className="absolute top-[13px] left-1/2 -translate-x-1/2 w-[100px] h-[20px] bg-[#06161c] rounded-b-[16px] z-50"></div>
                 
                 <div className="w-full h-full bg-gradient-to-b from-[#fbfaf7] to-[#eef1f0] rounded-[30px] overflow-hidden relative pt-7 px-3.5 pb-3.5">
                   
-                  {/* --- DISCOVER FEED (Εμφανίζεται μόνο στο step-0) --- */}
+                  {/* --- DISCOVER FEED (Step 0) --- */}
                   <div className={`absolute inset-x-3.5 top-7 bottom-3.5 flex flex-col gap-2.5 transition-all duration-500 transform ${activeStep === 0 ? "opacity-100 translate-y-0 pointer-events-auto z-10" : "opacity-0 translate-y-[10px] pointer-events-none z-0"}`}>
                     <div className="flex gap-2.5 bg-white rounded-[14px] p-2 shadow-sm border border-gray-100">
                       <div className="w-[54px] h-[54px] rounded-[10px] bg-gradient-to-br from-[#1d6076] to-[#62b6c7] flex-shrink-0" />
@@ -239,7 +265,7 @@ export default function NomadFlowLanding() {
                     </div>
                   </div>
 
-                  {/* --- MAIN CARD VIEW (Εμφανίζεται στα βήματα 1 και 2) --- */}
+                  {/* --- MAIN CARD VIEW (Step 1 & 2) --- */}
                   <div className={`absolute inset-x-3.5 top-7 bottom-3.5 bg-white rounded-[20px] shadow-xl overflow-hidden flex flex-col transition-all duration-500 transform ${activeStep >= 1 ? "opacity-100 translate-y-0 scale-100 pointer-events-auto z-20" : "opacity-0 translate-y-[12px] scale-[0.98] pointer-events-none z-0"}`}>
                     <div className="h-[150px] bg-gradient-to-br from-[#13414f] via-[#1d6076] to-[#62b6c7] relative flex-shrink-0">
                       <svg className="absolute inset-0 w-full h-full text-white" viewBox="0 0 290 150" preserveAspectRatio="none" fill="none">
@@ -450,7 +476,7 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- SECTION 6: OUTRO / MOUNTAIN FOOTER (Ακριβώς όπως το demo) --- */}
+      {/* --- SECTION 6: OUTRO / MOUNTAIN FOOTER --- */}
       <div className="relative bg-[#000A0F] overflow-hidden">
         <div className="w-full overflow-hidden relative z-30 bg-transparent rotate-180">
           <svg viewBox="0 0 100 5" preserveAspectRatio="none" width="100%" height="60" style={{ display: "block" }}>
