@@ -272,18 +272,18 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- ΤΙΤΛΟΣ REVIEWS (Σταθερός στο γκρι background) --- */}
-      <section className="bg-[#F8F9FA] pt-28 pb-4 text-center relative z-20">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] tracking-tight drop-shadow-sm">
+      {/* --- ΤΙΤΛΟΣ REVIEWS (Στο λευκό/γκρι backround του site) --- */}
+      <section className="bg-[#F8F9FA] pt-32 pb-4 text-center relative z-20">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] tracking-tight">
           Loved by <br /> explorers everywhere
         </h2>
       </section>
 
-      {/* --- 4. ENIAIO COMPONENT (REVIEWS CAROUSEL OVERLAP & DIAGONAL FOOTER) --- */}
+      {/* --- 5. ENIAIO COMPONENT (REVIEWS OVERLAP & DIAGONAL MOUNTAIN FOOTER) --- */}
       <div className="relative bg-[#000A0F] overflow-hidden">
         
-        {/* Η αυθεντική εικόνα οροσειράς της Polarsteps που κάθεται πίσω από Reviews και Footer */}
-        <div className="absolute inset-0 z-0 opacity-45 pointer-events-none">
+        {/* Η αυθεντική εικόνα της οροσειράς που περνάει πίσω από τα Reviews και το Footer */}
+        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
           <img 
             src="https://framerusercontent.com/images/bM3zU8ikfSHFLRniHcb1d8qGW8.jpg" 
             alt="Mountain range silhouette" 
@@ -292,22 +292,21 @@ export default function NomadFlowLanding() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#000A0F] via-transparent to-[#00111A]" />
         </div>
 
-        {/* ΔΙΑΓΩΝΙΑ ΚΟΠΗ (SVG POLYGON) - Χαμηλώσαμε το z-index στο z-10 για να πηγαίνει κάτω από τις κάρτες */}
+        {/* ΑΥΘΕΝΤΙΚΗ ΔΙΑΓΩΝΙΑ ΚΟΠΗ (z-10 για να μην σκεπάζει τις κάρτες) */}
         <div className="w-full overflow-hidden relative z-10 bg-transparent rotate-180">
           <svg viewBox="0 0 100 5" preserveAspectRatio="none" width="100%" height="60" style={{ display: "block" }}>
             <polygon points="-1,0 0,5 101,5" fill="#F8F9FA"></polygon>
           </svg>
         </div>
 
-        {/* REVIEWS TRACK (ΑΛΛΑΓΗ ΕΔΩ: z-40 και σχετικό position ώστε οι κάρτες να περνάνε ΠΑΝΩ από τη διαγώνιο) */}
-        <div className="relative z-40 pb-16 w-full text-center mt-[-160px] overflow-visible">
-
+        {/* REVIEWS TRACK (Με z-40 για να βγαίνει ΠΑΝΩ από τη διαγώνιο χωρίς να κόβεται) */}
+        <div className="relative z-40 pb-16 w-full text-center mt-[-150px] overflow-visible">
           <div className="relative w-full max-w-7xl mx-auto px-6 overflow-visible">
             {/* Arrows */}
             <button onClick={() => carouselScroll("left")} className="absolute left-4 md:left-12 top-[45%] -translate-y-1/2 z-50 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❮</button>
             <button onClick={() => carouselScroll("right")} className="absolute right-4 md:right-12 top-[45%] -translate-y-1/2 z-50 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❯</button>
 
-            {/* Carousel Items Track */}
+            {/* Carousel Items Track - True Polarsteps Layout */}
             <div 
               ref={sliderRef}
               className="flex items-center gap-6 overflow-x-auto scrollbar-none px-[5%] md:px-[20%] py-4 overflow-visible"
@@ -317,8 +316,8 @@ export default function NomadFlowLanding() {
               }}
             >
               {/* STACK 1: Δύο κάρτες κειμένου (Η μία κάτω από την άλλη) */}
-              <div className="flex flex-col gap-6 min-w-[280px] md:min-w-[320px] h-[460px] justify-between snap-center">
-                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between text-left border border-gray-100/50">
+              <div className="flex flex-col gap-6 min-w-[280px] md:min-w-[320px] h-[460px] justify-between snap-center text-left">
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between border border-gray-100/50">
                   <div>
                     <h4 className="text-sm font-bold text-[#00293D] mb-1">Perfect for tracking trips</h4>
                     <p className="text-[9px] font-bold text-gray-400 mb-2">CONOR, MARCH 9 2026</p>
@@ -328,7 +327,7 @@ export default function NomadFlowLanding() {
                   </div>
                   <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
                 </div>
-                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between text-left border border-gray-100/50">
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between border border-gray-100/50">
                   <div>
                     <h4 className="text-sm font-bold text-[#00293D] mb-1">See where you've been</h4>
                     <p className="text-[9px] font-bold text-gray-400 mb-2">MARCUS, FEB 22 2026</p>
@@ -342,7 +341,7 @@ export default function NomadFlowLanding() {
 
               {/* STACK 2: Ψηλή Κάρτα Βίντεο (Alex Hubin) */}
               <div className="relative rounded-[2rem] min-w-[280px] md:min-w-[320px] h-[460px] shadow-2xl overflow-hidden snap-center group text-left">
-                <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Alex" className="w-full h-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Alex" className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
                 <div className="absolute top-6 left-6 flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-xs font-bold text-white">AH</div>
@@ -354,12 +353,12 @@ export default function NomadFlowLanding() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center text-xl border border-white/30 cursor-pointer transition-transform group-hover:scale-110">▶</span>
                 </div>
-                <span className="absolute bottom-4 left-6 text-[9px] font-black tracking-widest text-white/50 uppercase">Pioneers</span>
+                <span className="absolute bottom-6 left-6 text-[10px] font-black tracking-widest text-white/50 uppercase">Pioneers</span>
               </div>
 
               {/* STACK 3: Δύο κάρτες κειμένου */}
-              <div className="flex flex-col gap-6 min-w-[280px] md:min-w-[320px] h-[460px] justify-between snap-center">
-                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between text-left border border-gray-100/50">
+              <div className="flex flex-col gap-6 min-w-[280px] md:min-w-[320px] h-[460px] justify-between snap-center text-left">
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between border border-gray-100/50">
                   <div>
                     <h4 className="text-sm font-bold text-[#00293D] mb-1">Easy to use</h4>
                     <p className="text-[9px] font-bold text-gray-400 mb-2">RACHEL, MARCH 15 2026</p>
@@ -369,7 +368,7 @@ export default function NomadFlowLanding() {
                   </div>
                   <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
                 </div>
-                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between text-left border border-gray-100/50">
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between border border-gray-100/50">
                   <div>
                     <h4 className="text-sm font-bold text-[#00293D] mb-1">Stops me wasting time</h4>
                     <p className="text-[9px] font-bold text-gray-400 mb-2">DEBORAH, MARCH 19 2026</p>
@@ -406,7 +405,7 @@ export default function NomadFlowLanding() {
           <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight max-w-2xl leading-tight mb-8 drop-shadow-md">
             Join 20M+ explorers by downloading Polarsteps today!
           </h2>
-          <button className="bg-white text-[#000A0F] font-bold px-7 py-3.5 rounded-xl shadow-xl transition-all flex items-center gap-3 hover:scale-105 group text-sm">
+          <button className="bg-white text-[#000A0F] font-bold px-7 py-3.5 rounded-xl shadow-2xl transition-all flex items-center gap-3 hover:scale-105 group text-sm">
             <span className="w-5 h-5 rounded-md bg-gradient-to-b from-[#FC1547] to-[#FE4367] flex items-center justify-center text-[10px] text-white font-bold">🧭</span>
             Get the app
           </button>
