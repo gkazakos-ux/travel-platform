@@ -124,8 +124,9 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- SECTION 2: INTERACTIVE STICKY PHONE SCROLL STORY --- */}
-      <section className="relative h-[240vh] bg-[#F8F9FA]">
+{/* --- SECTION 2: INTERACTIVE STICKY PHONE SCROLL STORY (WITH SCROLL SNAP) --- */}
+      {/* Προσθέσαμε snap-y snap-mandatory και h-[300vh] για να δώσουμε «βάθος» στο scroll */}
+      <section className="relative h-[300vh] bg-[#F8F9FA] snap-y snap-mandatory">
         <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-12">
             
@@ -232,6 +233,11 @@ export default function NomadFlowLanding() {
 
           </div>
         </div>
+
+        {/* ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΛΕΙΔΙ: Αόρατα snap points που αναγκάζουν τον browser να σταματήσει το scroll */}
+        <div className="absolute top-0 h-screen w-full snap-start pointer-events-none" />
+        <div className="absolute top-[100vh] h-screen w-full snap-start pointer-events-none" />
+        <div className="absolute top-[200vh] h-screen w-full snap-start pointer-events-none" />
       </section>
 
       {/* --- SECTION 3: TRAVEL BOOK --- */}
@@ -331,7 +337,7 @@ export default function NomadFlowLanding() {
           {/* ΑΛΛΑΓΗ ΕΔΩ: mt-16 ΑΝΤΙ ΓΙΑ mt-4 ΓΙΑ ΝΑ ΠΕΣΟΥΝ ΠΙΟ ΚΑΤΩ ΟΙ ΚΑΡΤΕΣ */}
           <div 
             ref={sliderRef}
-            className="flex items-center gap-6 overflow-x-auto scrollbar-none px-[5%] md:px-[15%] py-4 mt-16 overflow-visible"
+            className="flex items-center gap-6 overflow-x-auto scrollbar-none px-[5%] md:px-[15%] py-4 mt-50 overflow-visible"
             style={{
               maskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
               WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)"
