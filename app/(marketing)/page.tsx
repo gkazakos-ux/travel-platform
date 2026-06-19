@@ -109,7 +109,7 @@ export default function NomadFlowLanding() {
           className="absolute inset-0 w-full h-full origin-bottom will-change-transform z-0 overflow-hidden"
         >
           <div className="absolute inset-0 bg-black/40 z-10" />
-          <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=2000&q=90" alt="Hero Background" className="w-full h-full object-cover" />
+          <img src="https://www.getlostmagazine.com/wp-content/uploads/2023/11/GL12-HOT5-1-1500x900-1.jpg" alt="Hero Background" className="w-full h-full object-cover" />
         </div>
 
         <div 
