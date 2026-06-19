@@ -196,11 +196,11 @@ export default function NomadFlowLanding() {
                     <div className="bg-white rounded-[2rem] shadow-lg border border-gray-100 overflow-hidden flex flex-col flex-1 bg-white">
                       <div className="h-32 bg-gray-900 relative overflow-hidden flex-shrink-0">
                         <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400" className="absolute inset-0 w-full h-full object-cover opacity-60" alt="" />
+                        {/* ΔΙΟΡΘΩΜΕΝΟ SVG - ΕΔΩ ΗΤΑΝ ΤΟ ΛΑΘΟΣ */}
                         <svg className="absolute inset-0 w-full h-full text-white" fill="none" viewBox="0 0 290 150">
                           <path stroke="currentColor" strokeWidth="3" strokeLinecap="round" d="M28 110 C 90 70, 130 120, 175 60 S 245 40, 268 28" />
                           <circle cx="28" cy="110" r="4" fill="#FF6B35" stroke="white" strokeWidth="1.5"/>
                           <circle cx="175" cy="60" r="4" fill="#FF6B35" stroke="white" strokeWidth="1.5"/>
-                        </circle>
                         </svg>
                         <span className={`absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 rounded-full text-white bg-[#FF6B35] shadow transition-transform duration-500 ${activeStep === 2 ? "scale-100 opacity-100" : "scale-70 opacity-0"}`}>♥ Saved</span>
                       </div>
@@ -316,14 +316,14 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- ΤΙΤΛΟΣ REVIEWS (Στο λευκό/γκρι backround του site) --- */}
+      {/* --- ΤΙΤΛΟΣ REVIEWS --- */}
       <section className="bg-[#F8F9FA] pt-32 pb-4 text-center relative z-20">
         <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] tracking-tight">
           Loved by <br /> explorers everywhere
         </h2>
       </section>
 
-      {/* --- 4. ENIAIO COMPONENT (REVIEWS OVERLAP & DIAGONAL MOUNTAIN FOOTER) --- */}
+      {/* --- 5. REVIEWS OVERLAP & DIAGONAL MOUNTAIN FOOTER --- */}
       <div className="relative bg-[#000A0F]">
         
         {/* Η αυθεντική εικόνα της οροσειράς που κάθεται πίσω από Reviews και Footer */}
@@ -336,14 +336,14 @@ export default function NomadFlowLanding() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#000A0F] via-transparent to-[#00111A]" />
         </div>
 
-        {/* ΑΥΘΕΝΤΙΚΗ ΔΙΑΓΩΝΙΑ ΚΟΠΗ (z-10 για να μην σκεπάζει τις κάρτες) */}
+        {/* ΑΥΘΕΝΤΙΚΗ ΔΙΑΓΩΝΙΑ ΚΟΠΗ */}
         <div className="w-full overflow-hidden relative z-10 bg-transparent rotate-180">
           <svg viewBox="0 0 100 5" preserveAspectRatio="none" width="100%" height="60" style={{ display: "block" }}>
             <polygon points="-1,0 0,5 101,5" fill="#F8F9FA"></polygon>
           </svg>
         </div>
 
-        {/* REVIEWS TRACK (Με z-40 για να βγαίνει ΠΑΝΩ από τη διαγώνιο χωρίς να κόβεται) */}
+        {/* REVIEWS TRACK */}
         <div className="relative z-40 pb-16 w-full text-center mt-[-150px] overflow-visible">
           <div className="relative w-full max-w-7xl mx-auto px-6 overflow-visible">
             {/* Arrows */}
@@ -389,14 +389,9 @@ export default function NomadFlowLanding() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
                 <div className="absolute top-6 left-6 flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-xs font-bold text-white">AH</div>
-                  <div>
-                    <p className="text-xs font-bold text-white">Alex Hubin</p>
-                    <p className="text-[9px] text-white/60 uppercase font-black tracking-wider">Adventurer</p>
-                  </div>
+                  <div><p className="text-xs font-bold text-white">Alex Hubin</p><p className="text-[9px] text-white/60 uppercase font-black tracking-wider">Adventurer</p></div>
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center text-xl border border-white/30 cursor-pointer transition-transform group-hover:scale-110">▶</span>
-                </div>
+                <div className="absolute inset-0 flex items-center justify-center"><span className="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center text-xl border border-white/30 cursor-pointer transition-transform group-hover:scale-110">▶</span></div>
                 <span className="absolute bottom-4 left-6 text-[9px] font-black tracking-widest text-white/50 uppercase">Pioneers</span>
               </div>
 
@@ -435,6 +430,7 @@ export default function NomadFlowLanding() {
                 <div className="absolute inset-0 flex items-center justify-center"><span className="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center text-xl border border-white/30 cursor-pointer transition-transform group-hover:scale-110">▶</span></div>
                 <span className="absolute bottom-6 left-6 text-[10px] font-black tracking-widest text-white/50 uppercase">Pioneers Shorts</span>
               </div>
+
             </div>
           </div>
         </div>
@@ -444,7 +440,7 @@ export default function NomadFlowLanding() {
           <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight max-w-2xl leading-tight mb-8 drop-shadow-md">
             Join 20M+ explorers by downloading Polarsteps today!
           </h2>
-          <button className="bg-white text-[#000A0F] font-bold px-7 py-3.5 rounded-xl shadow-2xl transition-all flex items-center gap-3 hover:scale-105 group text-sm">
+          <button className="bg-white text-[#000A0F] font-bold px-7 py-3.5 rounded-xl shadow-xl transition-all flex items-center gap-3 hover:scale-105 group text-sm">
             <span className="w-5 h-5 rounded-md bg-gradient-to-b from-[#FC1547] to-[#FE4367] flex items-center justify-center text-[10px] text-white font-bold">🧭</span>
             Get the app
           </button>
