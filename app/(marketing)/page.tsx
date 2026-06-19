@@ -194,7 +194,7 @@ export default function NomadFlowLanding() {
         >
           <div className="absolute inset-0 bg-black/40 z-10" />
           <img 
-            src="https://www.getlostmagazine.com/wp-content/uploads/2023/11/GL12-HOT5-1-1500x900-1.jpg" 
+            src="https://img.magnific.com/free-photo/person-traveling-enjoying-their-vacation_23-2151383050.jpg?t=st=1781893352~exp=1781896952~hmac=f3489fdfc724d5430d28b3267f6305f763687ca784c2a5f33c2eca937ec306eb&w=1480" 
             alt="Hero Background" 
             className="w-full h-full object-cover" 
           />
