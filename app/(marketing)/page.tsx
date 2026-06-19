@@ -3,10 +3,10 @@ import Image from "next/image";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-gray-950 font-sans flex flex-col justify-between">
+    <div className="min-h-screen bg-white text-gray-950 font-sans flex flex-col justify-between">
       
-      {/* 1. NAVIGATION BAR */}
-      <nav className="max-w-7xl w-full mx-auto px-6 py-5 flex justify-between items-center bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
+      {/* 1. NAVIGATION BAR (Full Width) */}
+      <nav className="w-full px-8 lg:px-16 py-5 flex justify-between items-center bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
         <div className="flex items-center gap-2">
           <span className="text-2xl">✈️</span>
           <span className="text-xl font-black tracking-tight text-gray-900">Travel<span className="text-[#FF6B35]">Platform</span></span>
@@ -22,8 +22,8 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* 2. HERO SECTION */}
-      <main className="max-w-7xl w-full mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center flex-1">
+      {/* 2. HERO SECTION (Full Width) */}
+      <main className="w-full px-8 lg:px-16 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center flex-1">
         
         {/* Αριστερό Μέρος: Κείμενο και Call to Action */}
         <div className="space-y-6 text-center md:text-left">
@@ -48,7 +48,7 @@ export default function LandingPage() {
         </div>
 
         {/* Δεξιά πλευρά: Μια όμορφη travel εικόνα */}
-        <div className="relative h-[350px] md:h-[500px] w-full rounded-3xl overflow-hidden shadow-2xl shadow-gray-200 border border-white">
+        <div className="relative h-[350px] md:h-[550px] w-full rounded-3xl overflow-hidden shadow-2xl shadow-gray-200 border border-white">
           <Image 
             src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800" 
             alt="Travel Planning" 
@@ -61,7 +61,7 @@ export default function LandingPage() {
       </main>
 
       {/* 3. FOOTER */}
-      <footer className="border-t border-gray-100 bg-white py-6 text-center text-xs text-gray-400 font-medium">
+      <footer className="w-full border-t border-gray-100 bg-white py-6 text-center text-xs text-gray-400 font-medium">
         &copy; {new Date().getFullYear()} TravelPlatform. All rights reserved.
       </footer>
 
