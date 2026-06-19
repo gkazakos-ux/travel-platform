@@ -374,7 +374,7 @@ export default function LocationStepsSection() {
           {/* ΑΛΛΑΓΗ ΕΔΩ: mt-16 ΑΝΤΙ ΓΙΑ mt-4 ΓΙΑ ΝΑ ΠΕΣΟΥΝ ΠΙΟ ΚΑΤΩ ΟΙ ΚΑΡΤΕΣ */}
           <div 
             ref={sliderRef}
-            className="flex items-center gap-6 overflow-x-auto scrollbar-none px-[5%] md:px-[15%] py-4 mt-50 overflow-visible"
+            className="flex items-center gap-6 overflow-x-auto scrollbar-none px-[5%] md:px-[15%] py-4 mt-500 overflow-visible"
             style={{
               maskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
               WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)"
