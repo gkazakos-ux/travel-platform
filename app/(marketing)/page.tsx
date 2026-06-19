@@ -272,18 +272,17 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- ΕΝΙΑΙΟΣ "DEEP WILD" CONTAINER (REVIEWS + FOOTER ΜΑΖΙ) --- */}
+      {/* --- 4. ΕΝΙΑΙΟΣ CONTAINER (TRUE POLARSTEPS REVIEWS & DIAGONAL FOOTER) --- */}
       <div className="relative bg-[#000A0F] overflow-hidden mt-[-1px]">
         
-        {/* Η αυθεντική εικόνα οροσειράς της Framer που περνάει ενιαία πίσω από τα πάντα */}
-        <div className="absolute inset-0 z-0 opacity-45 pointer-events-none">
+        {/* Η αυθεντική εικόνα οροσειράς της Polarsteps που κάθεται πίσω από Reviews και Footer */}
+        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
           <img 
             src="https://framerusercontent.com/images/bM3zU8ikfSHFLRniHcb1d8qGW8.jpg" 
             alt="Mountain range silhouette" 
-            className="w-full h-full object-cover object-bottom scale-105"
+            className="w-full h-full object-cover object-center scale-105"
           />
-          {/* Blend layers για να σκοτεινιάσει σωστά προς το τέλος */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#000A0F] via-transparent to-[#001621]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#000A0F] via-transparent to-[#00111A]" />
         </div>
 
         {/* ΑΥΘΕΝΤΙΚΗ ΔΙΑΓΩΝΙΑ ΚΟΠΗ (SVG POLYGON) */}
@@ -293,72 +292,112 @@ export default function NomadFlowLanding() {
           </svg>
         </div>
 
-        {/* REVIEWS TRACK (Επιπλέει καθαρά πάνω από τα βουνά) */}
+        {/* REVIEWS TRACK (True Asymmetric Layout) */}
         <div className="relative z-20 pt-12 pb-16 w-full text-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-12 drop-shadow-md">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-16 drop-shadow-md">
             Loved by <br /> explorers everywhere
           </h2>
 
           <div className="relative w-full max-w-7xl mx-auto px-6">
             {/* Arrows */}
-            <button onClick={() => carouselScroll("left")} className="absolute left-4 md:left-12 top-[40%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❮</button>
-            <button onClick={() => carouselScroll("right")} className="absolute right-4 md:right-12 top-[40%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❯</button>
+            <button onClick={() => carouselScroll("left")} className="absolute left-4 md:left-12 top-[45%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❮</button>
+            <button onClick={() => carouselScroll("right")} className="absolute right-4 md:right-12 top-[45%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❯</button>
 
-            {/* Carousel Track με απαλό fade στα πλάγια */}
+            {/* Carousel Items Track */}
             <div 
               ref={sliderRef}
-              className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory py-4 overflow-visible"
+              className="flex items-center gap-6 overflow-x-auto scrollbar-none px-[5%] md:px-[20%] py-4 overflow-visible"
               style={{
                 maskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
                 WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)"
               }}
             >
-              {/* Card 1 */}
-              <div className="bg-white rounded-[2rem] p-8 min-w-[290px] md:min-w-[320px] h-[340px] shadow-2xl flex flex-col justify-between snap-center text-left border border-gray-100/50">
-                <div>
-                  <h4 className="text-lg font-bold text-[#00293D] mb-1">Perfect for tracking</h4>
-                  <p className="text-[10px] font-bold text-gray-400 mb-4">CONOR, MARCH 9 2026</p>
-                  <p className="text-xs text-gray-500 leading-relaxed">I love this app! It's perfect for tracking trips and I've ordered a few of the travel books which are very good quality.</p>
+              {/* STACK 1: Δύο κάρτες κειμένου (Η μία κάτω από την άλλη) */}
+              <div className="flex flex-col gap-6 min-w-[280px] md:min-w-[320px] h-[460px] justify-between snap-center">
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-lg flex flex-col justify-between text-left border border-gray-100/50">
+                  <div>
+                    <h4 className="text-sm font-bold text-[#00293D] mb-1">Perfect for tracking trips</h4>
+                    <p className="text-[9px] font-bold text-gray-400 mb-2">CONOR, MARCH 9 2026</p>
+                    <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-4">
+                      I love this app! It's perfect for tracking trips and I've ordered a few of the travel books which are very good quality and really nice.
+                    </p>
+                  </div>
+                  <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
                 </div>
-                <div className="text-orange-400 text-xs">⭐⭐⭐⭐⭐</div>
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-lg flex flex-col justify-between text-left border border-gray-100/50">
+                  <div>
+                    <h4 className="text-sm font-bold text-[#00293D] mb-1">See where you've been</h4>
+                    <p className="text-[9px] font-bold text-gray-400 mb-2">MARCUS, FEB 22 2026</p>
+                    <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-4">
+                      It tracks where you've been during the day and you can add your photos and comments later. Great to look back on over the years.
+                    </p>
+                  </div>
+                  <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
+                </div>
               </div>
 
-              {/* Card 2: Video (Alex Hubin) */}
-              <div className="relative rounded-[2rem] min-w-[290px] md:min-w-[320px] h-[340px] shadow-2xl overflow-hidden snap-center group text-left">
+              {/* STACK 2: Ψηλή Κάρτα Βίντεο (Alex Hubin) */}
+              <div className="relative rounded-[2rem] min-w-[280px] md:min-w-[320px] h-[460px] shadow-2xl overflow-hidden snap-center group text-left">
                 <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Alex" className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
                 <div className="absolute top-6 left-6 flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-xs font-bold text-white">AH</div>
-                  <div><p className="text-xs font-bold text-white">Alex Hubin</p><p className="text-[9px] text-white/60 uppercase font-black tracking-wider">Adventurer</p></div>
+                  <div>
+                    <p className="text-xs font-bold text-white">Alex Hubin</p>
+                    <p className="text-[9px] text-white/60 uppercase font-black tracking-wider">Adventurer</p>
+                  </div>
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center"><span className="w-12 h-12 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center text-lg border border-white/30 cursor-pointer transition-transform group-hover:scale-110">▶</span></div>
-                <span className="absolute bottom-4 left-6 text-[9px] font-black tracking-widest text-white/50 uppercase">Pioneers</span>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center text-xl border border-white/30 cursor-pointer transition-transform group-hover:scale-110">▶</span>
+                </div>
+                <span className="absolute bottom-6 left-6 text-[10px] font-black tracking-widest text-white/50 uppercase">Pioneers</span>
               </div>
 
-              {/* Card 3 */}
-              <div className="bg-white rounded-[2rem] p-8 min-w-[290px] md:min-w-[320px] h-[340px] shadow-2xl flex flex-col justify-between snap-center text-left border border-gray-100/50">
-                <div>
-                  <h4 className="text-lg font-bold text-[#00293D] mb-1">Easy to use</h4>
-                  <p className="text-[10px] font-bold text-gray-400 mb-4">RACHEL, MARCH 15 2026</p>
-                  <p className="text-xs text-gray-500 leading-relaxed">I've been using this app for several trips now. Easy peasy to use. Shared it with family and friends who are using it as well.</p>
+              {/* STACK 3: Δύο κάρτες κειμένου */}
+              <div className="flex flex-col gap-6 min-w-[280px] md:min-w-[320px] h-[460px] justify-between snap-center">
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-lg flex flex-col justify-between text-left border border-gray-100/50">
+                  <div>
+                    <h4 className="text-sm font-bold text-[#00293D] mb-1">Easy to use</h4>
+                    <p className="text-[9px] font-bold text-gray-400 mb-2">RACHEL, MARCH 15 2026</p>
+                    <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-4">
+                      I've been using this app for several trips now. Easy peasy to use. Shared it with family and friends who are using this app as well now.
+                    </p>
+                  </div>
+                  <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
                 </div>
-                <div className="text-orange-400 text-xs">⭐⭐⭐⭐⭐</div>
+                <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-lg flex flex-col justify-between text-left border border-gray-100/50">
+                  <div>
+                    <h4 className="text-sm font-bold text-[#00293D] mb-1">Stops me wasting time</h4>
+                    <p className="text-[9px] font-bold text-gray-400 mb-2">DEBORAH, MARCH 19 2026</p>
+                    <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-4">
+                      Just completed a 4 month trip using NomadFlow. Totally love it, stops me wasting time private messaging people about what we are doing!
+                    </p>
+                  </div>
+                  <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
+                </div>
               </div>
 
-              {/* Card 4 */}
-              <div className="bg-white rounded-[2rem] p-8 min-w-[290px] md:min-w-[320px] h-[340px] shadow-2xl flex flex-col justify-between snap-center text-left border border-gray-100/50">
-                <div>
-                  <h4 className="text-lg font-bold text-[#00293D] mb-1">Stops me wasting time</h4>
-                  <p className="text-[10px] font-bold text-gray-400 mb-4">DEBORAH, MARCH 19 2026</p>
-                  <p className="text-xs text-gray-500 leading-relaxed">Just completed a 4 month trip using NomadFlow. Totally love it, stops me wasting time private messaging people about what we are doing!</p>
+              {/* STACK 4: Ψηλή Κάρτα Βίντεο (Leoni Kolberg) */}
+              <div className="relative rounded-[2rem] min-w-[280px] md:min-w-[320px] h-[460px] shadow-2xl overflow-hidden snap-center group text-left">
+                <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=600&q=80" alt="Leoni" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+                <div className="absolute top-6 left-6 flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-xs font-bold text-white">LK</div>
+                  <div>
+                    <p className="text-xs font-bold text-white">Leoni Kolberg</p>
+                    <p className="text-[9px] text-white/60 uppercase font-black tracking-wider">Solo Cyclist</p>
+                  </div>
                 </div>
-                <div className="text-orange-400 text-xs">⭐⭐⭐⭐⭐</div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="w-14 h-14 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center text-xl border border-white/30 cursor-pointer transition-transform group-hover:scale-110">▶</span>
+                </div>
+                <span className="absolute bottom-6 left-6 text-[10px] font-black tracking-widest text-white/50 uppercase">Pioneers Shorts</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* CTA AREA (Centered με το σωστό κουμπί) */}
+        {/* CTA AREA (Centered) */}
         <div className="relative z-10 w-full flex flex-col items-center pt-8 pb-20 text-center">
           <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight max-w-2xl leading-tight mb-8 drop-shadow-md">
             Join 20M+ explorers by downloading Polarsteps today!
@@ -369,7 +408,7 @@ export default function NomadFlowLanding() {
           </button>
         </div>
 
-        {/* FOOTER LINKS */}
+        {/* FOOTER LINKS AND BRANDING */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full text-left">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-white/10 pb-16 mb-12">
              <div>
