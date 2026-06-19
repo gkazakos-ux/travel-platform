@@ -1,18 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
+import { createClient } from "@/services/supabase/server";
 
-export default function HomePage() {
+export default async function DashboardPage() {
+  // 1. Σύνδεση με τη Βάση Δεδομένων (Supabase)
+  const supabase = await createClient();
+
+  // 2. Παίρνουμε τον συνδεδεμένο χρήστη
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // 3. Παίρνουμε το username από τον πίνακα profiles
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("username")
+    .eq("id", user?.id)
+    .maybeSingle();
+
+  // Ορίζουμε το όνομα για να το χρησιμοποιήσουμε παντού (αν δεν έχει, βάζουμε "Traveller")
+  const displayName = profile?.username || "Traveller";
+
   return (
     <div className="min-h-screen bg-[#F8F9FA] flex text-gray-900 font-sans w-full">
       
-      {/* 1. ΑΡΙΣΤΕΡΗ ΜΠΑΡΑ (SIDEBAR) */}
+      {/* ΑΡΙΣΤΕΡΗ ΜΠΑΡΑ (SIDEBAR) */}
       <aside className="w-64 bg-white border-r border-gray-100 flex flex-col justify-between py-6 px-4 shrink-0">
         <div>
-          {/* Profile Section */}
+          {/* ΔΥΝΑΜΙΚΟ Profile Section */}
           <div className="flex items-center gap-3 mb-8 cursor-pointer hover:bg-gray-50 p-2 rounded-xl transition">
             <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden relative">
               <Image 
-                src="https://i.pravatar.cc/150?img=47" 
+                src="https://i.pravatar.cc/150?img=11" // Προσωρινό avatar, αργότερα βάζουμε του χρήστη
                 alt="Profile" 
                 fill
                 unoptimized
@@ -20,12 +37,12 @@ export default function HomePage() {
               />
             </div>
             <div>
-              <h3 className="text-sm font-bold">Cecillia Puni</h3>
-              <p className="text-[11px] text-gray-500">Part-time Traveller</p>
+              {/* ΕΔΩ ΜΠΑΙΝΕΙ ΤΟ ΠΡΑΓΜΑΤΙΚΟ ΣΟΥ ΟΝΟΜΑ */}
+              <h3 className="text-sm font-bold truncate max-w-[120px]">{displayName}</h3>
+              <p className="text-[11px] text-gray-500 truncate max-w-[120px]">{user?.email}</p>
             </div>
           </div>
 
-          {/* New Trip Button */}
           <button className="w-full bg-[#FF6B35] text-white rounded-xl py-3 text-sm font-bold mb-8 hover:bg-[#e85d2c] transition shadow-md shadow-orange-200">
             + New Trip
           </button>
@@ -68,7 +85,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Logout */}
+        {/* Logout (Αργότερα θα το κάνουμε να δουλεύει πραγματικά) */}
         <div>
           <button className="flex items-center gap-2 text-sm text-red-500 font-bold hover:text-red-600 hover:bg-red-50 p-2.5 rounded-xl w-full transition">
             <span>↪️</span> Logout
@@ -76,13 +93,12 @@ export default function HomePage() {
         </div>
       </aside>
 
-      {/* 2. ΚΕΝΤΡΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ */}
+      {/* ΚΕΝΤΡΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ */}
       <main className="flex-1 p-8 overflow-y-auto">
         
-        {/* ΑΝΑΒΑΘΜΙΣΜΕΝΟ HEADER */}
+        {/* HEADER */}
         <header className="flex justify-between items-center mb-8 bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
           <div className="flex items-center gap-8">
-            {/* Logo που σε πάει πίσω στην Front Page */}
             <Link href="/" className="flex items-center gap-1.5 hover:opacity-80 transition border-r border-gray-200 pr-6">
               <span className="text-xl">✈️</span>
               <span className="text-base font-black tracking-tight text-gray-900">
@@ -90,22 +106,19 @@ export default function HomePage() {
               </span>
             </Link>
 
-            {/* Καλωσόρισμα */}
+            {/* ΔΥΝΑΜΙΚΟ Καλωσόρισμα */}
             <div>
-              <h1 className="text-xl font-extrabold tracking-tight">Good Morning, Cecil 👋</h1>
+              <h1 className="text-xl font-extrabold tracking-tight">Good Morning, {displayName} 👋</h1>
               <p className="text-xs text-gray-400 font-medium">Plan your itinerary with us</p>
             </div>
           </div>
           
-          {/* Μενού Πλοήγησης & Εικονίδια */}
           <div className="flex items-center gap-6">
-            {/* Explore & Search Links */}
             <nav className="flex items-center gap-5 border-r border-gray-200 pr-6 text-sm font-bold text-gray-500">
               <Link href="/explore" className="hover:text-gray-900 transition">Explore</Link>
               <Link href="/search" className="hover:text-gray-900 transition">Search</Link>
             </nav>
 
-            {/* Εικονίδια Ενεργειών */}
             <div className="flex items-center gap-3">
               <button className="w-9 h-9 bg-[#F8F9FA] rounded-full flex items-center justify-center hover:bg-gray-100 transition text-sm">🔍</button>
               <button className="w-9 h-9 bg-[#F8F9FA] rounded-full flex items-center justify-center hover:bg-gray-100 transition text-sm relative">
@@ -125,7 +138,7 @@ export default function HomePage() {
         {/* ΚΥΡΙΩΣ ΠΛΕΓΜΑ (GRID) */}
         <div className="grid grid-cols-3 gap-8">
           
-          {/* ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ (2/3) - UPCOMING TRIPS */}
+          {/* ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ */}
           <div className="col-span-2 space-y-8">
             <div>
               <div className="flex justify-between items-center mb-4">
@@ -134,7 +147,6 @@ export default function HomePage() {
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                {/* Κάρτα 1 */}
                 <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm hover:shadow-md transition">
                   <div className="flex gap-3 mb-3">
                     <div className="w-12 h-12 rounded-xl bg-gray-100 relative overflow-hidden">
@@ -151,7 +163,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Κάρτα 2 */}
                 <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm hover:shadow-md transition">
                   <div className="flex gap-3 mb-3">
                     <div className="w-12 h-12 rounded-xl bg-gray-100 relative overflow-hidden">
@@ -171,7 +182,7 @@ export default function HomePage() {
             </div>
           </div>
           
-          {/* ΔΕΞΙΑ ΣΤΗΛΗ (1/3) - FRIENDS LOCATION */}
+          {/* ΔΕΞΙΑ ΣΤΗΛΗ */}
           <div className="col-span-1">
             <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm h-full flex flex-col justify-between">
               <div>
