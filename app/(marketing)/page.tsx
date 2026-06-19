@@ -84,32 +84,63 @@ export default function NomadFlowLanding() {
   if (globalProgress.story > 0.33 && globalProgress.story <= 0.66) activeStep = 1;
   if (globalProgress.story > 0.66) activeStep = 2;
 
+const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Διαβάζει το scroll για να αλλάξει το στυλ του μενού
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <main className="bg-white relative min-h-screen font-sans">
-      
-      {/* Navbar - Καθαρή, με το #FF6B35 λογότυπο */}
-      <nav className="fixed top-0 w-full z-[100] px-6 py-6 flex justify-between items-center text-white mix-blend-difference">
-        <div className="text-2xl font-extrabold tracking-tighter text-white">NomadFlow</div>
+    <nav 
+      className={`fixed top-0 w-full z-[100] transition-all duration-300 ${
+        isScrolled 
+          ? "bg-white/85 backdrop-blur-md border-b border-gray-200 py-4 text-gray-900 shadow-sm" 
+          : "bg-transparent py-6 text-white"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <div className="text-2xl font-extrabold tracking-tighter">
+          NomadFlow
+        </div>
         <div className="hidden md:flex gap-8 text-sm font-bold">
-          <Link href="#" className="hover:opacity-70 transition-opacity">Explore</Link>
-          <Link href="#" className="hover:opacity-70 transition-opacity">How it works</Link>
+          <Link href="#" className="hover:text-[#FF6B35] transition-colors">Explore</Link>
+          <Link href="#" className="hover:text-[#FF6B35] transition-colors">How it works</Link>
         </div>
         <div className="flex items-center gap-4">
-          <Link href="/login" className="text-sm font-bold hover:opacity-70 transition-opacity">Log In</Link>
+          <Link href="/login" className="text-sm font-bold hover:text-[#FF6B35] transition-colors">
+            Log In
+          </Link>
+          {/* Το κουμπί παραμένει ΠΑΝΤΑ πορτοκαλί */}
           <Link href="/signup" className="bg-[#FF6B35] text-white text-sm font-bold px-6 py-2.5 rounded-full shadow-lg shadow-orange-500/30 hover:scale-105 transition-transform">
             Start Planning
           </Link>
         </div>
-      </nav>
+      </div>
+    </nav>
+  );
+};
 
-      {/* --- SECTION 1: HERO ZOOM OUT --- */}
-      <section className="relative h-[120vh] bg-black overflow-hidden flex flex-col justify-start pt-32">
+   {/* --- SECTION 1: HERO ZOOM OUT --- */}
+      {/* ΑΛΛΑΓΗ ΕΔΩ: bg-[#F8F9FA] αντί για bg-black */}
+      <section className="relative h-[120vh] bg-[#F8F9FA] overflow-hidden flex flex-col justify-start pt-32">
+        
         <div 
           style={{ transform: `scale(${heroScale})`, borderRadius: `${heroRadius}px` }}
-          className="absolute inset-0 w-full h-full origin-bottom will-change-transform z-0 overflow-hidden"
+          /* Προστέθηκε shadow-2xl για να γράφει ωραία πάνω στο γκρι φόντο */
+          className="absolute inset-0 w-full h-full origin-bottom will-change-transform z-0 overflow-hidden shadow-2xl"
         >
           <div className="absolute inset-0 bg-black/40 z-10" />
-          <img src="https://www.getlostmagazine.com/wp-content/uploads/2023/11/GL12-HOT5-1-1500x900-1.jpg" alt="Hero Background" className="w-full h-full object-cover" />
+          <img 
+            src="https://www.getlostmagazine.com/wp-content/uploads/2023/11/GL12-HOT5-1-1500x900-1.jpg" 
+            alt="Hero Background" 
+            className="w-full h-full object-cover" 
+          />
         </div>
 
         <div 
