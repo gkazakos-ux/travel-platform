@@ -60,7 +60,7 @@ export default function NomadFlowLanding() {
       // 1. Hero Zoom Progress
       setHeroProgress(Math.min(1, Math.max(0, scrollY / 500)));
       
-      // 2. Δυναμικός υπολογισμός Step με βάση το bounding box του Section 2
+      // 2. Υπολογισμός Step με βάση το bounding box του Section 2
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
       const sectionHeight = rect.height;
@@ -322,7 +322,7 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- SECTION 5: ΚΑΘΑΡΟ REVIEWS SECTION --- */}
+      {/* --- SECTION 5: REVIEWS SECTION --- */}
       <section className="bg-[#F8F9FA] pt-32 pb-20 text-center relative z-20">
         <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] tracking-tight">
           Loved by <br /> explorers everywhere
@@ -352,7 +352,7 @@ export default function NomadFlowLanding() {
                     I love this app! It's perfect for tracking trips and I've ordered a few of the travel books which are very good quality and really nice.
                   </p>
                 </div>
-                <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐•</div>
+                <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
               </div>
               <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between border border-gray-100/50">
                 <div>
@@ -362,7 +362,7 @@ export default function NomadFlowLanding() {
                     It tracks where you've been during the day and you can add your photos and comments later. Great to look back on over the years.
                   </p>
                 </div>
-                <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐•</div>
+                <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
               </div>
             </div>
 
@@ -388,7 +388,7 @@ export default function NomadFlowLanding() {
                     I've been using this app for several trips now. Easy peasy to use. Shared it with family and friends who are using this app as well now.
                   </p>
                 </div>
-                <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐•</div>
+                <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
               </div>
               <div className="bg-white rounded-[2rem] p-6 h-[218px] shadow-2xl flex flex-col justify-between border border-gray-100/50">
                 <div>
@@ -398,7 +398,7 @@ export default function NomadFlowLanding() {
                     Just completed a 4 month trip using NomadFlow. Totally love it, stops me wasting time private messaging people about what we are doing!
                   </p>
                 </div>
-                <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐•</div>
+                <div className="text-orange-400 text-[10px]">⭐⭐⭐⭐⭐</div>
               </div>
             </div>
 
@@ -459,4 +459,37 @@ export default function NomadFlowLanding() {
              <div>
                 <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">About</h4>
                 <ul className="space-y-3.5 text-sm font-medium text-gray-300">
-                  <li><Link href="#" className="hover:text-white transition-colors">About
+                  <li><Link href="#" className="hover:text-white transition-colors">About us</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Careers</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Stories</Link></li>
+                </ul>
+             </div>
+             <div>
+                <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">Features</h4>
+                <ul className="space-y-3.5 text-sm font-medium text-gray-300">
+                  <li><Link href="#" className="hover:text-white transition-colors">Travel Planner</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Travel Tracker</Link></li>
+                </ul>
+             </div>
+             <div>
+                <h4 className="text-[11px] font-bold tracking-widest text-[#527585] mb-5 uppercase">Help & Support</h4>
+                <ul className="space-y-3.5 text-sm font-medium text-gray-300">
+                  <li><Link href="#" className="hover:text-white transition-colors">Help Center</Link></li>
+                  <li><Link href="#" className="hover:text-white transition-colors">Contact us</Link></li>
+                </ul>
+             </div>
+          </div>
+          
+          <div className="w-full flex flex-col md:flex-row justify-between items-center text-xs font-medium text-[#527585] pb-12">
+            <p>© 2026 NomadFlow. All rights reserved.</p>
+            <div className="flex gap-6 mt-4 md:mt-0">
+              <Link href="#" className="hover:text-gray-300 transition-colors">Terms</Link>
+              <Link href="#" className="hover:text-gray-300 transition-colors">Privacy</Link>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  );
+}
