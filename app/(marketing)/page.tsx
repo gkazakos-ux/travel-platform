@@ -82,7 +82,7 @@ const Navbar = () => {
   );
 };
 
-// --- 3. MAIN LANDING PAGE COMPONENT ---
+// --- MAIN LANDING PAGE ---
 export default function NomadFlowLanding() {
   const [globalProgress, setGlobalProgress] = useState({ hero: 0, story: 0 });
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -272,8 +272,8 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- ΤΙΤΛΟΣ REVIEWS (Πατάει στο γκρι φόντο, πριν την εικόνα) --- */}
-      <section className="bg-[#F8F9FA] pt-24 pb-4 text-center relative z-20">
+      {/* --- ΤΙΤΛΟΣ REVIEWS (Σταθερός στο γκρι background) --- */}
+      <section className="bg-[#F8F9FA] pt-28 pb-4 text-center relative z-20">
         <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] tracking-tight drop-shadow-sm">
           Loved by <br /> explorers everywhere
         </h2>
@@ -282,8 +282,8 @@ export default function NomadFlowLanding() {
       {/* --- 4. ENIAIO COMPONENT (REVIEWS CAROUSEL OVERLAP & DIAGONAL FOOTER) --- */}
       <div className="relative bg-[#000A0F] overflow-hidden">
         
-        {/* Η αυθεντική εικόνα οροσειράς της Polarsteps που περνάει πίσω από Reviews και Footer */}
-        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
+        {/* Η αυθεντική εικόνα οροσειράς της Polarsteps που κάθεται πίσω από Reviews και Footer */}
+        <div className="absolute inset-0 z-0 opacity-45 pointer-events-none">
           <img 
             src="https://framerusercontent.com/images/bM3zU8ikfSHFLRniHcb1d8qGW8.jpg" 
             alt="Mountain range silhouette" 
@@ -292,20 +292,20 @@ export default function NomadFlowLanding() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#000A0F] via-transparent to-[#00111A]" />
         </div>
 
-        {/* ΑΥΘΕΝΤΙΚΗ ΔΙΑΓΩΝΙΑ ΚΟΠΗ (SVG POLYGON) - Κάθεται ΠΙΣΩ από τις κάρτες */}
+        {/* ΔΙΑΓΩΝΙΑ ΚΟΠΗ (SVG POLYGON) - Χαμηλώσαμε το z-index στο z-10 για να πηγαίνει κάτω από τις κάρτες */}
         <div className="w-full overflow-hidden relative z-10 bg-transparent rotate-180">
           <svg viewBox="0 0 100 5" preserveAspectRatio="none" width="100%" height="60" style={{ display: "block" }}>
             <polygon points="-1,0 0,5 101,5" fill="#F8F9FA"></polygon>
           </svg>
         </div>
 
-        {/* REVIEWS TRACK (ΑΛΛΑΓΗ ΕΔΩ: mt-[-140px] για να ανέβουν τα Reviews ανάμεσα στα δύο sections) */}
-        <div className="relative z-20 pb-16 w-full text-center mt-[-140px] overflow-visible">
+        {/* REVIEWS TRACK (ΑΛΛΑΓΗ ΕΔΩ: z-40 και σχετικό position ώστε οι κάρτες να περνάνε ΠΑΝΩ από τη διαγώνιο) */}
+        <div className="relative z-40 pb-16 w-full text-center mt-[-160px] overflow-visible">
 
           <div className="relative w-full max-w-7xl mx-auto px-6 overflow-visible">
             {/* Arrows */}
-            <button onClick={() => carouselScroll("left")} className="absolute left-4 md:left-12 top-[50%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❮</button>
-            <button onClick={() => carouselScroll("right")} className="absolute right-4 md:right-12 top-[50%] -translate-y-1/2 z-40 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❯</button>
+            <button onClick={() => carouselScroll("left")} className="absolute left-4 md:left-12 top-[45%] -translate-y-1/2 z-50 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❮</button>
+            <button onClick={() => carouselScroll("right")} className="absolute right-4 md:right-12 top-[45%] -translate-y-1/2 z-50 bg-white text-[#00293D] w-12 h-12 rounded-full flex items-center justify-center shadow-2xl font-bold active:scale-95 transition-transform">❯</button>
 
             {/* Carousel Items Track */}
             <div 
@@ -342,7 +342,7 @@ export default function NomadFlowLanding() {
 
               {/* STACK 2: Ψηλή Κάρτα Βίντεο (Alex Hubin) */}
               <div className="relative rounded-[2rem] min-w-[280px] md:min-w-[320px] h-[460px] shadow-2xl overflow-hidden snap-center group text-left">
-                <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Alex" className="absolute inset-0 w-full h-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Alex" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
                 <div className="absolute top-6 left-6 flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-xs font-bold text-white">AH</div>
@@ -406,7 +406,7 @@ export default function NomadFlowLanding() {
           <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight max-w-2xl leading-tight mb-8 drop-shadow-md">
             Join 20M+ explorers by downloading Polarsteps today!
           </h2>
-          <button className="bg-white text-[#000A0F] font-bold px-7 py-3.5 rounded-xl shadow-2xl transition-all flex items-center gap-3 hover:scale-105 group text-sm">
+          <button className="bg-white text-[#000A0F] font-bold px-7 py-3.5 rounded-xl shadow-xl transition-all flex items-center gap-3 hover:scale-105 group text-sm">
             <span className="w-5 h-5 rounded-md bg-gradient-to-b from-[#FC1547] to-[#FE4367] flex items-center justify-center text-[10px] text-white font-bold">🧭</span>
             Get the app
           </button>
