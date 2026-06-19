@@ -6,7 +6,7 @@ import Link from "next/link";
 // --- Βοηθητικό Component για το Κινητό ---
 const PhoneMockup = ({ activeStep }: { activeStep: number }) => {
   const screens = [
-    "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=80",
+    "https://img.magnific.com/free-photo/man-standing-rock-near-lake_410324-106.jpg?t=st=1781893523~exp=1781897123~hmac=c5ea977ab736d2ad0d24a69651903adb2485c15233c4f2e605c850bf667b7e96&w=1480",
     "https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=600&q=80",
     "https://images.unsplash.com/photo-1500835556837-99ac94a94552?auto=format&fit=crop&w=600&q=80"
   ];
