@@ -1,11 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#F8F9FA] flex text-gray-900 font-sans">
+    <div className="min-h-screen bg-[#F8F9FA] flex text-gray-900 font-sans w-full">
       
       {/* 1. ΑΡΙΣΤΕΡΗ ΜΠΑΡΑ (SIDEBAR) */}
-      <aside className="w-64 bg-white border-r border-gray-100 flex flex-col justify-between py-6 px-4">
+      <aside className="w-64 bg-white border-r border-gray-100 flex flex-col justify-between py-6 px-4 shrink-0">
         <div>
           {/* Profile Section */}
           <div className="flex items-center gap-3 mb-8 cursor-pointer hover:bg-gray-50 p-2 rounded-xl transition">
@@ -78,23 +79,45 @@ export default function HomePage() {
       {/* 2. ΚΕΝΤΡΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ */}
       <main className="flex-1 p-8 overflow-y-auto">
         
-        {/* HEADER */}
-        <header className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-extrabold tracking-tight">Good Morning, Cecil 👋</h1>
-            <p className="text-gray-500 mt-1 text-sm font-medium">Plan your itinerary with us</p>
+        {/* ΑΝΑΒΑΘΜΙΣΜΕΝΟ HEADER */}
+        <header className="flex justify-between items-center mb-8 bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+          <div className="flex items-center gap-8">
+            {/* Logo που σε πάει πίσω στην Front Page */}
+            <Link href="/" className="flex items-center gap-1.5 hover:opacity-80 transition border-r border-gray-200 pr-6">
+              <span className="text-xl">✈️</span>
+              <span className="text-base font-black tracking-tight text-gray-900">
+                Travel<span className="text-[#FF6B35]">Platform</span>
+              </span>
+            </Link>
+
+            {/* Καλωσόρισμα */}
+            <div>
+              <h1 className="text-xl font-extrabold tracking-tight">Good Morning, Cecil 👋</h1>
+              <p className="text-xs text-gray-400 font-medium">Plan your itinerary with us</p>
+            </div>
           </div>
           
-          <div className="flex items-center gap-4">
-            <button className="w-10 h-10 bg-white rounded-full border border-gray-100 flex items-center justify-center hover:shadow-sm transition text-gray-500">🔍</button>
-            <button className="w-10 h-10 bg-white rounded-full border border-gray-100 flex items-center justify-center hover:shadow-sm transition text-gray-500 relative">
-              🔔
-              <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
-            </button>
-            <div className="flex items-center gap-3 bg-white border border-gray-100 rounded-full px-4 py-2 ml-2 shadow-sm">
-              <span className="text-xs font-bold text-gray-400">Get Apps:</span>
-              <span className="text-sm cursor-pointer hover:opacity-70">🍏</span>
-              <span className="text-sm cursor-pointer hover:opacity-70">🪟</span>
+          {/* Μενού Πλοήγησης & Εικονίδια */}
+          <div className="flex items-center gap-6">
+            {/* Explore & Search Links */}
+            <nav className="flex items-center gap-5 border-r border-gray-200 pr-6 text-sm font-bold text-gray-500">
+              <Link href="/explore" className="hover:text-gray-900 transition">Explore</Link>
+              <Link href="/search" className="hover:text-gray-900 transition">Search</Link>
+            </nav>
+
+            {/* Εικονίδια Ενεργειών */}
+            <div className="flex items-center gap-3">
+              <button className="w-9 h-9 bg-[#F8F9FA] rounded-full flex items-center justify-center hover:bg-gray-100 transition text-sm">🔍</button>
+              <button className="w-9 h-9 bg-[#F8F9FA] rounded-full flex items-center justify-center hover:bg-gray-100 transition text-sm relative">
+                🔔
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 border-2 border-white rounded-full"></span>
+              </button>
+              
+              <div className="flex items-center gap-2 bg-[#F8F9FA] rounded-full px-3 py-1.5 ml-1">
+                <span className="text-[10px] font-bold text-gray-400 uppercase">Get Apps:</span>
+                <span className="text-xs cursor-pointer hover:opacity-70">🍏</span>
+                <span className="text-xs cursor-pointer hover:opacity-70">🪟</span>
+              </div>
             </div>
           </div>
         </header>
@@ -104,15 +127,12 @@ export default function HomePage() {
           
           {/* ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ (2/3) - UPCOMING TRIPS */}
           <div className="col-span-2 space-y-8">
-            
-            {/* Ενότητα: Upcoming Trip */}
             <div>
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-bold text-gray-800">Upcoming Trip</h2>
                 <button className="text-xs font-bold text-[#FF6B35] bg-orange-50 px-3 py-1.5 rounded-full hover:bg-orange-100 transition">Details</button>
               </div>
               
-              {/* Κάρτες Ταξιδιών */}
               <div className="grid grid-cols-2 gap-4">
                 {/* Κάρτα 1 */}
                 <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm hover:shadow-md transition">
@@ -149,7 +169,6 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-
           </div>
           
           {/* ΔΕΞΙΑ ΣΤΗΛΗ (1/3) - FRIENDS LOCATION */}
@@ -162,11 +181,8 @@ export default function HomePage() {
                 </div>
                 <p className="text-xs text-gray-400 mb-4">Check on your friend live location</p>
                 
-                {/* Αναπαράσταση του χάρτη με ένα απαλό background */}
                 <div className="h-44 bg-blue-50/50 rounded-xl relative overflow-hidden border border-blue-50 flex items-center justify-center">
                   <span className="text-xs text-blue-300 font-medium tracking-wide uppercase">Interactive Map Placeholder</span>
-                  
-                  {/* Μικρά "στίγματα" φίλων πάνω στο χάρτη (όπως το γραφιστικό) */}
                   <div className="absolute top-10 left-12 bg-white px-2 py-1 rounded-lg shadow-sm text-[10px] font-bold flex items-center gap-1 border border-gray-100">
                     👩‍💼 <span className="text-gray-700">Shelly (Japan)</span>
                   </div>
