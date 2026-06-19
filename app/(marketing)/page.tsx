@@ -264,53 +264,71 @@ export default function NomadFlowLanding() {
       </section>
 
       {/* --- FOOTER --- */}
-      <footer className="bg-white pt-24 pb-12 text-gray-500 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-gray-100 pb-12 mb-8">
-          <div>
-              <h4 className="text-xs font-bold tracking-widest text-gray-900 mb-6 uppercase">Get Started</h4>
-              <ul className="space-y-4 text-sm font-medium">
-                <li><Link href="/signup" className="hover:text-[#FF6B35] transition-colors">Get the app</Link></li>
-                <li><Link href="/login" className="hover:text-[#FF6B35] transition-colors">Log in</Link></li>
-              </ul>
-          </div>
-          <div>
-              <h4 className="text-xs font-bold tracking-widest text-gray-900 mb-6 uppercase">About</h4>
-              <ul className="space-y-4 text-sm font-medium">
-                <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">About us</Link></li>
-                <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Careers</Link></li>
-                <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">News & press</Link></li>
-              </ul>
-          </div>
-          <div>
-              <h4 className="text-xs font-bold tracking-widest text-gray-900 mb-6 uppercase">Features</h4>
-              <ul className="space-y-4 text-sm font-medium">
-                <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Travel Planner</Link></li>
-                <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Trip Tracker</Link></li>
-                <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Travel Books</Link></li>
-              </ul>
-          </div>
-          <div>
-              <h4 className="text-xs font-bold tracking-widest text-gray-900 mb-6 uppercase">Help & Support</h4>
-              <ul className="space-y-4 text-sm font-medium">
-                <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Help Center</Link></li>
-                <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Contact us</Link></li>
-              </ul>
-          </div>
+const Footer = () => {
+  return (
+    <footer className="bg-gradient-to-b from-[#000A0F] to-[#001621] pt-24 pb-10 text-white">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-white/10 pb-16 mb-8">
+         {/* Column 1 */}
+         <div>
+            <h4 className="text-xs font-bold tracking-widest text-[#8493A6] mb-6 uppercase">Get Started</h4>
+            <ul className="space-y-4 text-sm font-medium">
+              <li><Link href="/signup" className="hover:text-[#FF6B35] transition-colors">Get the app</Link></li>
+              <li><Link href="/login" className="hover:text-[#FF6B35] transition-colors">Log in</Link></li>
+            </ul>
+         </div>
+         {/* Column 2 */}
+         <div>
+            <h4 className="text-xs font-bold tracking-widest text-[#8493A6] mb-6 uppercase">About</h4>
+            <ul className="space-y-4 text-sm font-medium">
+              <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">About us</Link></li>
+              <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Careers</Link></li>
+              <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">News & press</Link></li>
+              <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Stories</Link></li>
+            </ul>
+         </div>
+         {/* Column 3 */}
+         <div>
+            <h4 className="text-xs font-bold tracking-widest text-[#8493A6] mb-6 uppercase">Features</h4>
+            <ul className="space-y-4 text-sm font-medium">
+              <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Travel Planner</Link></li>
+              <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">AI Trip Planner</Link></li>
+              <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Travel Tracker</Link></li>
+              <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Travel Books</Link></li>
+            </ul>
+         </div>
+         {/* Column 4 */}
+         <div>
+            <h4 className="text-xs font-bold tracking-widest text-[#8493A6] mb-6 uppercase">Help & Support</h4>
+            <ul className="space-y-4 text-sm font-medium">
+              <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Help Center</Link></li>
+              <li><Link href="#" className="hover:text-[#FF6B35] transition-colors">Contact us</Link></li>
+            </ul>
+         </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs font-medium text-[#8493A6]">
+        <div className="flex gap-4 mb-6 md:mb-0 items-center">
+          <span>© 2026 NomadFlow</span>
+          <span>·</span>
+          <Link href="#" className="hover:text-white transition-colors">Terms</Link>
+          <span>·</span>
+          <Link href="#" className="hover:text-white transition-colors">Privacy</Link>
+          <span>·</span>
+          <Link href="#" className="hover:text-white transition-colors">Cookies</Link>
         </div>
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs font-medium">
-          <div className="flex gap-4 mb-4 md:mb-0">
-            <span>© 2026 NomadFlow</span>
-            <span>·</span>
-            <Link href="#" className="hover:text-gray-900 transition-colors">Terms</Link>
-            <span>·</span>
-            <Link href="#" className="hover:text-gray-900 transition-colors">Privacy</Link>
-          </div>
-          <div className="flex gap-4">
-            <span className="hover:text-[#FF6B35] cursor-pointer transition-colors">Instagram</span>
-            <span className="hover:text-[#FF6B35] cursor-pointer transition-colors">TikTok</span>
-          </div>
+        <div className="flex gap-6 items-center">
+           <a href="#" aria-label="TikTok" className="text-[#8493A6] hover:text-[#FF6B35] transition-colors">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9.1.12 2.58-1.04 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.03-12.07z"/>
+              </svg>
+           </a>
+           <a href="#" aria-label="Instagram" className="text-[#8493A6] hover:text-[#FF6B35] transition-colors">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+           </a>
         </div>
-      </footer>
-    </main>
+      </div>
+    </footer>
   );
-}
+};
