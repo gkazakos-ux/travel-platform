@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 const Navbar = () => {
@@ -31,44 +31,52 @@ const Navbar = () => {
 };
 
 export default function NomadFlowLanding() {
-  // Δημιουργούμε ένα reference για να ξέρει το Framer Motion πότε σκρολάρουμε το Hero
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
+  // Χρησιμοποιούμε state για να παρακολουθούμε το scroll position
+  const [scrollProgress, setScrollProgress] = useState(0);
 
-  // ΕΔΩ ΓΙΝΕΤΑΙ Η ΜΑΓΕΙΑ ΤΟΥ POLARSTEPS:
-  // Καθώς το scroll πάει από το 0 στο 1, το scale (μέγεθος) μικραίνει από 1.25 σε 0.95
-  const scale = useTransform(scrollYProgress, [0, 1], [1.25, 0.95]);
-  // Οι γωνίες στρογγυλεύουν περισσότερο καθώς σκρολάρεις
-  const borderRadius = useTransform(scrollYProgress, [0, 1], ["0rem", "3rem"]);
-  // Το κείμενο και τα κουμπιά γίνονται fade out καθώς κατεβαίνεις
-  const opacityText = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  useEffect(() => {
+    const handleScroll = () => {
+      // Υπολογίζουμε πόσο έχει σκρολάρει ο χρήστης σε σχέση με το ύψος του Hero (περίπου 600px)
+      const totalHeight = 600;
+      const currentScroll = window.scrollY;
+      const progress = Math.min(currentScroll / totalHeight, 1);
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Υπολογίζουμε χειροκίνητα τις τιμές του Polarsteps Zoom Out
+  const currentScale = 1.25 - scrollProgress * 0.3; // Από 1.25 πέφτει στο 0.95
+  const currentRadius = `${scrollProgress * 3}rem`; // Από 0rem πάει σε 3rem στρογγυλάδα
+  const currentOpacity = 1 - scrollProgress * 2; // Το κείμενο εξαφανίζεται γρήγορα
 
   return (
-    <main ref={containerRef} className="min-h-screen bg-white relative">
+    <main className="min-h-screen bg-white relative">
       <Navbar />
 
-      {/* --- HERO SECTION WITH POLARSTEPS ZOOM OUT --- */}
-      <section className="relative h-[120vh] flex flex-col justify-between items-center overflow-hidden bg-black">
+      {/* --- HERO SECTION WITH CUSTOM ZOOM OUT (FIXED & SECURE) --- */}
+      <section className="relative h-[110vh] flex flex-col justify-between items-center overflow-hidden bg-black">
         
-        {/* Ο Καμβάς/Εικόνα που κάνει το Zoom Out βασισμένο στο Scroll */}
+        {/* Ο Καμβάς που κάνει Zoom Out με βάση το state μας */}
         <motion.div 
-          style={{ scale, borderRadius }}
-          className="absolute inset-0 w-full h-full overflow-hidden origin-center z-0"
+          style={{ 
+            scale: currentScale, 
+            borderRadius: currentRadius 
+          }}
+          className="absolute inset-0 w-full h-full overflow-hidden origin-center z-0 transition-all duration-75 ease-out"
         >
           <img 
             src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1800&q=90" 
             alt="Cinematic Travel Background" 
-            className="w-full h-full object-cover brightness-[65%] contrast-[105%]"
+            className="w-full h-full object-cover brightness-[60%] contrast-[105%]"
           />
         </motion.div>
 
-        {/* Το κείμενο του Hero που γίνεται fade out ομαλά */}
+        {/* Το κείμενο του Hero που ξεθωριάζει */}
         <motion.div 
-          style={{ opacity: opacityText }}
+          style={{ opacity: Math.max(currentOpacity, 0) }}
           className="relative z-10 text-center max-w-4xl mx-auto px-6 pt-52 flex flex-col items-center flex-grow justify-center"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold mb-6">
@@ -86,13 +94,13 @@ export default function NomadFlowLanding() {
           </Link>
         </motion.div>
 
-        {/* Μικρό indicator για το scroll στο κάτω μέρος */}
+        {/* Scroll Indicator */}
         <div className="relative z-10 pb-12 text-white/50 text-xs font-bold uppercase tracking-widest animate-bounce">
           Scroll down to explore ↓
         </div>
       </section>
 
-      {/* --- ΕΠΟΜΕΝΟ SECTION (ΕΜΦΑΝΙΖΕΤΑΙ ΜΟΛΙΣ ΓΙΝΕΙ ΤΟ ZOOM OUT) --- */}
+      {/* --- ΕΠΟΜΕΝΟ SECTION --- */}
       <section className="relative z-20 bg-[#F8F9FA] py-32 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-20">
@@ -104,7 +112,6 @@ export default function NomadFlowLanding() {
             </h2>
           </div>
 
-          {/* Simple Grid Demo */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-xl shadow-gray-200/30">
               <div className="w-12 h-12 bg-orange-50 text-[#FF6B35] rounded-2xl flex items-center justify-center text-xl font-bold mb-6">🗺️</div>
@@ -124,9 +131,8 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* Basic Footer to maintain layout */}
       <footer className="bg-white py-12 border-t border-gray-100 text-center text-xs text-gray-400 font-medium">
-        © 2026 NomadFlow. Engineered with premium motion controls.
+        © 2026 NomadFlow. Engineered with custom native scroll listeners.
       </footer>
     </main>
   );
