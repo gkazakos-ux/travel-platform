@@ -22,10 +22,10 @@ const Navbar = () => {
           <Link href="#" className="hover:text-[#FF6B35] transition-colors">Community</Link>
         </div>
         <div className="flex items-center gap-4">
-          <button className="text-sm font-semibold text-gray-900 px-4 py-2">Log In</button>
-          <button className="bg-[#FF6B35] text-white text-sm font-bold px-6 py-2.5 rounded-full hover:shadow-lg transition-all active:scale-95">
+          <Link href="/login" className="text-sm font-semibold text-gray-900 px-4 py-2">Log In</Link>
+          <Link href="/signup" className="bg-[#FF6B35] text-white text-sm font-bold px-6 py-2.5 rounded-full hover:shadow-lg transition-all active:scale-95">
             Start Planning
-          </button>
+          </Link>
         </div>
       </div>
     </nav>
@@ -52,9 +52,9 @@ const Hero = () => {
             Turn travel chaos into perfectly organized itineraries. Collaborate with friends, track budgets, and explore the world with absolute effortless control.
           </p>
           <div className="flex flex-wrap gap-4">
-            <button className="bg-[#FF6B35] text-white font-bold px-8 py-4 rounded-2xl shadow-xl shadow-orange-200 hover:-translate-y-1 transition-all active:scale-95">
+            <Link href="/signup" className="bg-[#FF6B35] text-white font-bold px-8 py-4 rounded-2xl shadow-xl shadow-orange-200 hover:-translate-y-1 transition-all active:scale-95">
               Start Your Journey
-            </button>
+            </Link>
             <button className="bg-gray-50 text-gray-900 font-bold px-8 py-4 rounded-2xl border border-gray-100 hover:bg-gray-100 transition-all flex items-center gap-2">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
               See How It Works
@@ -125,7 +125,8 @@ const BentoFeatures = () => {
         <motion.div variants={itemVariants} className="group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 h-[400px]">
           <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">✨</div>
           <h3 className="text-2xl font-bold text-gray-900 mb-4">AI Magic</h3>
-          <p className="text-gray-500">Get smart suggestions for hidden gems based on your group's vibe and previous trips.</p>
+          {/* ΔΙΟΡΘΩΘΗΚΕ Η ΑΠΟΣΤΡΟΦΟΣ ΕΔΩ (group&apos;s) */}
+          <p className="text-gray-500">Get smart suggestions for hidden gems based on your group&apos;s vibe and previous trips.</p>
         </motion.div>
 
         {/* Small Feature: Shared Budgets */}
@@ -148,7 +149,8 @@ const BentoFeatures = () => {
               <div>
                 <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">📵</div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Offline Mode</h3>
-                <p className="text-gray-500">Access your full itinerary even when you're off the grid in the mountains. No signal, no problem.</p>
+                {/* ΔΙΟΡΘΩΘΗΚΕ Η ΑΠΟΣΤΡΟΦΟΣ ΕΔΩ (you&apos;re) */}
+                <p className="text-gray-500">Access your full itinerary even when you&apos;re off the grid in the mountains. No signal, no problem.</p>
               </div>
               <div className="hidden md:block relative">
                  <div className="w-full h-48 bg-[#F8F9FA] rounded-2xl border border-dashed border-gray-200 flex items-center justify-center">
@@ -241,7 +243,6 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 pt-10 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center gap-6">
         <p className="text-xs text-gray-400 font-medium font-body">© 2024 NomadFlow. All rights reserved. Your journey, perfectly organized.</p>
         <div className="flex gap-6">
-          {/* Social Icons Placeholder */}
           <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-orange-50 hover:text-orange-500 transition-all cursor-pointer">𝕏</div>
           <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-orange-50 hover:text-orange-500 transition-all cursor-pointer"></div>
           <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-orange-50 hover:text-orange-500 transition-all cursor-pointer"></div>
@@ -274,9 +275,9 @@ export default function NomadFlowLanding() {
           <p className="text-lg text-gray-500 mb-10 max-w-lg mx-auto">
             Join thousands of travelers who have already transformed the way they plan. Create your first itinerary for free today.
           </p>
-          <button className="bg-[#FF6B35] text-white font-bold px-12 py-5 rounded-2xl shadow-xl shadow-orange-200 hover:-translate-y-1 transition-all active:scale-95 text-lg">
+          <Link href="/signup" className="inline-block bg-[#FF6B35] text-white font-bold px-12 py-5 rounded-2xl shadow-xl shadow-orange-200 hover:-translate-y-1 transition-all active:scale-95 text-lg">
             Start Planning Now
-          </button>
+          </Link>
         </motion.div>
       </section>
 
