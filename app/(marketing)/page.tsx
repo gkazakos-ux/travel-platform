@@ -56,9 +56,9 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center lg:text-left"
+          className="text-center lg:text-left animate-fade-in"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-100 text-orange-600 text-xs font-bold mb-6 animate-pulse">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-100 text-orange-600 text-xs font-bold mb-6">
             ✨ NomadFlow 2.0 is live
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight leading-[1.1] mb-6">
@@ -75,33 +75,25 @@ const Hero = () => {
           </div>
         </motion.div>
         
-        {/* ΔΕΞΙ ΜΕΡΟΣ: ΠΡΑΓΜΑΤΙΚΟ CSS 3D TRANSFORMS ANIMATION */}
-        <div className="relative h-[500px] bg-gradient-to-br from-orange-50 via-white to-indigo-50 rounded-[3rem] border border-gray-100 overflow-hidden flex items-center justify-center shadow-inner perspective-[1000px]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-100/30 to-transparent blur-xl"></div>
+        {/* ΔΕΞΙ ΜΕΡΟΣ: ΕΝΣΩΜΑΤΩΣΗ ΤΟΥ 3D SPLINE */}
+        <div className="relative h-[450px] md:h-[550px] w-full bg-gradient-to-br from-orange-50/50 via-white to-indigo-50/30 rounded-[3rem] border border-gray-100 shadow-inner overflow-hidden">
+          <iframe 
+            src="https://my.spline.design/traveliconsanimated-fc9a1e095a5f17d3d2ea5bc8e8bb39bb/" 
+            frameBorder="0" 
+            width="100%" 
+            height="100%" 
+            className="absolute inset-0 scale-105 pointer-events-auto"
+            title="NomadFlow 3D Travel Asset"
+          />
           
-          {/* 3D Περιστρεφόμενος Κύβος/Σφαίρα UI */}
-          <div className="w-64 h-64 relative transform-style-3d animate-[spin_20s_linear_infinite] flex items-center justify-center">
-            {/* 3D Δακτύλιοι */}
-            <div className="absolute w-72 h-72 border-2 border-dashed border-[#FF6B35]/30 rounded-full rotate-X-[60deg] rotate-Y-[20deg]"></div>
-            <div className="absolute w-60 h-60 border border-indigo-300 rounded-full rotate-X-[20deg] rotate-Y-[70deg] animate-ping [animation-duration:4s]"></div>
-            
-            {/* Κεντρικό 3D Object */}
-            <div className="w-40 h-40 bg-gradient-to-tr from-[#FF6B35] to-amber-400 rounded-full shadow-[0_0_50px_rgba(255,107,53,0.4)] flex items-center justify-center text-5xl backface-hidden">
-               🌍
-            </div>
-          </div>
-
-          {/* Floating UI Card */}
+          {/* Μικρό Floating Badge που δένει το 3D με το UI */}
           <motion.div 
-            animate={{ y: [0, -15, 0], rotate: [2, -2, 2] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-10 left-10 bg-white/90 backdrop-blur-md p-5 rounded-2xl shadow-2xl border border-gray-100 flex items-center gap-4 z-20"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-4 py-3 rounded-xl shadow-xl border border-gray-50 flex items-center gap-3 z-10 pointer-events-none"
           >
-            <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center text-xl">🗺️</div>
-            <div>
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Live Map</p>
-              <p className="text-xs font-black text-gray-900">Updating live...</p>
-            </div>
+            <span className="text-lg">🧳</span>
+            <span className="text-xs font-black text-gray-800 tracking-tight">Interactive 3D Workspace</span>
           </motion.div>
         </div>
       </div>
@@ -117,7 +109,6 @@ const BentoFeatures = () => {
         <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mt-6 tracking-tight">Everything you need, in one place.</h2>
       </div>
 
-      {/* Bento Grid συνδεδεμένο με τα Scroll Animations (whileInView) */}
       <motion.div 
         variants={staggerContainer}
         initial="hidden"
@@ -125,10 +116,10 @@ const BentoFeatures = () => {
         viewport={{ once: true, margin: "-100px" }}
         className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6"
       >
-        {/* Κάρτα 1: Interactive Maps (Με 3D Hover Effect) */}
+        {/* Κάρτα 1: Interactive Maps */}
         <motion.div 
           variants={fadeInUp} 
-          whileHover={{ scale: 1.02, rotateX: 2, rotateY: -2, z: 10 }}
+          whileHover={{ scale: 1.02, rotateX: 1, rotateY: -1 }}
           className="md:col-span-2 group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 relative overflow-hidden h-[400px] cursor-pointer"
         >
           <div className="relative z-10">
@@ -136,7 +127,7 @@ const BentoFeatures = () => {
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Interactive Maps</h3>
             <p className="text-gray-500 max-w-sm">Visualize your entire journey. Pin spots, calculate routes, and optimize your daily exploring with ease.</p>
           </div>
-          <div className="absolute right-0 bottom-0 w-2/3 h-2/3 bg-gray-50 rounded-tl-3xl border-t border-l border-gray-100 group-hover:scale-105 transition-transform duration-500 overflow-hidden">
+          <div className="absolute right-0 bottom-0 w-2/3 h-2/3 bg-gray-50 rounded-tl-3xl border-t border-l border-gray-100 overflow-hidden">
              <div className="w-full h-full opacity-40 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#FF6B35]/20 to-transparent"></div>
           </div>
         </motion.div>
@@ -144,7 +135,7 @@ const BentoFeatures = () => {
         {/* Κάρτα 2: AI Magic */}
         <motion.div 
           variants={fadeInUp}
-          whileHover={{ scale: 1.03, rotateY: 3 }}
+          whileHover={{ scale: 1.03, rotateY: 2 }}
           className="group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 h-[400px] cursor-pointer"
         >
           <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">✨</div>
@@ -155,7 +146,7 @@ const BentoFeatures = () => {
         {/* Κάρτα 3: Shared Budgets */}
         <motion.div 
           variants={fadeInUp}
-          whileHover={{ scale: 1.03, rotateY: -3 }}
+          whileHover={{ scale: 1.03, rotateY: -2 }}
           className="group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 h-[400px] cursor-pointer"
         >
           <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">💰</div>
@@ -169,7 +160,7 @@ const BentoFeatures = () => {
         {/* Κάρτα 4: Offline Mode */}
         <motion.div 
           variants={fadeInUp}
-          whileHover={{ scale: 1.02, rotateX: -2 }}
+          whileHover={{ scale: 1.02, rotateX: -1 }}
           className="md:col-span-2 group bg-white rounded-[2rem] p-10 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 h-[400px] flex items-center cursor-pointer"
         >
            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -179,8 +170,8 @@ const BentoFeatures = () => {
                 <p className="text-gray-500">Access your full itinerary even when you&apos;re off the grid in the mountains. No signal, no problem.</p>
               </div>
               <div className="hidden md:block relative w-full h-full">
-                 <div className="w-full h-48 bg-[#F8F9FA] group-hover:bg-orange-50/50 rounded-2xl border border-dashed border-gray-200 group-hover:border-orange-200 flex items-center justify-center transition-colors">
-                    <span className="text-gray-300 group-hover:text-orange-400 font-bold uppercase tracking-widest text-[10px] transition-colors">Itinerary Syncing...</span>
+                 <div className="w-full h-48 bg-[#F8F9FA] group-hover:bg-orange-50/50 rounded-2xl border border-dashed border-gray-200 flex items-center justify-center">
+                    <span className="text-gray-300 group-hover:text-orange-400 font-bold uppercase tracking-widest text-[10px]">Itinerary Syncing...</span>
                  </div>
               </div>
            </div>
@@ -273,7 +264,7 @@ export default function NomadFlowLanding() {
       <SocialMarquee />
       <BentoFeatures />
       
-      {/* Bottom CTA Section με Scroll Trigger */}
+      {/* Bottom CTA Section */}
       <section className="py-32 px-6 bg-[#F8F9FA]">
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
