@@ -33,7 +33,7 @@ const PhoneMockup = ({ activeStep }: { activeStep: number }) => {
         <div className="absolute top-16 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-gray-100">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-xl overflow-hidden border border-orange-200">
-              <img src="https://framerusercontent.com/images/2nyTYvfYE5cURVPtIIvP8lpQh0.jpg?width=2000&height=1334" alt="Avatar" className="w-full h-full object-cover" />
+              <img src="https://www.getlostmagazine.com/wp-content/uploads/2023/11/GL12-HOT5-1-1500x900-1.jpg" alt="Avatar" className="w-full h-full object-cover" />
             </div>
             <div>
               <p className="text-xs font-bold text-gray-900">Emma Miller</p>
