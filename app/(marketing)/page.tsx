@@ -124,122 +124,159 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-{/* --- SECTION 2: INTERACTIVE STICKY PHONE SCROLL STORY (WITH SCROLL SNAP) --- */}
-      {/* Προσθέσαμε snap-y snap-mandatory και h-[300vh] για να δώσουμε «βάθος» στο scroll */}
-      <section className="relative h-[300vh] bg-[#F8F9FA] snap-y snap-mandatory">
-        <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-12">
-            
-            {/* Αριστερή Στήλη: Κείμενα */}
-            <div className="flex-1 text-center md:text-left mb-10 md:mb-0 relative h-[220px] md:h-[350px]">
-              {/* STEP 1 */}
-              <div className={`absolute inset-0 w-full transition-all duration-500 flex flex-col justify-center ${activeStep === 0 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 -translate-x-10 pointer-events-none z-0'}`}>
-                <div className="text-xs font-bold text-[#FF6B35] tracking-widest uppercase mb-2">01 / 03 · PLAN</div>
-                <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Plan your next adventure</h2>
-                <p className="text-base text-gray-500 max-w-md">Get personalized travel tips, map out your route before you go, and explore without the blank page syndrome.</p>
-                <div className="flex gap-1.5 mt-6 justify-center md:justify-start"><span className="w-6 h-1.5 bg-[#FF6B35] rounded-full"></span><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span></div>
-              </div>
+import { useEffect, useRef, useState } from "react";
 
-              {/* STEP 2 */}
-              <div className={`absolute inset-0 w-full transition-all duration-500 flex flex-col justify-center ${activeStep === 1 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 -translate-x-10 pointer-events-none z-0'}`}>
-                <div className="text-xs font-bold text-[#FF6B35] tracking-widest uppercase mb-2">02 / 03 · TRACK</div>
-                <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Capture your route automatically</h2>
-                <p className="text-base text-gray-500 max-w-md">Keep your phone in your pocket. NomadFlow tracks and maps your route, stats, and milestones completely offline.</p>
-                <div className="flex gap-1.5 mt-6 justify-center md:justify-start"><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span><span className="w-6 h-1.5 bg-[#FF6B35] rounded-full"></span><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span></div>
-              </div>
+// Μέσα στο component σου, αντικατέστησε το Section 2 με αυτό:
+export default function LocationStepsSection() {
+  const [activeStep, setActiveStep] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-              {/* STEP 3 */}
-              <div className={`absolute inset-0 w-full transition-all duration-500 flex flex-col justify-center ${activeStep === 2 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 -translate-x-10 pointer-events-none z-0'}`}>
-                <div className="text-xs font-bold text-[#FF6B35] tracking-widest uppercase mb-2">03 / 03 · RELIVE</div>
-                <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Relive the adventure</h2>
-                <p className="text-base text-gray-500 max-w-md">See your travel stats grow, look back at your pins, and generate full keep-sakes of your travel lifetime.</p>
-                <div className="flex gap-1.5 mt-6 justify-center md:justify-start"><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span><span className="w-6 h-1.5 bg-[#FF6B35] rounded-full"></span></div>
-              </div>
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      
+      // Παίρνουμε τη θέση του section σε σχέση με το viewport
+      const rect = containerRef.current.getBoundingClientRect();
+      const sectionHeight = rect.height;
+      
+      // Πόσο τοις εκατό του section έχει σκρολαριστεί
+      // Το rect.top θα είναι αρνητικό καθώς σκρολάρουμε προς τα κάτω
+      const scrolledIntoSection = -rect.top;
+      const totalScrollableDist = sectionHeight - window.innerHeight;
+
+      if (totalScrollableDist > 0) {
+        const progress = scrolledIntoSection / totalScrollableDist;
+        
+        // Μοιράζουμε το progress (0 έως 1) στα 3 βήματα
+        if (progress < 0.33) {
+          setActiveStep(0);
+        } else if (progress >= 0.33 && progress < 0.66) {
+          setActiveStep(1);
+        } else {
+          setActiveStep(2);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    {/* --- SECTION 2: INTERACTIVE STICKY PHONE SCROLL STORY --- */}
+    {/* Αφαιρέθηκε τελείως το snap-y. Το ύψος h-[260vh] εγγυάται αρκετό χώρο για να «κλειδώσει» το sticky */}
+    <section ref={containerRef} className="relative h-[260vh] bg-[#F8F9FA]">
+      
+      {/* Το sticky container κρατάει το κινητό και τα κείμενα πάντα κεντραρισμένα στην οθόνη */}
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-12">
+          
+          {/* Αριστερή Στήλη: Κείμενα (Σταθερό ύψος για να μην κουνιέται το layout) */}
+          <div className="flex-1 text-center md:text-left mb-6 md:mb-0 relative h-[250px] md:h-[350px]">
+            {/* STEP 1 */}
+            <div className={`absolute inset-0 w-full transition-all duration-500 flex flex-col justify-center ${activeStep === 0 ? 'opacity-100 translate-y-0 z-10' : 'opacity-0 translate-y-4 pointer-events-none z-0'}`}>
+              <div className="text-xs font-bold text-[#FF6B35] tracking-widest uppercase mb-2">01 / 03 · PLAN</div>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Plan your next adventure</h2>
+              <p className="text-base text-gray-500 max-w-md mx-auto md:mx-0">Get personalized travel tips, map out your route before you go, and explore without the blank page syndrome.</p>
+              <div className="flex gap-1.5 mt-6 justify-center md:justify-start"><span className="w-6 h-1.5 bg-[#FF6B35] rounded-full transition-all"></span><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span></div>
             </div>
 
-            {/* Δεξιά Στήλη: Το Κινητό */}
-            <div className="flex-1 flex justify-center z-20 relative">
-              <div className="relative w-[290px] md:w-[320px] h-[580px] md:h-[640px] bg-black rounded-[3rem] border-[8px] border-gray-900 shadow-2xl overflow-hidden flex flex-col text-gray-900">
-                <div className="absolute top-0 inset-x-0 h-6 flex justify-center z-[60] pointer-events-none">
-                  <div className="w-28 h-4 bg-gray-900 rounded-b-2xl"></div>
-                </div>
-
-                <div className="relative w-full h-full bg-[#f4f6f8] pt-6 flex flex-col overflow-hidden">
-                  
-                  {/* STEP 0 SCREEN LAYOUT (MAP VIEW) */}
-                  <div className={`absolute inset-0 w-full h-full bg-[#E5E9EC] transition-all duration-500 p-4 pt-10 flex flex-col justify-between ${activeStep === 0 ? "opacity-100 scale-100 z-30" : "opacity-0 scale-95 pointer-events-none z-0"}`}>
-                    <div className="absolute inset-0 z-0">
-                      <svg className="w-full h-full text-[#FF6B35]" viewBox="0 0 280 570" fill="none">
-                        <path stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,8" d="M40 480 C 110 400, 70 320, 150 280 S 230 200, 210 90" />
-                        <circle cx="40" cy="480" r="7" fill="#00293D" stroke="white" strokeWidth="2"/>
-                        <circle cx="150" cy="280" r="7" fill="#FF6B35" stroke="white" strokeWidth="2"/>
-                        <circle cx="210" cy="90" r="7" fill="#00293D" stroke="white" strokeWidth="2"/>
-                      </svg>
-                    </div>
-                    <div className="relative z-10 bg-white/95 backdrop-blur rounded-2xl p-3.5 shadow-md flex items-center gap-3 border border-white">
-                      <div className="w-8 h-8 rounded-full bg-[#FF6B35] text-white flex items-center justify-center font-bold text-sm shadow-sm">M</div>
-                      <div className="text-left flex-1">
-                        <p className="text-xs font-black text-gray-900">8 days in Portugal</p>
-                        <p className="text-[10px] text-gray-400 font-bold">Maria · Lisbon → Porto</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* STEP 1 & 2 SCREEN LAYOUT */}
-                  <div className={`absolute inset-0 w-full h-full p-3 pt-8 flex flex-col gap-3 transition-all duration-500 ${activeStep >= 1 ? "opacity-100 z-40" : "opacity-0 pointer-events-none"}`}>
-                    <div className={`flex flex-col gap-2 transition-all duration-700 transform ${activeStep === 1 ? "translate-y-0 opacity-100 h-auto" : "-translate-y-12 opacity-0 h-0 overflow-hidden"}`}>
-                      <div className="bg-white rounded-2xl p-2.5 flex items-center gap-3 border border-gray-100 shadow-xs">
-                        <div className="w-10 h-10 bg-gray-200 rounded-xl bg-cover bg-center" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=100')` }}></div>
-                        <div className="flex-1 text-left"><p className="text-[11px] font-bold">Tokyo in a week</p><div className="h-1.5 w-16 bg-gray-100 rounded mt-1"></div></div>
-                      </div>
-                    </div>
-
-                    <div className="bg-white rounded-[2rem] shadow-lg border border-gray-100 overflow-hidden flex flex-col flex-1 bg-white">
-                      <div className="h-32 bg-gray-900 relative overflow-hidden flex-shrink-0">
-                        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400" className="absolute inset-0 w-full h-full object-cover opacity-60" alt="" />
-                        <svg className="absolute inset-0 w-full h-full text-white" fill="none" viewBox="0 0 290 150">
-                          <path stroke="currentColor" strokeWidth="3" strokeLinecap="round" d="M28 110 C 90 70, 130 120, 175 60 S 245 40, 268 28" />
-                          <circle cx="28" cy="110" r="4" fill="#FF6B35" stroke="white" strokeWidth="1.5"/>
-                          <circle cx="175" cy="60" r="4" fill="#FF6B35" stroke="white" strokeWidth="1.5"/>
-                        </svg>
-                        <span className={`absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 rounded-full text-white bg-[#FF6B35] shadow transition-transform duration-500 ${activeStep === 2 ? "scale-100 opacity-100" : "scale-70 opacity-0"}`}>♥ Saved</span>
-                      </div>
-
-                      <div className="p-4 flex flex-col justify-between flex-1 text-left">
-                        <div>
-                          <div className="flex items-center gap-2.5 mb-2">
-                            <span className="w-7 h-7 bg-orange-100 rounded-full flex items-center justify-center font-bold text-xs text-[#FF6B35]">M</span>
-                            <div className="leading-none"><b className="text-xs font-black">Maria</b><br/><small className="text-[9px] text-gray-400">Lisbon → Porto</small></div>
-                          </div>
-                          <div className="text-sm font-black text-gray-900 mb-1.5">8 days in Portugal</div>
-                        </div>
-
-                        <div className="mt-4 flex flex-col gap-3">
-                          <div className="flex gap-2 w-full">
-                            <button className={`flex-1 flex items-center justify-center gap-1.5 text-[10px] font-bold border rounded-xl py-2 transition-all ${activeStep === 1 ? "bg-[#FF6B35]/10 text-[#FF6B35] border-[#FF6B35]/20" : "bg-gray-50 text-gray-400 border-gray-100"}`}>Save</button>
-                            <button className={`flex-1 flex items-center justify-center gap-1.5 text-[10px] font-bold rounded-xl py-2 border transition-all ${activeStep === 2 ? "bg-[#00293D] text-white border-[#00293D] scale-105" : "bg-white text-gray-700 border-gray-200"}`}>Copy</button>
-                          </div>
-                          <div className={`text-[9px] font-bold p-2 text-center rounded-xl transition-all duration-700 border ${activeStep === 2 ? "bg-emerald-50 text-emerald-700 border-emerald-100 translate-y-0 opacity-100" : "bg-gray-50 text-transparent border-transparent translate-y-2 opacity-0"}`}>
-                            ✓ Saved to your trips · Draft ready to edit
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
+            {/* STEP 2 */}
+            <div className={`absolute inset-0 w-full transition-all duration-500 flex flex-col justify-center ${activeStep === 1 ? 'opacity-100 translate-y-0 z-10' : 'opacity-0 translate-y-4 pointer-events-none z-0'}`}>
+              <div className="text-xs font-bold text-[#FF6B35] tracking-widest uppercase mb-2">02 / 03 · TRACK</div>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Capture your route automatically</h2>
+              <p className="text-base text-gray-500 max-w-md mx-auto md:mx-0">Keep your phone in your pocket. NomadFlow tracks and maps your route, stats, and milestones completely offline.</p>
+              <div className="flex gap-1.5 mt-6 justify-center md:justify-start"><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span><span className="w-6 h-1.5 bg-[#FF6B35] rounded-full transition-all"></span><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span></div>
             </div>
 
+            {/* STEP 3 */}
+            <div className={`absolute inset-0 w-full transition-all duration-500 flex flex-col justify-center ${activeStep === 2 ? 'opacity-100 translate-y-0 z-10' : 'opacity-0 translate-y-4 pointer-events-none z-0'}`}>
+              <div className="text-xs font-bold text-[#FF6B35] tracking-widest uppercase mb-2">03 / 03 · RELIVE</div>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Relive the adventure</h2>
+              <p className="text-base text-gray-500 max-w-md mx-auto md:mx-0">See your travel stats grow, look back at your pins, and generate full keep-sakes of your travel lifetime.</p>
+              <div className="flex gap-1.5 mt-6 justify-center md:justify-start"><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span><span className="w-2 h-1.5 bg-gray-300 rounded-full"></span><span className="w-6 h-1.5 bg-[#FF6B35] rounded-full transition-all"></span></div>
+            </div>
           </div>
+
+          {/* Δεξιά Στήλη: Το Κινητό (Πάντα σταθερό στο κέντρο λόγω του sticky) */}
+          <div className="flex-1 flex justify-center z-20 relative">
+            <div className="relative w-[280px] md:w-[320px] h-[540px] md:h-[620px] bg-black rounded-[3rem] border-[8px] border-gray-900 shadow-2xl overflow-hidden flex flex-col text-gray-900">
+              <div className="absolute top-0 inset-x-0 h-6 flex justify-center z-[60] pointer-events-none">
+                <div className="w-28 h-4 bg-gray-900 rounded-b-2xl"></div>
+              </div>
+
+              <div className="relative w-full h-full bg-[#f4f6f8] pt-6 flex flex-col overflow-hidden">
+                
+                {/* STEP 0 SCREEN LAYOUT (MAP VIEW) */}
+                <div className={`absolute inset-0 w-full h-full bg-[#E5E9EC] transition-all duration-500 p-4 pt-10 flex flex-col justify-between ${activeStep === 0 ? "opacity-100 scale-100 z-30" : "opacity-0 scale-95 pointer-events-none z-0"}`}>
+                  <div className="absolute inset-0 z-0">
+                    <svg className="w-full h-full text-[#FF6B35]" viewBox="0 0 280 570" fill="none">
+                      <path stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,8" d="M40 480 C 110 400, 70 320, 150 280 S 230 200, 210 90" />
+                      <circle cx="40" cy="480" r="7" fill="#00293D" stroke="white" strokeWidth="2"/>
+                      <circle cx="150" cy="280" r="7" fill="#FF6B35" stroke="white" strokeWidth="2"/>
+                      <circle cx="210" cy="90" r="7" fill="#00293D" stroke="white" strokeWidth="2"/>
+                    </svg>
+                  </div>
+                  <div className="relative z-10 bg-white/95 backdrop-blur rounded-2xl p-3.5 shadow-md flex items-center gap-3 border border-white">
+                    <div className="w-8 h-8 rounded-full bg-[#FF6B35] text-white flex items-center justify-center font-bold text-sm shadow-sm">M</div>
+                    <div className="text-left flex-1">
+                      <p className="text-xs font-black text-gray-900">8 days in Portugal</p>
+                      <p className="text-[10px] text-gray-400 font-bold">Maria · Lisbon → Porto</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* STEP 1 & 2 SCREEN LAYOUT */}
+                <div className={`absolute inset-0 w-full h-full p-3 pt-8 flex flex-col gap-3 transition-all duration-500 ${activeStep >= 1 ? "opacity-100 z-40" : "opacity-0 pointer-events-none"}`}>
+                  <div className={`flex flex-col gap-2 transition-all duration-700 transform ${activeStep === 1 ? "translate-y-0 opacity-100 h-auto" : "-translate-y-12 opacity-0 h-0 overflow-hidden"}`}>
+                    <div className="bg-white rounded-2xl p-2.5 flex items-center gap-3 border border-gray-100 shadow-xs">
+                      <div className="w-10 h-10 bg-gray-200 rounded-xl bg-cover bg-center" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=100')` }}></div>
+                      <div className="flex-1 text-left"><p className="text-[11px] font-bold">Tokyo in a week</p><div className="h-1.5 w-16 bg-gray-100 rounded mt-1"></div></div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-[2rem] shadow-lg border border-gray-100 overflow-hidden flex flex-col flex-1 bg-white">
+                    <div className="h-32 bg-gray-900 relative overflow-hidden flex-shrink-0">
+                      <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400" className="absolute inset-0 w-full h-full object-cover opacity-60" alt="" />
+                      <svg className="absolute inset-0 w-full h-full text-white" fill="none" viewBox="0 0 290 150">
+                        <path stroke="currentColor" strokeWidth="3" strokeLinecap="round" d="M28 110 C 90 70, 130 120, 175 60 S 245 40, 268 28" />
+                        <circle cx="28" cy="110" r="4" fill="#FF6B35" stroke="white" strokeWidth="1.5"/>
+                        <circle cx="175" cy="60" r="4" fill="#FF6B35" stroke="white" strokeWidth="1.5"/>
+                      </svg>
+                      <span className={`absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 rounded-full text-white bg-[#FF6B35] shadow transition-transform duration-500 ${activeStep === 2 ? "scale-100 opacity-100" : "scale-70 opacity-0"}`}>♥ Saved</span>
+                    </div>
+
+                    <div className="p-4 flex flex-col justify-between flex-1 text-left">
+                      <div>
+                        <div className="flex items-center gap-2.5 mb-2">
+                          <span className="w-7 h-7 bg-orange-100 rounded-full flex items-center justify-center font-bold text-xs text-[#FF6B35]">M</span>
+                          <div className="leading-none"><b className="text-xs font-black">Maria</b><br/><small className="text-[9px] text-gray-400">Lisbon → Porto</small></div>
+                        </div>
+                        <div className="text-sm font-black text-gray-900 mb-1.5">8 days in Portugal</div>
+                      </div>
+
+                      <div className="mt-4 flex flex-col gap-3">
+                        <div className="flex gap-2 w-full">
+                          <button className={`flex-1 flex items-center justify-center gap-1.5 text-[10px] font-bold border rounded-xl py-2 transition-all ${activeStep === 1 ? "bg-[#FF6B35]/10 text-[#FF6B35] border-[#FF6B35]/20" : "bg-gray-50 text-gray-400 border-gray-100"}`}>Save</button>
+                          <button className={`flex-1 flex items-center justify-center gap-1.5 text-[10px] font-bold rounded-xl py-2 border transition-all ${activeStep === 2 ? "bg-[#00293D] text-white border-[#00293D] scale-105" : "bg-white text-gray-700 border-gray-200"}`}>Copy</button>
+                        </div>
+                        <div className={`text-[9px] font-bold p-2 text-center rounded-xl transition-all duration-700 border ${activeStep === 2 ? "bg-emerald-50 text-emerald-700 border-emerald-100 translate-y-0 opacity-100" : "bg-gray-50 text-transparent border-transparent translate-y-2 opacity-0"}`}>
+                          ✓ Saved to your trips · Draft ready to edit
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
-
-        {/* ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΛΕΙΔΙ: Αόρατα snap points που αναγκάζουν τον browser να σταματήσει το scroll */}
-        <div className="absolute top-0 h-screen w-full snap-start pointer-events-none" />
-        <div className="absolute top-[100vh] h-screen w-full snap-start pointer-events-none" />
-        <div className="absolute top-[200vh] h-screen w-full snap-start pointer-events-none" />
-      </section>
-
+      </div>
+    </section>
+  );
+}
       {/* --- SECTION 3: TRAVEL BOOK --- */}
       <section className="py-32 bg-white text-center px-6 border-t border-gray-100">
         <div className="max-w-4xl mx-auto">
