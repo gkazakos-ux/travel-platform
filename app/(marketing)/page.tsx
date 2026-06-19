@@ -315,22 +315,23 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- SECTION 5: ΚΑΘΑΡΟ, ΑΣΦΑΛΕΣ REVIEWS SECTION --- */}
-      {/* Ήσυχο γκρι background, ο τίτλος είναι ΠΑΝΤΑ καθαρός και οι κάρτες δεν κρύβονται ποτέ */}
-      <section className="bg-[#F8F9FA] pt-24 pb-20 text-center relative z-20">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] tracking-tight mb-12">
+{/* --- SECTION 5: ΚΑΘΑΡΟ REVIEWS SECTION --- */}
+      {/* ΑΥΞΗΘΗΚΕ ΤΟ pt-32 ΓΙΑ ΝΑ ΔΩΣΕΙ ΧΩΡΟ ΚΑΤΩ ΑΠΟ ΤΟΝ ΤΙΤΛΟ */}
+      <section className="bg-[#F8F9FA] pt-32 pb-20 text-center relative z-20">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] tracking-tight">
           Loved by <br /> explorers everywhere
         </h2>
 
         <div className="relative w-full max-w-7xl mx-auto px-6 overflow-visible">
-          {/* Navigation Arrows */}
+          {/* Arrows */}
           <button onClick={() => carouselScroll("left")} className="absolute left-4 md:left-12 top-1/2 -translate-y-1/2 z-50 bg-[#00293D] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-xl font-bold active:scale-95 transition-transform">❮</button>
           <button onClick={() => carouselScroll("right")} className="absolute right-4 md:right-12 top-1/2 -translate-y-1/2 z-50 bg-[#00293D] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-xl font-bold active:scale-95 transition-transform">❯</button>
 
-          {/* Carousel Track */}
+          {/* Carousel Tracks */}
+          {/* ΑΛΛΑΓΗ ΕΔΩ: mt-16 ΑΝΤΙ ΓΙΑ mt-4 ΓΙΑ ΝΑ ΠΕΣΟΥΝ ΠΙΟ ΚΑΤΩ ΟΙ ΚΑΡΤΕΣ */}
           <div 
             ref={sliderRef}
-            className="flex items-center gap-6 overflow-x-auto scrollbar-none px-[5%] md:px-[15%] py-4 overflow-visible"
+            className="flex items-center gap-6 overflow-x-auto scrollbar-none px-[5%] md:px-[15%] py-4 mt-16 overflow-visible"
             style={{
               maskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
               WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)"
