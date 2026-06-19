@@ -56,7 +56,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center lg:text-left animate-fade-in"
+          className="text-center lg:text-left"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-100 text-orange-600 text-xs font-bold mb-6">
             ✨ NomadFlow 2.0 is live
@@ -75,10 +75,10 @@ const Hero = () => {
           </div>
         </motion.div>
         
-        {/* ΔΕΞΙ ΜΕΡΟΣ: ΕΝΣΩΜΑΤΩΣΗ ΤΟΥ 3D SPLINE */}
+        {/* ΔΕΞΙ ΜΕΡΟΣ: ΕΔΩ ΜΠΗΚΕ Η ΔΙΚΗ ΣΟΥ 3D ΒΑΛΙΤΣΑ GO TRAVEL */}
         <div className="relative h-[450px] md:h-[550px] w-full bg-gradient-to-br from-orange-50/50 via-white to-indigo-50/30 rounded-[3rem] border border-gray-100 shadow-inner overflow-hidden">
           <iframe 
-            src="https://my.spline.design/traveliconsanimated-fc9a1e095a5f17d3d2ea5bc8e8bb39bb/" 
+            src="https://my.spline.design/luggageanimatedcopy-bd00fb95db504ca03ba5b6826477e600/" 
             frameBorder="0" 
             width="100%" 
             height="100%" 
@@ -86,7 +86,6 @@ const Hero = () => {
             title="NomadFlow 3D Travel Asset"
           />
           
-          {/* Μικρό Floating Badge που δένει το 3D με το UI */}
           <motion.div 
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
