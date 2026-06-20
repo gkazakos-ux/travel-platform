@@ -5,22 +5,68 @@
   --foreground: #171717;
 }
 
+/* ─── NomadFlow Design Tokens ──────────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --color-background:     var(--background);
+  --color-foreground:     var(--foreground);
+
+  /* Brand palette */
+  --color-nomad-orange:   #FF6B35;
+  --color-nomad-orange-d: #e85520;
+  --color-nomad-dark:     #0B2027;
+  --color-nomad-darker:   #001621;
+  --color-nomad-cream:    #F3EFE6;
+  --color-nomad-gray:     #F8F9FA;
+  --color-nomad-teal:     #00DB9A;
+  --color-nomad-blue:     #62B6C7;
+
+  /* Typography */
+  --font-sans:    var(--font-inter, ui-sans-serif, system-ui, sans-serif);
+  --font-heading: var(--font-syne, system-ui, sans-serif);
+  --font-mono:    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ─── Base ─────────────────────────────────────────────────────── */
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #FF6B35 #001621;
+}
+
+/* Smooth scroll — only when motion is acceptable */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* ─── Utilities ─────────────────────────────────────────────────── */
+.text-balance { text-wrap: balance; }
+.text-pretty  { text-wrap: pretty; }
+
+/* Dot-grid used in StatsCard world map */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Cinematic noise grain overlay — layered on dark sections via ::after */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+  /* Inline SVG feTurbulence noise texture */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  mix-blend-mode: overlay;
+  opacity: 0.6;
 }
