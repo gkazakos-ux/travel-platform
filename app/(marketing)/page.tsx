@@ -2,7 +2,47 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
+
+// --- ΔΕΔΟΜΕΝΑ ΓΙΑ ΤΟ ΝΕΟ SECTION 3 (CAROUSEL) ---
+const destinations = [
+  {
+    id: 1,
+    country: "THAILAND",
+    title: "Phi Phi Islands",
+    location: "Thailand",
+    description: "Thailand is a Southeast Asian country. It's known for tropical beaches, opulent royal palaces, ancient ruins and ornate temples displaying figures of Buddha.",
+    bgImage: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=1920&q=80",
+    thumb: "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: 2,
+    country: "INDONESIA",
+    title: "Broken Beach, Bali",
+    location: "Indonesia",
+    description: "Explore the breathtaking cliffs and natural arches of Nusa Penida. Indonesia offers thousands of volcanic islands with unique landscapes and vibrant cultures.",
+    bgImage: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?auto=format&fit=crop&w=1920&q=80",
+    thumb: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: 3,
+    country: "INDIA",
+    title: "Kerala Backwaters",
+    location: "India",
+    description: "India is a vast South Asian country with diverse terrain. Cruise through the peaceful, palm-lined backwaters of Kerala on a traditional houseboat.",
+    bgImage: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1920&q=80",
+    thumb: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: 4,
+    country: "JAPAN",
+    title: "Mount Fuji",
+    location: "Japan",
+    description: "Experience the harmonious blend of ancient traditions and futuristic innovation. From tranquil zen gardens to the bustling neon streets of Tokyo.",
+    bgImage: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1920&q=80",
+    thumb: "https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=600&q=80"
+  }
+];
 
 // --- 1. NAVBAR COMPONENT (Liquid / Glassmorphism) ---
 const Navbar = () => {
@@ -127,10 +167,12 @@ const Navbar = () => {
 // --- 2. MAIN LANDING PAGE COMPONENT ---
 export default function NomadFlowLanding() {
   const [activeStep, setActiveStep] = useState(0);
+  const [activeDest, setActiveDest] = useState(0);
   
   const heroRef = useRef<HTMLDivElement>(null);
   const storyRef = useRef<HTMLElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const destCarouselRef = useRef<HTMLDivElement>(null);
 
   // --- FRAMER MOTION: HERO SCROLL ---
   const { scrollYProgress: heroProgress } = useScroll({
@@ -168,6 +210,50 @@ export default function NomadFlowLanding() {
       const { scrollLeft, clientWidth } = sliderRef.current;
       const scrollTo = direction === "left" ? scrollLeft - clientWidth * 0.4 : scrollLeft + clientWidth * 0.4;
       sliderRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+    }
+  };
+
+  // --- ΕΞΥΠΝΟ SCROLL CAROUSEL (Κεντράρει πάντα την κάρτα) ---
+  const scrollToDest = (index: number) => {
+    setActiveDest(index);
+    if (destCarouselRef.current) {
+      const container = destCarouselRef.current;
+      const cards = Array.from(container.children) as HTMLElement[];
+      if (cards[index]) {
+        const card = cards[index];
+        const containerWidth = container.offsetWidth;
+        const cardLeft = card.offsetLeft;
+        const cardWidth = card.offsetWidth;
+        
+        container.scrollTo({
+          left: cardLeft - containerWidth / 2 + cardWidth / 2,
+          behavior: "smooth"
+        });
+      }
+    }
+  };
+
+  const handleDestScroll = () => {
+    if (!destCarouselRef.current) return;
+    const container = destCarouselRef.current;
+    const scrollLeft = container.scrollLeft;
+    const containerCenter = scrollLeft + container.offsetWidth / 2;
+    
+    let closestIndex = activeDest;
+    let minDistance = Infinity;
+
+    Array.from(container.children).forEach((child, index) => {
+      const card = child as HTMLElement;
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(containerCenter - cardCenter);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    if (closestIndex !== activeDest) {
+      setActiveDest(closestIndex);
     }
   };
 
@@ -246,21 +332,19 @@ export default function NomadFlowLanding() {
       <section ref={storyRef} className="relative h-[300vh] bg-[#F3EFE6]">
         <div className="sticky top-0 h-screen overflow-hidden flex items-center w-full">
           
-          {/* ΕΔΩ ΜΠΗΚΑΝ ΟΙ ΛΕΞΕΙΣ: Μέσα στο sticky container, με absolute θέση, ώστε να ΜΗΝ σπρώχνουν το grid */}
-{/* --- ΓΙΓΑΝΤΙΑΙΕΣ ΛΕΞΕΙΣ ΦΟΝΤΟΥ (ΜΕΤΑΤΟΠΙΣΜΕΝΕΣ ΑΡΙΣΤΕΡΑ) --- */}
-<div className="absolute inset-0 flex items-center justify-start pl-[2vw] pointer-events-none z-0 overflow-hidden">
-  <div className={`absolute text-[20vw] fongitt-black tracking-tighter text-[#0B2027]/[0.03] select-none uppercase font-mono transition-all duration-1000 whitespace-nowrap ${activeStep === 0 ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
-    DISCOVER
-  </div>
-  <div className={`absolute text-[24vw] font-black tracking-tighter text-[#0B2027]/[0.03] select-none uppercase font-mono transition-all duration-1000 whitespace-nowrap ${activeStep === 1 ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
-    SAVE
-  </div>
-  <div className={`absolute text-[24vw] font-black tracking-tighter text-[#0B2027]/[0.03] select-none uppercase font-mono transition-all duration-1000 whitespace-nowrap ${activeStep === 2 ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
-    COPY
-  </div>
-</div>
+          {/* ΓΙΓΑΝΤΙΑΙΕΣ ΛΕΞΕΙΣ ΦΟΝΤΟΥ */}
+          <div className="absolute inset-0 flex items-center justify-start pl-[2vw] pointer-events-none z-0 overflow-hidden">
+            <div className={`absolute text-[20vw] font-black tracking-tighter text-[#0B2027]/[0.03] select-none uppercase font-mono transition-all duration-1000 whitespace-nowrap ${activeStep === 0 ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+              DISCOVER
+            </div>
+            <div className={`absolute text-[24vw] font-black tracking-tighter text-[#0B2027]/[0.03] select-none uppercase font-mono transition-all duration-1000 whitespace-nowrap ${activeStep === 1 ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+              SAVE
+            </div>
+            <div className={`absolute text-[24vw] font-black tracking-tighter text-[#0B2027]/[0.03] select-none uppercase font-mono transition-all duration-1000 whitespace-nowrap ${activeStep === 2 ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+              COPY
+            </div>
+          </div>
 
-          {/* Το κυρίως περιεχόμενο (Κείμενο + Κινητό) κάθεται από πάνω (z-10) */}
           <div className="max-w-7xl mx-auto w-full px-6 relative z-10">
             <div className="grid md:grid-cols-2 gap-16 items-center">
 
@@ -420,95 +504,123 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- SECTION 3: TRAVEL FOOTPRINT --- */}
-      <section className="py-32 bg-white text-center px-6 border-t border-gray-100 overflow-hidden">
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-5xl mx-auto"
-        >
-          <h3 className="text-[#FF6B35] font-bold tracking-[0.2em] uppercase text-xs mb-4">Relive your journey</h3>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#00293D] mb-6 tracking-tight">
-            Your world, at a glance.
-          </h2>
-          <p className="text-lg md:text-xl text-gray-500 mb-16 max-w-2xl mx-auto leading-relaxed">
-            Every country, every city, every step. NomadFlow automatically builds a beautiful, interactive map of your entire travel history.
-          </p>
+      {/* --- SECTION 3: NEW DESTINATIONS CAROUSEL --- */}
+      <section className="relative w-full h-[100vh] bg-[#0B2027] overflow-hidden flex items-center">
+        
+        {/* Dynamic Background Image with Crossfade */}
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={activeDest}
+            src={destinations[activeDest].bgImage}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          />
+        </AnimatePresence>
+
+        {/* Dark Overlays for Text Readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60 z-10 pointer-events-none" />
+
+        <div className="relative z-20 max-w-7xl mx-auto w-full px-6 flex flex-col md:flex-row items-center gap-10">
           
-          <div className="relative w-full max-w-4xl mx-auto group">
-            <div className="absolute inset-0 bg-[#FF6B35]/10 blur-[100px] rounded-full transform scale-90 -z-10 transition-transform duration-700 group-hover:scale-105"></div>
+          {/* Left Content (Title, Info, Button) */}
+          <div className="w-full md:w-1/2 flex flex-col relative mt-20 md:mt-0">
             
-            <motion.div 
-              whileHover={{ y: -8 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="relative z-10 bg-[#001621] rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(0,22,33,0.5)] overflow-hidden flex flex-col border border-[#00293D]"
-            >
-              {/* Χάρτης και Διαδρομή */}
-              <div className="relative w-full h-[250px] md:h-[350px] bg-[#000A0F] overflow-hidden flex items-center justify-center">
-                <div className="absolute inset-0 opacity-[0.2] bg-[url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg')] bg-cover bg-center"></div>
-                
-                <svg className="absolute inset-0 w-full h-full z-20" viewBox="0 0 800 400" fill="none" preserveAspectRatio="xMidYMid slice">
-                  <motion.path 
-                    initial={{ pathLength: 0 }}
-                    whileInView={{ pathLength: 1 }}
-                    transition={{ duration: 2.5, ease: "easeInOut" }}
-                    stroke="#FF6B35" 
-                    strokeWidth="3" 
-                    strokeLinecap="round" 
-                    strokeDasharray="8,8" 
-                    d="M 150 180 Q 300 80, 450 220 T 700 120" 
-                  />
-                  <circle cx="150" cy="180" r="6" fill="#00DB9A" />
-                  <circle cx="450" cy="220" r="5" fill="#fff" />
-                  <circle cx="700" cy="120" r="6" fill="#FF6B35" />
+            {/* Vertical Pagination Indicator */}
+            <div className="absolute -left-8 md:-left-12 top-0 bottom-0 flex-col items-center justify-between py-2 hidden md:flex">
+               <div className="w-[1px] h-[30%] bg-white/30"></div>
+               <div className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white text-xs font-bold backdrop-blur-md shadow-lg">
+                 {activeDest + 1}
+               </div>
+               <div className="w-[1px] h-[30%] bg-white/30"></div>
+            </div>
 
-                  {/* Tooltips Τοποθεσιών */}
-                  <g transform="translate(140, 145)">
-                    <rect width="60" height="22" rx="11" fill="#ffffff" fillOpacity="0.1" stroke="#ffffff" strokeOpacity="0.2"/>
-                    <text x="30" y="15" fill="white" fontSize="10" fontWeight="bold" textAnchor="middle">Mexico</text>
-                  </g>
-                  <g transform="translate(690, 85)">
-                    <rect width="50" height="22" rx="11" fill="#ffffff" fillOpacity="0.1" stroke="#ffffff" strokeOpacity="0.2"/>
-                    <text x="25" y="15" fill="white" fontSize="10" fontWeight="bold" textAnchor="middle">Japan</text>
-                  </g>
-                </svg>
-              </div>
-
-              {/* Γυάλινη Μπάρα Στατιστικών */}
-              <div className="bg-white/5 backdrop-blur-xl border-t border-white/10 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-8 z-30">
-                
-                <div className="flex items-center gap-4 w-full md:w-auto">
-                  <div className="w-12 h-12 rounded-full bg-[#FF6B35] flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                    M
-                  </div>
-                  <div className="text-left">
-                    <h4 className="text-lg font-bold text-white leading-tight">Maria&apos;s Journey</h4>
-                    <p className="text-xs text-gray-400 font-medium mt-0.5">Since 2024</p>
-                  </div>
-                </div>
-
-                <div className="flex justify-between md:justify-end gap-8 md:gap-12 w-full md:w-auto px-4 md:px-0 border-t border-white/10 md:border-t-0 pt-6 md:pt-0">
-                  <div className="text-center md:text-left">
-                    <div className="text-3xl md:text-4xl font-black text-white mb-1">14</div>
-                    <div className="text-[9px] font-bold tracking-widest text-gray-400 uppercase">Countries</div>
-                  </div>
-                  <div className="text-center md:text-left">
-                    <div className="text-3xl md:text-4xl font-black text-white mb-1">42</div>
-                    <div className="text-[9px] font-bold tracking-widest text-[#00DB9A] uppercase">Cities</div>
-                  </div>
-                  <div className="text-center md:text-left">
-                    <div className="text-3xl md:text-4xl font-black text-white mb-1">180</div>
-                    <div className="text-[9px] font-bold tracking-widest text-[#62B6C7] uppercase">Days</div>
-                  </div>
-                </div>
-
-              </div>
-            </motion.div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeDest}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col"
+              >
+                <h2 className="text-6xl md:text-[7rem] font-black text-white leading-none tracking-tighter mb-6 drop-shadow-2xl uppercase">
+                  {destinations[activeDest].country}
+                </h2>
+                <p className="text-white/80 text-sm md:text-base max-w-md leading-relaxed mb-10 drop-shadow-md">
+                  {destinations[activeDest].description}
+                </p>
+                <button className="bg-[#FF6B35] text-white px-8 py-3.5 rounded-full font-bold text-sm hover:scale-105 transition-transform flex items-center gap-3 shadow-[0_10px_20px_rgba(255,107,53,0.3)] w-max">
+                  Explore
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-        </motion.div>
+          {/* Right Content - Cards Carousel */}
+          <div className="w-full md:w-1/2 relative mt-8 md:mt-0">
+            <div
+              ref={destCarouselRef}
+              className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-none pb-8 pt-4 px-[5vw] md:px-[10vw]"
+              onScroll={handleDestScroll}
+            >
+              {destinations.map((dest, i) => (
+                <div
+                  key={dest.id}
+                  onClick={() => scrollToDest(i)}
+                  className={`min-w-[260px] h-[360px] rounded-[2rem] overflow-hidden relative snap-center shrink-0 cursor-pointer transition-all duration-500 border border-white/20 select-none ${
+                    activeDest === i 
+                      ? 'scale-100 shadow-[0_20px_40px_rgba(0,0,0,0.5)] z-20' 
+                      : 'scale-90 opacity-60 hover:opacity-100 z-10'
+                  }`}
+                >
+                  <img src={dest.thumb} alt={dest.title} className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none" />
+                  
+                  {/* Bookmark Icon */}
+                  <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 text-white shadow-sm">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                  </div>
+
+                  {/* Card Info */}
+                  <div className="absolute bottom-6 left-6 right-6 text-white pointer-events-none">
+                     <div className="flex gap-1.5 mb-3">
+                       {destinations.map((_, dotIdx) => (
+                         <div key={dotIdx} className={`h-1.5 rounded-full transition-all duration-300 ${dotIdx === activeDest && activeDest === i ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`}></div>
+                       ))}
+                     </div>
+                     <h3 className="text-xl font-bold leading-tight mb-1">{dest.title}</h3>
+                     <p className="text-[10px] uppercase tracking-widest font-semibold text-white/70">{dest.location}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Navigation Arrows */}
+            <div className="absolute -bottom-2 md:-bottom-6 right-4 flex gap-4 z-30">
+               <button onClick={() => {
+                  const newIdx = activeDest === 0 ? destinations.length - 1 : activeDest - 1;
+                  setActiveDest(newIdx);
+                  destCarouselRef.current?.scrollTo({ left: newIdx * 284, behavior: 'smooth' });
+               }} className="group w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ease-out hover:scale-110 active:scale-95 bg-white/10 backdrop-blur-[40px] backdrop-saturate-[150%] border border-white/20 text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.4),inset_0_0_0_1px_rgba(255,255,255,0.1)] hover:bg-white/20 hover:border-white/30">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1"><path d="M15 18l-6-6 6-6"/></svg>
+               </button>
+               <button onClick={() => {
+                  const newIdx = (activeDest + 1) % destinations.length;
+                  setActiveDest(newIdx);
+                  destCarouselRef.current?.scrollTo({ left: newIdx * 284, behavior: 'smooth' });
+               }} className="group w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ease-out hover:scale-110 active:scale-95 bg-white/10 backdrop-blur-[40px] backdrop-saturate-[150%] border border-white/20 text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.4),inset_0_0_0_1px_rgba(255,255,255,0.1)] hover:bg-white/20 hover:border-white/30">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"><path d="M9 18l6-6-6-6"/></svg>
+               </button>
+            </div>
+
+          </div>
+
+        </div>
       </section>
 
       {/* --- SECTION 4: MASONRY BENTO GRID --- */}
