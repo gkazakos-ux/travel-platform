@@ -12,8 +12,9 @@
 
 import { Navbar }      from "@/components/landing/Navbar";
 import { Hero }        from "@/components/landing/Hero";
-import { HowItWorks }  from "@/components/landing/HowItWorks";
-import { StatsCard }   from "@/components/landing/StatsCard";
+import { HowItWorks }          from "@/components/landing/HowItWorks";
+import { DestinationShowcase } from "@/components/landing/DestinationShowcase";
+import { StatsCard }           from "@/components/landing/StatsCard";
 import { BentoGrid }   from "@/components/landing/BentoGrid";
 import { Footer }      from "@/components/landing/Footer";
 
@@ -30,7 +31,10 @@ export default function NomadFlowLanding() {
         {/* 2 — How it works (300 vh): sticky 3-step story */}
         <HowItWorks />
 
-        {/* 3 — Stats (viewport height ~): dark card, world map, counters */}
+        {/* 3 — Destination Showcase (400 vh): scroll-driven fullscreen destination reveal */}
+        <DestinationShowcase />
+
+        {/* 4 — Stats (viewport height ~): dark card, world map, counters */}
         <StatsCard />
 
         {/*

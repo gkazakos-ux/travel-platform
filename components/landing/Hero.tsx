@@ -131,7 +131,7 @@ export function Hero() {
       >
         {/* ── Dark cinematic card — scales & gains corner radius on scroll ── */}
         <motion.div
-          className="absolute inset-0 grain overflow-hidden"
+          className="absolute inset-0 overflow-hidden"
           style={{
             scale:       noAnim ? 1 : cardScale,
             borderRadius: noAnim ? "0px" : cardRadius,
@@ -170,10 +170,7 @@ export function Hero() {
             }}
           >
             {/* Eyebrow badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0  }}
-              transition={{ delay: 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            <div
               className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full
                          bg-white/8 border border-white/12 backdrop-blur-sm"
             >
@@ -181,13 +178,10 @@ export function Hero() {
               <span className="text-white/80 text-xs font-medium tracking-wider uppercase">
                 47,000 trips shared this week
               </span>
-            </motion.div>
+            </div>
 
             {/* Main headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0  }}
-              transition={{ delay: 0.35, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            <h1
               className="text-balance text-5xl sm:text-6xl md:text-7xl lg:text-[88px]
                          font-black text-white leading-[0.92] tracking-[-0.04em] mb-6"
               style={{ fontFamily: "var(--font-heading)" }}
@@ -195,26 +189,16 @@ export function Hero() {
               Travel stories
               <br />
               <em className="not-italic text-[#FF6B35]">worth copying.</em>
-            </motion.h1>
+            </h1>
 
             {/* Sub-headline */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0  }}
-              transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="text-white/55 text-base sm:text-lg max-w-md leading-relaxed mb-10"
-            >
+            <p className="text-white/55 text-base sm:text-lg max-w-md leading-relaxed mb-10">
               Real itineraries from real explorers.
               Discover, save, and one-tap copy any trip — then make it yours.
-            </motion.p>
+            </p>
 
             {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0  }}
-              transition={{ delay: 0.65, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-3 flex-wrap justify-center"
-            >
+            <div className="flex items-center gap-3 flex-wrap justify-center">
               <a
                 href="/signup"
                 className="flex items-center gap-2 px-7 py-3.5 rounded-full
@@ -237,7 +221,7 @@ export function Hero() {
                 See how it works
                 <ChevronDown />
               </a>
-            </motion.div>
+            </div>
           </motion.div>
 
           {/* ── Phone Mockup — rises from below as text fades out ── */}
