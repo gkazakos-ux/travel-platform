@@ -201,11 +201,20 @@ export default function NomadFlowLanding() {
     offset: ["start start", "end end"],
   });
 
-  const headingOpacity = useTransform(flightProgress, [0.02, 0.20], [1, 0]);
-  const headingY       = useTransform(flightProgress, [0.02, 0.20], ["0px", "-50px"]);
-  const overlayOpacity = useTransform(flightProgress, [0.60, 0.88], [1, 0]);
-  const destBlur       = useTransform(flightProgress, [0.65, 0.95], ["blur(30px)", "blur(0px)"]);
-  const destScale      = useTransform(flightProgress, [0.65, 0.95], [1.1, 1]);
+  // Section is h-[500vh]; plane occupies first 60% (≈300vh), destinations cycle last 45%
+  const headingOpacity = useTransform(flightProgress, [0.012, 0.12], [1, 0]);
+  const headingY       = useTransform(flightProgress, [0.012, 0.12], ["0px", "-50px"]);
+  const overlayOpacity = useTransform(flightProgress, [0.36, 0.528], [1, 0]);
+  const destBlur       = useTransform(flightProgress, [0.39, 0.57], ["blur(30px)", "blur(0px)"]);
+  const destScale      = useTransform(flightProgress, [0.39, 0.57], [1.1, 1]);
+
+  // Auto-advance destinations based on scroll (p 0.55→1.0, 4 dests × ~56vh each)
+  useMotionValueEvent(flightProgress, "change", (p) => {
+    if (p >= 0.55) {
+      const newDest = Math.min(destinations.length - 1, Math.floor(((p - 0.55) / 0.45) * destinations.length));
+      setActiveDest(newDest);
+    }
+  });
 
   useEffect(() => {
     let trailLen = 0;
@@ -227,7 +236,8 @@ export default function NomadFlowLanding() {
       const W = svg.clientWidth;
       const H = svg.clientHeight;
 
-      const planeProg = Math.min(1, p / 0.62);
+      // Section is 500vh; plane flies in first 60% of scroll (≈300vh)
+      const planeProg = Math.min(1, p / 0.372);
 
       const pt  = trail.getPointAtLength(planeProg * trailLen);
       const pt2 = trail.getPointAtLength(Math.min(trailLen, planeProg * trailLen + 1.5));
@@ -245,7 +255,8 @@ export default function NomadFlowLanding() {
       trail.style.strokeDasharray = trailLen.toString();
       trail.style.strokeDashoffset = (trailLen * (1 - planeProg)).toString();
 
-      const layerOpacity = p < 0.52 ? 1 : Math.max(0, 1 - (p - 0.52) / 0.13);
+      // Fade plane layer as it exits (scaled: 0.312→0.390)
+      const layerOpacity = p < 0.312 ? 1 : Math.max(0, 1 - (p - 0.312) / 0.078);
       planeLayer.style.opacity = layerOpacity.toString();
     };
     window.addEventListener("scroll", handleFlightScroll, { passive: true });
@@ -573,7 +584,7 @@ export default function NomadFlowLanding() {
       </section>
 
       {/* --- SECTION 3: COMBINED FLIGHT + DESTINATIONS --- */}
-      <section ref={flightSecRef} className="relative h-[300vh] z-20 bg-[#0B2027]">
+      <section ref={flightSecRef} className="relative h-[500vh] z-20 bg-[#0B2027]">
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
           {/* LAYER 1: Destinations (revealed after plane exits) */}
