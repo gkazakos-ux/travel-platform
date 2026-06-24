@@ -201,20 +201,37 @@ export default function NomadFlowLanding() {
     offset: ["start start", "end end"],
   });
 
-  // Section is h-[500vh]; plane occupies first 60% (≈300vh), destinations cycle last 45%
-  const headingOpacity = useTransform(flightProgress, [0.012, 0.12], [1, 0]);
-  const headingY       = useTransform(flightProgress, [0.012, 0.12], ["0px", "-50px"]);
-  const overlayOpacity = useTransform(flightProgress, [0.36, 0.528], [1, 0]);
-  const destBlur       = useTransform(flightProgress, [0.39, 0.57], ["blur(30px)", "blur(0px)"]);
-  const destScale      = useTransform(flightProgress, [0.39, 0.57], [1.1, 1]);
+  // h-[500vh] → scrollable = 400vh. Preserve original vh distances (based on 300vh section):
+  // heading fade: 4vh→40vh = 0.01→0.10 of 400vh
+  // sky overlay fade: 120vh→176vh = 0.30→0.44
+  // dest reveal: 130vh→190vh = 0.325→0.475
+  // dest cycling: 220vh→400vh (p=0.55→1.0), 4 dests × 45vh each
+  const headingOpacity = useTransform(flightProgress, [0.01, 0.10], [1, 0]);
+  const headingY       = useTransform(flightProgress, [0.01, 0.10], ["0px", "-50px"]);
+  const overlayOpacity = useTransform(flightProgress, [0.30, 0.44], [1, 0]);
+  const destBlur       = useTransform(flightProgress, [0.325, 0.475], ["blur(30px)", "blur(0px)"]);
+  const destScale      = useTransform(flightProgress, [0.325, 0.475], [1.1, 1]);
 
-  // Auto-advance destinations based on scroll (p 0.55→1.0, 4 dests × ~56vh each)
+  // Auto-advance destinations via scroll (p 0.55→1.0 = 220vh→400vh, 45vh per dest)
   useMotionValueEvent(flightProgress, "change", (p) => {
     if (p >= 0.55) {
       const newDest = Math.min(destinations.length - 1, Math.floor(((p - 0.55) / 0.45) * destinations.length));
       setActiveDest(newDest);
     }
   });
+
+  // Sync carousel card whenever activeDest changes (from scroll or click)
+  useEffect(() => {
+    const container = destCarouselRef.current;
+    if (!container) return;
+    const cards = Array.from(container.children) as HTMLElement[];
+    const card = cards[activeDest];
+    if (!card) return;
+    container.scrollTo({
+      left: card.offsetLeft - container.offsetWidth / 2 + card.offsetWidth / 2,
+      behavior: "smooth",
+    });
+  }, [activeDest]);
 
   useEffect(() => {
     let trailLen = 0;
@@ -236,8 +253,9 @@ export default function NomadFlowLanding() {
       const W = svg.clientWidth;
       const H = svg.clientHeight;
 
-      // Section is 500vh; plane flies in first 60% of scroll (≈300vh)
-      const planeProg = Math.min(1, p / 0.372);
+      // Plane completes at 124vh of scroll (same as original 300vh section)
+      // 124vh / 400vh total = 0.31
+      const planeProg = Math.min(1, p / 0.31);
 
       const pt  = trail.getPointAtLength(planeProg * trailLen);
       const pt2 = trail.getPointAtLength(Math.min(trailLen, planeProg * trailLen + 1.5));
@@ -255,8 +273,8 @@ export default function NomadFlowLanding() {
       trail.style.strokeDasharray = trailLen.toString();
       trail.style.strokeDashoffset = (trailLen * (1 - planeProg)).toString();
 
-      // Fade plane layer as it exits (scaled: 0.312→0.390)
-      const layerOpacity = p < 0.312 ? 1 : Math.max(0, 1 - (p - 0.312) / 0.078);
+      // Fade plane at 104vh→130vh of scroll = 0.26→0.325 of 400vh
+      const layerOpacity = p < 0.26 ? 1 : Math.max(0, 1 - (p - 0.26) / 0.065);
       planeLayer.style.opacity = layerOpacity.toString();
     };
     window.addEventListener("scroll", handleFlightScroll, { passive: true });
