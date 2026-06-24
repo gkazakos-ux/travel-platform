@@ -174,6 +174,12 @@ export default function NomadFlowLanding() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const destCarouselRef = useRef<HTMLDivElement>(null);
 
+  // --- COMBINED FLIGHT & DESTINATION REFS ---
+  const flightSecRef = useRef<HTMLElement>(null);
+  const planeRef = useRef<HTMLDivElement>(null);
+  const planeTrailRef = useRef<SVGPathElement>(null);
+  const planeLayerRef = useRef<HTMLDivElement>(null);
+
   // --- FRAMER MOTION: HERO SCROLL ---
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
@@ -188,6 +194,68 @@ export default function NomadFlowLanding() {
   const phoneOpacity = useTransform(heroProgress, [0.2, 0.6], [0, 1]);
   const phoneY = useTransform(heroProgress, [0.2, 1], ["80px", "0px"]);
   const phoneScale = useTransform(heroProgress, [0.2, 1], [0.85, 1]);
+
+  // --- FRAMER MOTION: COMBINED FLIGHT + DESTINATIONS SCROLL ---
+  const { scrollYProgress: flightProgress } = useScroll({
+    target: flightSecRef,
+    offset: ["start start", "end end"],
+  });
+
+  const headingOpacity = useTransform(flightProgress, [0.02, 0.20], [1, 0]);
+  const headingY       = useTransform(flightProgress, [0.02, 0.20], ["0px", "-50px"]);
+  const overlayOpacity = useTransform(flightProgress, [0.60, 0.88], [1, 0]);
+  const destBlur       = useTransform(flightProgress, [0.65, 0.95], ["blur(30px)", "blur(0px)"]);
+  const destScale      = useTransform(flightProgress, [0.65, 0.95], [1.1, 1]);
+
+  useEffect(() => {
+    let trailLen = 0;
+    const handleFlightScroll = () => {
+      const stage = flightSecRef.current;
+      const plane = planeRef.current;
+      const trail = planeTrailRef.current;
+      const planeLayer = planeLayerRef.current;
+      if (!stage || !plane || !trail || !planeLayer) return;
+
+      const total = stage.offsetHeight - window.innerHeight;
+      const top = stage.getBoundingClientRect().top;
+      const p = total > 0 ? Math.max(0, Math.min(1, -top / total)) : 0;
+
+      if (!trailLen) trailLen = trail.getTotalLength();
+      const svg = trail.ownerSVGElement;
+      if (!svg) return;
+
+      const W = svg.clientWidth;
+      const H = svg.clientHeight;
+
+      const planeProg = Math.min(1, p / 0.62);
+
+      const pt  = trail.getPointAtLength(planeProg * trailLen);
+      const pt2 = trail.getPointAtLength(Math.min(trailLen, planeProg * trailLen + 1.5));
+
+      const px = (pt.x / 1200) * W;
+      const py = (pt.y / 700) * H;
+      const dx = ((pt2.x - pt.x) / 1200) * W;
+      const dy = ((pt2.y - pt.y) / 700) * H;
+      const ang = (Math.atan2(dy, dx) * 180) / Math.PI;
+
+      plane.style.left = px + "px";
+      plane.style.top = py + "px";
+      plane.style.transform = `translate(-50%,-50%) rotate(${ang}deg)`;
+
+      trail.style.strokeDasharray = trailLen.toString();
+      trail.style.strokeDashoffset = (trailLen * (1 - planeProg)).toString();
+
+      const layerOpacity = p < 0.52 ? 1 : Math.max(0, 1 - (p - 0.52) / 0.13);
+      planeLayer.style.opacity = layerOpacity.toString();
+    };
+    window.addEventListener("scroll", handleFlightScroll, { passive: true });
+    window.addEventListener("resize", handleFlightScroll);
+    handleFlightScroll();
+    return () => {
+      window.removeEventListener("scroll", handleFlightScroll);
+      window.removeEventListener("resize", handleFlightScroll);
+    };
+  }, []);
 
   // --- FRAMER MOTION: STICKY STORY SCROLL ---
   const { scrollYProgress: storyProgress } = useScroll({
@@ -504,120 +572,198 @@ export default function NomadFlowLanding() {
         </div>
       </section>
 
-      {/* --- SECTION 3: NEW DESTINATIONS CAROUSEL --- */}
-      <section className="relative w-full h-[100vh] bg-[#0B2027] overflow-hidden flex items-center">
-        
-        {/* Dynamic Background Image with Crossfade */}
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={activeDest}
-            src={destinations[activeDest].bgImage}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="absolute inset-0 w-full h-full object-cover z-0"
-          />
-        </AnimatePresence>
+      {/* --- SECTION 3: COMBINED FLIGHT + DESTINATIONS --- */}
+      <section ref={flightSecRef} className="relative h-[300vh] z-20 bg-[#0B2027]">
+        <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
-        {/* Dark Overlays for Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60 z-10 pointer-events-none" />
-
-        <div className="relative z-20 max-w-7xl mx-auto w-full px-6 flex flex-col md:flex-row items-center gap-10">
-          
-          {/* Left Content (Title, Info, Button) */}
-          <div className="w-full md:w-1/2 flex flex-col relative mt-20 md:mt-0">
-            
-            {/* Vertical Pagination Indicator */}
-            <div className="absolute -left-8 md:-left-12 top-0 bottom-0 flex-col items-center justify-between py-2 hidden md:flex">
-               <div className="w-[1px] h-[30%] bg-white/30"></div>
-               <div className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white text-xs font-bold backdrop-blur-md shadow-lg">
-                 {activeDest + 1}
-               </div>
-               <div className="w-[1px] h-[30%] bg-white/30"></div>
-            </div>
-
+          {/* LAYER 1: Destinations (revealed after plane exits) */}
+          <motion.div
+            className="absolute inset-0 w-full h-full"
+            style={{ filter: destBlur, scale: destScale }}
+          >
             <AnimatePresence mode="wait">
-              <motion.div
+              <motion.img
                 key={activeDest}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-col"
-              >
-                <h2 className="text-6xl md:text-[7rem] font-black text-white leading-none tracking-tighter mb-6 drop-shadow-2xl uppercase">
-                  {destinations[activeDest].country}
-                </h2>
-                <p className="text-white/80 text-sm md:text-base max-w-md leading-relaxed mb-10 drop-shadow-md">
-                  {destinations[activeDest].description}
-                </p>
-                <button className="bg-[#FF6B35] text-white px-8 py-3.5 rounded-full font-bold text-sm hover:scale-105 transition-transform flex items-center gap-3 shadow-[0_10px_20px_rgba(255,107,53,0.3)] w-max">
-                  Explore
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                </button>
-              </motion.div>
+                src={destinations[activeDest].bgImage}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-0 w-full h-full object-cover z-0"
+              />
             </AnimatePresence>
-          </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60 z-10 pointer-events-none" />
 
-          {/* Right Content - Cards Carousel */}
-          <div className="w-full md:w-1/2 relative mt-8 md:mt-0">
-            <div
-              ref={destCarouselRef}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-none pb-8 pt-4 px-[5vw] md:px-[10vw]"
-              onScroll={handleDestScroll}
-            >
-              {destinations.map((dest, i) => (
-                <div
-                  key={dest.id}
-                  onClick={() => scrollToDest(i)}
-                  className={`min-w-[260px] h-[360px] rounded-[2rem] overflow-hidden relative snap-center shrink-0 cursor-pointer transition-all duration-500 border border-white/20 select-none ${
-                    activeDest === i 
-                      ? 'scale-100 shadow-[0_20px_40px_rgba(0,0,0,0.5)] z-20' 
-                      : 'scale-90 opacity-60 hover:opacity-100 z-10'
-                  }`}
-                >
-                  <img src={dest.thumb} alt={dest.title} className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none" />
-                  
-                  {/* Bookmark Icon */}
-                  <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 text-white shadow-sm">
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+            <div className="relative z-20 max-w-7xl mx-auto w-full h-full px-6 flex flex-col md:flex-row items-center gap-10">
+              <div className="w-full md:w-1/2 flex flex-col relative mt-20 md:mt-0">
+                <div className="absolute -left-8 md:-left-12 top-0 bottom-0 flex-col items-center justify-between py-2 hidden md:flex">
+                  <div className="w-[1px] h-[30%] bg-white/30"></div>
+                  <div className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white text-xs font-bold backdrop-blur-md shadow-lg">
+                    {activeDest + 1}
                   </div>
-
-                  {/* Card Info */}
-                  <div className="absolute bottom-6 left-6 right-6 text-white pointer-events-none">
-                     <div className="flex gap-1.5 mb-3">
-                       {destinations.map((_, dotIdx) => (
-                         <div key={dotIdx} className={`h-1.5 rounded-full transition-all duration-300 ${dotIdx === activeDest && activeDest === i ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`}></div>
-                       ))}
-                     </div>
-                     <h3 className="text-xl font-bold leading-tight mb-1">{dest.title}</h3>
-                     <p className="text-[10px] uppercase tracking-widest font-semibold text-white/70">{dest.location}</p>
-                  </div>
+                  <div className="w-[1px] h-[30%] bg-white/30"></div>
                 </div>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeDest}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex flex-col"
+                  >
+                    <h2 className="text-6xl md:text-[7rem] font-black text-white leading-none tracking-tighter mb-6 drop-shadow-2xl uppercase">
+                      {destinations[activeDest].country}
+                    </h2>
+                    <p className="text-white/80 text-sm md:text-base max-w-md leading-relaxed mb-10 drop-shadow-md">
+                      {destinations[activeDest].description}
+                    </p>
+                    <button className="bg-[#FF6B35] text-white px-8 py-3.5 rounded-full font-bold text-sm hover:scale-105 transition-transform flex items-center gap-3 shadow-[0_10px_20px_rgba(255,107,53,0.3)] w-max">
+                      Explore
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              <div className="w-full md:w-1/2 relative mt-8 md:mt-0">
+                <div
+                  ref={destCarouselRef}
+                  className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-none pb-8 pt-4 px-[5vw] md:px-[10vw]"
+                  onScroll={handleDestScroll}
+                >
+                  {destinations.map((dest, i) => (
+                    <div
+                      key={dest.id}
+                      onClick={() => scrollToDest(i)}
+                      className={`min-w-[260px] h-[360px] rounded-[2rem] overflow-hidden relative snap-center shrink-0 cursor-pointer transition-all duration-500 border border-white/20 select-none ${
+                        activeDest === i
+                          ? 'scale-100 shadow-[0_20px_40px_rgba(0,0,0,0.5)] z-20'
+                          : 'scale-90 opacity-60 hover:opacity-100 z-10'
+                      }`}
+                    >
+                      <img src={dest.thumb} alt={dest.title} className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none" />
+                      <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 text-white shadow-sm">
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                      </div>
+                      <div className="absolute bottom-6 left-6 right-6 text-white pointer-events-none">
+                        <div className="flex gap-1.5 mb-3">
+                          {destinations.map((_, dotIdx) => (
+                            <div key={dotIdx} className={`h-1.5 rounded-full transition-all duration-300 ${dotIdx === activeDest && activeDest === i ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`}></div>
+                          ))}
+                        </div>
+                        <h3 className="text-xl font-bold leading-tight mb-1">{dest.title}</h3>
+                        <p className="text-[10px] uppercase tracking-widest font-semibold text-white/70">{dest.location}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="absolute -bottom-2 md:-bottom-6 right-4 flex gap-4 z-30">
+                  <button onClick={() => {
+                    const newIdx = activeDest === 0 ? destinations.length - 1 : activeDest - 1;
+                    setActiveDest(newIdx);
+                    destCarouselRef.current?.scrollTo({ left: newIdx * 284, behavior: 'smooth' });
+                  }} className="group w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ease-out hover:scale-110 active:scale-95 bg-white/10 backdrop-blur-[40px] backdrop-saturate-[150%] border border-white/20 text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.4),inset_0_0_0_1px_rgba(255,255,255,0.1)] hover:bg-white/20 hover:border-white/30">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1"><path d="M15 18l-6-6 6-6"/></svg>
+                  </button>
+                  <button onClick={() => {
+                    const newIdx = (activeDest + 1) % destinations.length;
+                    setActiveDest(newIdx);
+                    destCarouselRef.current?.scrollTo({ left: newIdx * 284, behavior: 'smooth' });
+                  }} className="group w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ease-out hover:scale-110 active:scale-95 bg-white/10 backdrop-blur-[40px] backdrop-saturate-[150%] border border-white/20 text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.4),inset_0_0_0_1px_rgba(255,255,255,0.1)] hover:bg-white/20 hover:border-white/30">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"><path d="M9 18l6-6-6-6"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* LAYER 2: Sky overlay (fades out after plane exits, z-20) */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none flex flex-col items-center z-20"
+            style={{
+              opacity: overlayOpacity,
+              background: "linear-gradient(to bottom, #F3EFE6 0%, #F4F5F6 40%, #F4F5F6 100%)"
+            }}
+          >
+            {/* Clouds */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {[
+                { top: "15%", left: "8%", w: "180px", op: 0.6 },
+                { top: "25%", left: "30%", w: "120px", op: 0.4 },
+                { top: "10%", left: "65%", w: "200px", op: 0.5 },
+                { top: "40%", left: "80%", w: "140px", op: 0.35 },
+                { top: "55%", left: "15%", w: "100px", op: 0.3 },
+              ].map((c, i) => (
+                <svg key={i} className="absolute" style={{ top: c.top, left: c.left, width: c.w, opacity: c.op }} viewBox="0 0 200 80" fill="none">
+                  <ellipse cx="100" cy="55" rx="90" ry="25" fill="white" />
+                  <ellipse cx="70" cy="45" rx="50" ry="30" fill="white" />
+                  <ellipse cx="130" cy="48" rx="45" ry="28" fill="white" />
+                  <ellipse cx="100" cy="40" rx="55" ry="32" fill="white" />
+                </svg>
               ))}
             </div>
 
-            {/* Navigation Arrows */}
-            <div className="absolute -bottom-2 md:-bottom-6 right-4 flex gap-4 z-30">
-               <button onClick={() => {
-                  const newIdx = activeDest === 0 ? destinations.length - 1 : activeDest - 1;
-                  setActiveDest(newIdx);
-                  destCarouselRef.current?.scrollTo({ left: newIdx * 284, behavior: 'smooth' });
-               }} className="group w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ease-out hover:scale-110 active:scale-95 bg-white/10 backdrop-blur-[40px] backdrop-saturate-[150%] border border-white/20 text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.4),inset_0_0_0_1px_rgba(255,255,255,0.1)] hover:bg-white/20 hover:border-white/30">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1"><path d="M15 18l-6-6 6-6"/></svg>
-               </button>
-               <button onClick={() => {
-                  const newIdx = (activeDest + 1) % destinations.length;
-                  setActiveDest(newIdx);
-                  destCarouselRef.current?.scrollTo({ left: newIdx * 284, behavior: 'smooth' });
-               }} className="group w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ease-out hover:scale-110 active:scale-95 bg-white/10 backdrop-blur-[40px] backdrop-saturate-[150%] border border-white/20 text-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.4),inset_0_0_0_1px_rgba(255,255,255,0.1)] hover:bg-white/20 hover:border-white/30">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"><path d="M9 18l6-6-6-6"/></svg>
-               </button>
-            </div>
+            {/* Section Heading */}
+            <motion.div
+              className="absolute top-[18%] left-1/2 -translate-x-1/2 text-center z-10"
+              style={{ opacity: headingOpacity, y: headingY }}
+            >
+              <p className="text-xs font-bold text-[#FF6B35] tracking-[0.25em] uppercase mb-3">EXPLORE THE WORLD</p>
+              <h2 className="text-4xl md:text-6xl font-black text-[#0B2027] tracking-tight leading-tight">
+                Where will you<br />go next?
+              </h2>
+            </motion.div>
+          </motion.div>
 
+          {/* LAYER 3: Plane layer (z-30, fades imperatively) */}
+          <div ref={planeLayerRef} className="absolute inset-0 pointer-events-none z-30">
+            <svg
+              viewBox="0 0 1200 700"
+              className="absolute inset-0 w-full h-full"
+              preserveAspectRatio="none"
+            >
+              {/* Invisible guide path */}
+              <path
+                id="flight-guide"
+                d="M -80 560 C 100 520, 200 400, 350 320 S 520 200, 650 180 S 850 200, 1000 160 S 1150 120, 1350 80"
+                fill="none"
+                stroke="transparent"
+              />
+              {/* Orange trail */}
+              <path
+                ref={planeTrailRef}
+                d="M -80 560 C 100 520, 200 400, 350 320 S 520 200, 650 180 S 850 200, 1000 160 S 1150 120, 1350 80"
+                fill="none"
+                stroke="#FF6B35"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeDasharray="8,10"
+                style={{ strokeDashoffset: 9999 }}
+              />
+            </svg>
+
+            {/* Plane graphic */}
+            <div
+              ref={planeRef}
+              className="absolute"
+              style={{ left: "-80px", top: "560px", transform: "translate(-50%,-50%) rotate(0deg)" }}
+            >
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <filter id="plane-shadow">
+                  <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#0B2027" floodOpacity="0.25" />
+                </filter>
+                <g filter="url(#plane-shadow)">
+                  <path
+                    d="M54 28L38 22L34 8C33.5 6.5 31.5 6.5 31 8L27 22L10 28C8.5 28.5 8.5 30.5 10 31L27 37L28 52C28 53.5 30 54.5 31.5 53.5L34 48L36.5 53.5C38 54.5 40 53.5 40 52L41 37L58 31C59.5 30.5 59.5 28.5 58 28H54Z"
+                    fill="#FF6B35"
+                  />
+                  <path d="M32 10L32 54" stroke="white" strokeWidth="1.5" strokeOpacity="0.3" />
+                </g>
+              </svg>
+            </div>
           </div>
 
         </div>
