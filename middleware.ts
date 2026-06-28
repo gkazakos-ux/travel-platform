@@ -1,4 +1,3 @@
-import { NextResponse, type NextRequest } from "use-server" // ή "next/server" ανάλογα με το import σου
 import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "./services/supabase/session";
 
@@ -22,7 +21,6 @@ export async function middleware(request: NextRequest) {
   const urlAccessKey = request.nextUrl.searchParams.get('preview');
 
   // ─── 1. ΕΛΕΓΧΟΣ ΜΥΣΤΙΚΟΥ ΚΛΕΙΔΙΟΥ (ΞΕΚΛΕΙΔΩΜΑ) ───
-  // Αν ο χρήστης δώσει το σωστό κλειδί, του βάζουμε το cookie και τον στέλνουμε καθαρό στην αρχική
   if (urlAccessKey === SECRET_KEY) {
     const response = NextResponse.redirect(new URL('/', request.url));
     response.cookies.set('beta_access', 'true', { 
@@ -33,7 +31,6 @@ export async function middleware(request: NextRequest) {
   }
 
   // ─── 2. ΕΞΑΙΡΕΣΕΙΣ ΑΠΟ ΤΟ ΚΛΕΙΔΩΜΑ ───
-  // Στατικά αρχεία, εικόνες, API και η ίδια η σελίδα maintenance πρέπει να φορτώνουν ελεύθερα
   if (
     process.env.NODE_ENV === 'development' || 
     pathname === '/maintenance' || 
@@ -47,12 +44,11 @@ export async function middleware(request: NextRequest) {
   // ─── 3. ΕΛΕΓΧΟΣ ΠΡΟΣΒΑΣΗΣ (ΚΛΕΙΔΩΜΑ) ───
   const hasAccessCookie = request.cookies.has('beta_access');
 
-  // Αν δεν έχει το cookie πρόσβασης, τον στέλνουμε με redirect στο /maintenance
   if (!hasAccessCookie) {
     return NextResponse.redirect(new URL('/maintenance', request.url));
   }
 
-  // ─── 4. ΥΠΑΡΧΩΝ ΚΩΔΙΚΑΣ SUPABASE & AUTH (Τρέχει μόνο αν το site είναι ξεκλείδωτο) ───
+  // ─── 4. ΥΠΑΡΧΩΝ ΚΩΔΙΚΑΣ SUPABASE & AUTH ───
   const { response, user } = await updateSession(request);
 
   const isProtected = PROTECTED_PREFIXES.some(
