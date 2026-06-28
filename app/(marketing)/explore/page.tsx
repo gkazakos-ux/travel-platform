@@ -68,7 +68,7 @@ const Navbar = () => {
 const REGIONS = ["All Regions", "Europe", "Asia", "Americas", "Africa"];
 
 const PINS = [
-  { id: "santorini", city: "Santorini",  country: "Greece",   region: "Europe",   days: 5,  img: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=600&q=80", rating: 4.8 },
+  { id: "santorini", city: "Santorini",  country: "Greece",   region: "Europe",    days: 5,  img: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=600&q=80", rating: 4.8 },
   { id: "rome",      city: "Rome",        country: "Italy",    region: "Europe",   days: 5,  img: "https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=600&q=80", rating: 4.8 },
   { id: "lisbon",    city: "Lisbon",      country: "Portugal", region: "Europe",   days: 8,  img: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=600&q=80", rating: 4.9 },
   { id: "marrakech", city: "Marrakech",   country: "Morocco",  region: "Africa",   days: 10, img: "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=600&q=80", rating: 4.7 },

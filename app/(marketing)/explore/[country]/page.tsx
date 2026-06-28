@@ -211,7 +211,7 @@ export default function ProfilesListingPage() {
                       </div>
                     </div>
                     <button className="w-full py-3 rounded-xl bg-[#FF6B35] text-white text-xs font-black tracking-wide shadow-sm hover:brightness-110 hover:scale-[1.02] active:scale-[0.96] transition-all">Follow +</button>
-                  </div>Choose
+                  </div>
                 ))}
               </div>
             ) : (
