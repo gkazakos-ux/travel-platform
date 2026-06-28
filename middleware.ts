@@ -22,7 +22,9 @@ export async function middleware(request: NextRequest) {
   // ──────────────────────────────────────────────────────────────
   
   // Εξαιρέσεις για να μη γίνει λούπα ή να μη σπάσουν οι εικόνες/API
+// Εξαιρέσεις για να μη γίνει λούπα ή να μη σπάσουν οι εικόνες/API, ή αν είμαστε στο Codespace
   if (
+    process.env.NODE_ENV === 'development' || // 👈 ΠΡΟΣΘΕΣΕ ΑΥΤΗ ΤΗ ΓΡΑΜΜΗ!
     pathname === '/maintenance' || 
     pathname.startsWith('/_next') || 
     pathname.startsWith('/api') ||
