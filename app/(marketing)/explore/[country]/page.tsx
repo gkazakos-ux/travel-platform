@@ -192,6 +192,7 @@ export default function ProfilesListingPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
                 {data.creators.map((c) => (
                   <div key={c.id} className="group w-full bg-white border border-gray-100 rounded-[2.2rem] p-5 shadow-[0_12px_35px_rgba(11,32,39,0.02)] hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(11,32,39,0.06)] hover:border-gray-200/80 transition-all duration-500 ease-out cursor-pointer flex flex-col justify-between">
+                    onClick={() => router.push('/profile')}
                     <div>
                       <div className="relative grid grid-cols-3 gap-2 items-center h-[115px] mb-8">
                         <div className="h-full rounded-[1.2rem] overflow-hidden bg-gray-100"><img src={c.imgLeft} alt="" className="w-full h-full object-cover opacity-60 group-hover:scale-95 group-hover:opacity-40 transition-all duration-500" /></div>
@@ -210,7 +211,7 @@ export default function ProfilesListingPage() {
                       </div>
                     </div>
                     <button className="w-full py-3 rounded-xl bg-[#FF6B35] text-white text-xs font-black tracking-wide shadow-sm hover:brightness-110 hover:scale-[1.02] active:scale-[0.96] transition-all">Follow +</button>
-                  </div>
+                  </div>Choose
                 ))}
               </div>
             ) : (
@@ -250,6 +251,7 @@ export default function ProfilesListingPage() {
                     return (
                       <motion.div 
                         key={c.id}
+                        
                         className="w-[360px] flex-none bg-white border border-gray-100 rounded-[2.2rem] p-5 shadow-[0_12px_35px_rgba(11,32,39,0.02)] flex flex-col justify-between select-none"
                         animate={{
                           scale: isCenter ? 1.06 : 0.92,
