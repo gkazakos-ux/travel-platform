@@ -16,21 +16,8 @@ const AUTH_PAGE_PREFIXES = ["/login", "/signup"];
 
 export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
-  
-  const SECRET_KEY = "open"; // Το μυστικό σου κλειδί
-  const urlAccessKey = request.nextUrl.searchParams.get('preview');
 
-  // ─── 1. ΕΛΕΓΧΟΣ ΜΥΣΤΙΚΟΥ ΚΛΕΙΔΙΟΥ (ΞΕΚΛΕΙΔΩΜΑ) ───
-  if (urlAccessKey === SECRET_KEY) {
-    const response = NextResponse.redirect(new URL('/', request.url));
-    response.cookies.set('beta_access', 'true', { 
-      maxAge: 60 * 60 * 24 * 7, // 7 ημέρες πρόσβαση
-      path: '/',
-    });
-    return response;
-  }
-
-  // ─── 2. ΕΞΑΙΡΕΣΕΙΣ ΑΠΟ ΤΟ ΚΛΕΙΔΩΜΑ ───
+  // ─── 1. ΑΠΟΛΥΤΕΣ ΕΞΑΙΡΕΣΕΙΣ (Στην κορυφή για αποφυγή λούπας) ───
   if (
     process.env.NODE_ENV === 'development' || 
     pathname === '/maintenance' || 
@@ -40,6 +27,19 @@ export async function middleware(request: NextRequest) {
   ) {
     return NextResponse.next();
   }
+  
+  const SECRET_KEY = "open"; // Το μυστικό σου κλειδί
+  const urlAccessKey = request.nextUrl.searchParams.get('preview');
+
+  // ─── 2. ΕΛΕΓΧΟΣ ΜΥΣΤΙΚΟΥ ΚΛΕΙΔΙΟΥ (ΞΕΚΛΕΙΔΩΜΑ) ───
+  if (urlAccessKey === SECRET_KEY) {
+    const response = NextResponse.redirect(new URL('/', request.url));
+    response.cookies.set('beta_access', 'true', { 
+      maxAge: 60 * 60 * 24 * 7, // 7 ημέρες πρόσβαση
+      path: '/',
+    });
+    return response;
+  }
 
   // ─── 3. ΕΛΕΓΧΟΣ ΠΡΟΣΒΑΣΗΣ (ΚΛΕΙΔΩΜΑ) ───
   const hasAccessCookie = request.cookies.has('beta_access');
@@ -48,7 +48,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/maintenance', request.url));
   }
 
-  // ─── 4. ΥΠΑΡΧΩΝ ΚΩΔΙΚΑΣ SUPABASE & AUTH ───
+  // ─── 4. ΥΠΑΡΧΩΝ ΚΩΔΙΚΑΣ SUPABASE & AUTH (Τρέχει μόνο αν το site είναι ξεκλείδωτο) ───
   const { response, user } = await updateSession(request);
 
   const isProtected = PROTECTED_PREFIXES.some(
